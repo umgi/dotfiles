@@ -40,9 +40,9 @@ dist: clean
 	rm -rf st-$(VERSION)
 
 install: st
-	git submodule init
-	git submodule update
-	$(MAKE) install -C scroll
+	#git submodule init
+	#git submodule update
+	#$(MAKE) install -C scroll
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -f st $(DESTDIR)$(PREFIX)/bin
 	cp -f st-copyout $(DESTDIR)$(PREFIX)/bin
