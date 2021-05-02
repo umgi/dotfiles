@@ -1,0 +1,2 @@
+xmodmap -e "keycode 104 = Enter"
+xset r rate 300 50

@@ -1,0 +1,53 @@
+#!/bin/sh
+
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+for x in mount umount pacman su ; do
+  alias $x="sudo $x"
+done
+
+alias \
+  cp="cp -iv" \
+  mv="mv -iv" \
+  rm="rm -vI" \
+  mkd="mkdir -pv" \
+  ffmpeg="ffmpeg -hide_banner"
+
+alias \
+  ls="ls --color=auto --group-directories-first" \
+  la="ls -a" \
+  ll="ls -lah" \
+  grep="grep --color=auto" \
+  diff="diff --color=auto"
+
+alias \
+  ka="killall" \
+  e="$EDITOR" \
+  v="$EDITOR" \
+  p="sudo pacman" \
+  z="zathura" \
+  wb="w3m -B"
+
+alias \
+  cfz="nvim ~/.config/zsh/.zshrc" \
+  cfa="nvim ~/.config/zsh/aliasrc" \
+  cfn="nvim ~/.config/nvim/init.vim" \
+  cfd="nvim ~/.config/dwm/config.h" \
+  cfdd="nvim ~/.config/dwmblocks/config.h"
+
+
+
+alias \
+  gs="git status" \
+  ga="git add" \
+  gc="git commit -m" \
+  gpu="git push -u origin main"
+
+alias \
+  dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME" \
+  dds="dot status" \
+  dda="dot add" \
+  ddc="dot commit -m" \
+  ddp="dot push -u origin main"

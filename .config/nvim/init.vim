@@ -50,7 +50,9 @@ set termguicolors
 set background=dark
 "colorscheme spacecamp
 "
-let g:neodark#background = '#202020'
+let g:neodark#background = '#111111'
+let g:neodark#use_256color = 0
+let g:neodark#use_custom_terminal_theme = 1
 colorscheme neodark
 
 " auto-pairs
@@ -87,3 +89,7 @@ inoremap <C-f>t <Esc>:CtrlSFToggle<CR>
 autocmd BufWritePost ~/.config/dwmblocks/config.h !cd ~/.config/dwmblocks/; sudo make install && {killall -q dwmblocks;setsid dwmblocks & }
 autocmd BufWritePost ~/.config/dwm/config.h !cd ~/.config/dwm/; sudo make install && {killall -q dwm;setsid dwm & }
 
+
+" xrdb
+autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
+autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %

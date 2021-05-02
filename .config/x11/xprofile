@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export GTK_IM_MODULE='fcitx'
+export QT_IM_MODULE='fcitx'
+export SDL_IM_MODULE='fcitx'
+export XMODIFIERS='@im=fcitx'
+
+fcitx -d &
+xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources &
+source ${XDG_CONFIG_HOME:-$HOME/.config}/x11/remaps &
+dwmblocks
