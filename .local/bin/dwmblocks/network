@@ -1,0 +1,13 @@
+case $BLOCK_BUTTON in
+  1) "$TERMINAL" -e nmtui; pkill -RT+4 dwmblocks ;;
+  6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+
+result="$(cat /sys/class/net/w*/operstate 2> /dev/null)"
+case "$result" in
+  down) wifistatus="d" ;;
+  up) wifistatus="$(awk '/^s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)" ;;
+esac
+
+printf "W%s\n" "$wifistatus"

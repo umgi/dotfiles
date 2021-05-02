@@ -1,0 +1,17 @@
+case $BLOCK_BUTTON in
+  4) xbacklight -inc 10 ;;
+  5) xbacklight -dec 10 ;;
+  6) "$TERMINAL" -e "$EDITOR" "$0"
+esac
+
+for battery in /sys/class/power_supply/BAT?*; do
+  [ -n "${capacity+x}" ] && printf " "
+
+  readed="$(cat "$battery/status")"
+  status="${readed:0:1}"
+  capacity=$(cat "$battery/capacity")
+  [ "$status" = "D" ] && [ "$capacity" -le 25 ] && warn="!"
+
+  printf "%s%d%s" "$status" "$capacity" "$warn"; unset warn
+    
+done && exit 0

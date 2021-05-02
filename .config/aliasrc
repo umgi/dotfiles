@@ -1,0 +1,17 @@
+alias ll="ls -a"
+alias lh="ls -lah"
+alias vim="nvim"
+
+alias w3mb="w3m -B"
+
+alias cfz="nvim ~/.config/zsh/.zshrc"
+alias cfa="nvim ~/.config/aliasrc"
+alias cfn="nvim ~/.config/nvim/init.vim"
+alias cfd="nvim ~/.config/dwm/config.h"
+alias cfdd="nvim ~/.config/dwmblocks/config.h"
+
+alias dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME"
+
+alias ls="ls --color=auto"
+alias la="ls -a"
+alias ll="ls -lah"
