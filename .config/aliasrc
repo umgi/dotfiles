@@ -10,8 +10,18 @@ alias cfn="nvim ~/.config/nvim/init.vim"
 alias cfd="nvim ~/.config/dwm/config.h"
 alias cfdd="nvim ~/.config/dwmblocks/config.h"
 
-alias dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME"
 
 alias ls="ls --color=auto"
 alias la="ls -a"
 alias ll="ls -lah"
+
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit -m"
+alias gpu="git push -u origin main"
+
+alias dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME"
+alias dds="dot status"
+alias dda="dot add"
+alias ddc="dot commit -m"
+alias ddp="dot push -u origin main"
