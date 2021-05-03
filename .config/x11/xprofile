@@ -6,6 +6,8 @@ export SDL_IM_MODULE='fcitx'
 export XMODIFIERS='@im=fcitx'
 
 fcitx -d &
+mpd &
 xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources &
 source ${XDG_CONFIG_HOME:-$HOME/.config}/x11/remaps &
+unclutter &
 dwmblocks
