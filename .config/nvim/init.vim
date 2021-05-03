@@ -34,6 +34,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
   Plug 'jiangmiao/auto-pairs'
   Plug 'dyng/ctrlsf.vim'
+  Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -55,8 +56,6 @@ let g:neodark#use_256color = 0
 let g:neodark#use_custom_terminal_theme = 1
 colorscheme neodark
 
-" auto-pairs
-let g:AutoPairsShortcutToggle = '<C-P>'
 
 " nerd tree
 let NERDTreeShowBookmarks = 1
@@ -66,7 +65,24 @@ let NERDTreeMinimalMenu = 1
 let NERDTreeWinPos = "left"
 let NERDTreeWinSize = 31
 
+nmap <F1> :NERDTreeFocus<CR>
 nmap <F2> :NERDTreeToggle<CR>
+
+nnoremap <C-h> <C-w><C-h>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+
+nnoremap <C-u> :tabm -1<CR>
+nnoremap <C-i> :tabprevious<CR>
+nnoremap <C-o> :tabnext<CR>
+nnoremap <C-p> :tabm +1<CR>
+
+let g:AutoPairsShortcutToggle = '<C-{>'
+
+set splitbelow
+set splitright
+
 
 
 " ctrlsf
@@ -93,3 +109,14 @@ autocmd BufWritePost ~/.config/dwm/config.h !cd ~/.config/dwm/; sudo make instal
 " xrdb
 autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
 autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
+
+" ale
+let g:ale_fixers = {
+  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \ 'javascript': ['prettier'],
+  \ 'css': ['prettier'],
+  \ 'svelte': ['prettier'],
+  \ 'json': ['prettier']
+  \ }
+
+let g:ale_fix_on_save = 1
