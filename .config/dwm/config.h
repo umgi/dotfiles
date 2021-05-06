@@ -189,6 +189,8 @@ static Key keys[] = {
 	/* fix strange KP_Enter position */
 	{ MODKEY,			XK_KP_Enter,	spawn,		{.v = termcmd } },
 	{ MODKEY|ShiftMask,		XK_KP_Enter,	togglescratch,	{.ui = 0} },
+	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
+	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0} },
 
 	/* volume control */
 	{ MODKEY,		XK_minus,	spawn, SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },
