@@ -126,7 +126,7 @@ git --git-dir=$HOME/.config/dotfiles --work-tree=$HOME reset --hard main
 
 pacman -Syu libxft libxinerama zsh
 
-cd ~/.config/dwm ~/.config/dwmblocks ~/.config/st 
+cd ~/.config/dwm ~/.config/dwmblocks ~/.config/st
 sudo make install
 ```
 
@@ -147,7 +147,7 @@ yay -s ttf-rounded-mplus
 
 ### packages
 ```
-pacman -Syu ack alsa-utils anki dmenu 
+pacman -Syu ack alsa-utils anki dmenu
 + evtest - get raw keyboard data
 + fcitx - japanese ime
 + feh htop mpd mpv
@@ -156,3 +156,11 @@ pacman -Syu ack alsa-utils anki dmenu
 + xorg-xbacklight - screen brightness
 + xorg-xev - raw xorg pressed key data
 + youtube-dl
+```
+
+### audio
+
+```
+$ pacman -Syu pulseaudio pamixer ncpamixer
+systemctl --user enable pulseaudio
+```
