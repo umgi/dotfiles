@@ -20,8 +20,14 @@ noremap <Left> <NOP>
 noremap <Down> <NOP>
 noremap <Right> <NOP>
 
+" auto install plug
+if ! filereadable(system('echo -n "$XDG_DATA_HOME/nvim/site/autoload/plug.vim"'))
+  echo "Downloading junegunn/vim-plug to manage plugins..."
+  silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall
+endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
   Plug 'rafi/awesome-vim-colorschemes'
   Plug 'mattn/emmet-vim'
