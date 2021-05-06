@@ -1,3 +1,5 @@
+#!/bin/sh
+
 case $BLOCK_BUTTON in
   1) setsid -f "$TERMINAL" -e ncpamixer ;;
   2) pamixer -t ;;
@@ -7,4 +9,15 @@ case $BLOCK_BUTTON in
 esac
 
 vol="$(pamixer --get-volume)"
-echo "$vol$( [ "$(pamixer --get-mute)" == "true" ] && echo "m" )"
+
+if [ "$vol" -gt "70" ]; then
+	icon="🔊"
+elif [ "$vol" -lt "20" ]; then
+	icon="🔈"
+else
+	icon="🔉"
+fi
+
+[ $(pamixer --get-mute) = true ] && icon="🔇"
+
+echo "$icon$vol"
