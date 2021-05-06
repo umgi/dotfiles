@@ -1,0 +1,6 @@
+[submodule ".config/dwm"]
+	path = .config/dwm
+	url = https://github.com/LukeSmithxyz/dwm
+[submodule "/home/dt/.config/mpv/scripts/subs2srs"]
+	path = /home/dt/.config/mpv/scripts/subs2srs
+	url = https://github.com/Ajatt-Tools/mpvacious.git
