@@ -1,36 +1,38 @@
+/* vim: set ts=8 sw=8 tw=0 noet : */
 //Modify this file to change what commands output to your statusbar, and recompile using the make command.
 
 #define PATH(name) "~/.local/bin/dwmblocks/"name
 static const Block blocks[] = {
 	/*Icon*/	/*Command*/		/*Update Interval*/	/*Update Signal*/
 	/* {"⌨", "sb-kbselect", 0, 30}, */
-	{"", "cat /tmp/recordingicon 2>/dev/null",	0,	9},
+	/*{"", "cat /tmp/recordingicon 2>/dev/null",	0,	9},
 	{"",	"sb-tasks",	10,	26},
 	{"",	"sb-music",	0,	11},
 	{"",	"sb-pacpackages",	0,	8},
-	{"",	"sb-news",		0,	6},
+	{"",	"sb-news",		0,	6},*/
 	/* {"",	"sb-price lbc \"LBRY Token\" 📚",			9000,	22}, */
 	/* {"",	"sb-price bat \"Basic Attention Token\" 🦁",	9000,	20}, */
 	/* {"",	"sb-price link \"Chainlink\" 🔗",			300,	25}, */
 	/* {"",	"sb-price xmr \"Monero\" 🔒",			9000,	24}, */
 	/* {"",	"sb-price eth Ethereum 🍸",	9000,	23}, */
 	/* {"",	"sb-price btc Bitcoin 💰",				9000,	21}, */
-	{"",	"sb-torrent",	20,	7},
+	/*{"",	"sb-torrent",	20,	7},*/
 	/* {"",	"sb-memory",	10,	14}, */
 	/* {"",	"sb-cpu",		10,	18}, */
 	/* {"",	"sb-moonphase",	18000,	17}, */
-	{"",	"sb-forecast",	18000,	5},
+	/*{"",	"sb-forecast",	18000,	5},
 	{"",	"sb-mailbox",	180,	12},
 	{"",	"sb-nettraf",	1,	16},
 	{"",	"sb-volume",	0,	10},
 	{"",	"sb-clock",	60,	1},
-	{"",	"sb-help-icon",	0,	15},
+	{"",	"sb-help-icon",	0,	15},*/
 
-  {"", PATH("ttl"),      4,  1},
-  {"", PATH("volume"),   0, 10},
-  {"", PATH("network"),  5,  4},
-  {"", PATH("battery"),  5,  3},
-  {"", PATH("clock"),   60,  1},
+	{ "",	PATH("ip.sh"),		60,	1 },
+	{ "",	PATH("ttl.sh"),		4,	1 },
+	{ "",	PATH("volume.sh"),	0,	10 },
+	{ "",	PATH("network.sh"),	5,	4 },
+	{ "",	PATH("battery.sh"),	5,	3 },
+	{ "",	PATH("clock.sh"),	60,	1 },
 };
 
 //Sets delimiter between status commands. NULL character ('\0') means no delimiter.
