@@ -73,10 +73,23 @@ nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 
-nnoremap <C-u> :tabm -1<CR>
+nnoremap <C-u> :tabnext<CR>
 nnoremap <C-i> :tabprevious<CR>
-nnoremap <C-o> :tabnext<CR>
-nnoremap <C-p> :tabm +1<CR>
+nnoremap <C-o> :tabm +1<CR>
+nnoremap <C-p> :tabm -1<CR>
+
+" resizing
+nnoremap <C-n> :res -5<CR>
+nnoremap <C-m> :res +5<CR>
+nnoremap <C-,> :vertical resize -5<CR>
+nnoremap <C-.> :vertical resize +5<CR>
+
+nnoremap <C-w>m :
+nnoremap <C-w>,
+nnoremap <C-w>.
+tmap <F1> <C-\><C-n> " close term
+
+
 
 let g:AutoPairsShortcutToggle = '<C-{>'
 
