@@ -12,12 +12,17 @@ count="$(ls /sys/class/power_supply | grep "BAT*" | wc -w)"
 
 for battery in /sys/class/power_supply/BAT?*; do
   [ -n "${capacity+x}" ] && printf " "
-  echo $battery
 
-  readed="$(cat "$battery/status")"
-  status="${readed:0:1}"
+  case "$(cat "$battery/status")" in
+    "Full") status="⚡" ;;
+    "Discharging") status="🔋" ;;
+    "Charging") status="🔌" ;;
+    "Not charging") status="🛑" ;;
+    "Unknown") status="♻️" ;;
+  esac
+
   capacity=$(cat "$battery/capacity")
-  [ "$status" = "D" ] && [ "$capacity" -le 25 ] && warn="❗"
+  [ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="❗"
 
   printf "%s%d%s" "$status" "$capacity" "$warn"; unset warn
 
