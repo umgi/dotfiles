@@ -1,7 +1,5 @@
 #!/bin/sh
 
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
-  . "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" & exec dwm
-else
-  . "$HOME/.xprofile" & exec dwm
+if [ -f "$XDG_CONFIG_HOME/x11/xprofile" ]; then
+  . "$XDG_CONFIG_HOME/x11/xprofile" & exec dwm
 fi
