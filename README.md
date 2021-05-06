@@ -116,6 +116,43 @@ $ reboot
 ### after
 
 ```
-pacman -Syu xorg-server xorg-xinit noto-fonts
+pacman -Syu xorg-server xorg-xinit noto-fonts git
 .config/fontconfig/fonts.conf
+
+cd .config
+git clone --bare https://github.com/umgi/dotfiles dotfiles
+git --git-dir=$HOME/.config/dotfiles --work-tree=$HOME fetch --all
+git --git-dir=$HOME/.config/dotfiles --work-tree=$HOME reset --hard main
+
+pacman -Syu libxft libxinerama zsh
+
+cd ~/.config/dwm ~/.config/dwmblocks ~/.config/st 
+sudo make install
 ```
+
+### install yay
+
+```
+cd /opt
+sudo git clone https://aur.archlinux.org/yay.git
+sudo chown -R <user>:wheel ./yay
+cd yay
+makepkg -s
+```
+
+### fonts
+```
+yay -s ttf-rounded-mplus
+```
+
+### packages
+```
+pacman -Syu ack alsa-utils anki dmenu 
++ evtest - get raw keyboard data
++ fcitx - japanese ime
++ feh htop mpd mpv
++ unclutter - hides cursor when unused
++ unzip unrar wget xclip xdg-user-dirs xdg-utils
++ xorg-xbacklight - screen brightness
++ xorg-xev - raw xorg pressed key data
++ youtube-dl
