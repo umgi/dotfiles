@@ -19,5 +19,6 @@ case "$(cat /sys/class/net/e*/operstate 2>/dev/null)" in
   up) ethstatus="$(sed "s/down//;s/up/👽/" /sys/class/net/e*/operstate 2>/dev/null)" ;;
 esac
 
+[ -z $wifistatus ] && [ -z $ethstatus ] && [ $(nmcli networking) = "enabled" ] && echo "👽" && exit 0
 
 printf "%s%s\n" "$wifistatus" "$ethstatus"

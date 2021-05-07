@@ -201,7 +201,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_F2,		spawn, SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,		XK_F3,		spawn, SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,		XK_F4,		spawn, SHCMD("mpc toggle") },
-	{ MODKEY,		XK_F5,		spawn, SHCMD("atl.sh") },
+	{ MODKEY,		XK_F5,		spawn, SHCMD("dmenu-nm.sh") },
 
 	/* backlight */
  	{ MODKEY,		XK_F9,		spawn, SHCMD("xbacklight -dec 3") },
