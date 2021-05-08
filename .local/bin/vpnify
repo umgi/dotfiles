@@ -1,0 +1,215 @@
+#!/bin/sh
+
+#
+# Copyright © 2019 Olga Ustiuzhanina <me@laserbat.pw>
+#
+# This program is free software. It comes without any warranty, to
+# the extent permitted by applicable law. You can redistribute it
+# and/or modify it under the terms of the Do What The Fuck You Want
+# To Public License, Version 2, as published by Sam Hocevar. See
+# the COPYING file for more details.
+#
+
+# Escalate priveleges
+if [ "$(id -u)" != 0 ]; then
+    exec sudo -E -- "$0" "$@"
+fi
+
+# Prevent nested execution
+if [ -n "$NETNS" ]; then
+    exit 1
+fi
+
+# Setup main variables:
+# Name of network namespace
+NETNS=$(basename "$0")
+export NETNS
+
+# Use 10.118.0.0/16 subnet
+MNUM=118
+export NNUM
+
+# Customization path
+if [ "$NETNS" = "vpnify" ]; then
+    CUSTOM_PATH="/etc/vpnify"
+else
+    CUSTOM_PATH="/etc/vpnify/$NETNS"
+fi
+
+export CUSTOM_PATH
+
+# Names of veth interfaces
+VETH0="${NETNS}_veth0"
+VETH1="${NETNS}_veth1"
+
+export VETH0
+export VETH1
+
+# Cleanup function
+clean() {
+    # Find all pids using this NS
+    PIDS=$(find -L /proc/[1-9]*/task/*/ns/net -samefile /run/netns/"$NETNS" 2> /dev/null)
+
+    if [ -z "$PIDS" ]; then
+        # Remove NS and drop iptables rule
+        ip netns del "$NETNS"
+        iptables -t nat -D POSTROUTING -s "$SUBNET.0/24" \
+            -m comment --comment "for $NETNS" -j MASQUERADE 2> /dev/null
+
+        iptables -D FORWARD -s "$SUBNET.0/24" -j ACCEPT -m comment --comment "for $NETNS"
+
+        # If mount namespace was created and is unsued now - remove it
+        if [ -e "/run/mntns/$NETNS" ]; then
+            # Remove mount namespace if it was created
+            umount "/run/mntns/$NETNS"
+            rm "/run/mntns/$NETNS"
+        fi
+    fi
+
+    # Execute custom user (post) hooks
+    for hook in "$CUSTOM_PATH"/post.d/*; do
+        [ -x "$hook" ] && "$hook"
+    done
+}
+
+# Run cleanup on exit
+trap 'clean;' 0
+
+# Check if this namespace exists already
+EXISTING=$(ip netns show | cut -d' ' -f1 | grep "^$NETNS\$"; true)
+
+# Network NS argument for nsenter
+NETWORK_NS="-n/run/netns/$NETNS"
+
+# Create mount namespace for /etc/resolv.conf and /etc/hosts if needed
+if  [ -e "$CUSTOM_PATH/resolv.conf" ] || [ -e "$CUSTOM_PATH/hosts" ] ; then
+    MOUNT_NS="--mount=/run/mntns/$NETNS"
+
+    if [ ! -e "/run/mntns/$NETNS" ]; then
+        mkdir -p /run/mntns
+    fi
+
+    if ! mountpoint -q /run/mntns; then
+        mount --bind /run/mntns /run/mntns
+        # Fix for systemd based systems
+        mount --make-rprivate /run/mntns
+    fi
+
+    if [ ! -e "/run/mntns/$NETNS" ]; then
+        touch /run/mntns/"$NETNS"
+
+        # This doesn't work with older unshare
+        # unshare $MOUNT_NS echo -n
+
+        # Ugly workaround for old unshare versions
+        unshare -m sleep 0.1 &
+
+        # Avoids a race condition
+        sleep 0.01
+
+        # Bind mount a namespace to make it permanent
+        mount --bind /proc/$!/task/$!/ns/mnt "/run/mntns/$NETNS"
+        mount --make-shared "/run/mntns/$NETNS"
+
+        # Kill backround process
+        kill $!
+        wait $! 2>/dev/null
+
+        [ -e "$CUSTOM_PATH/hosts" ] && nsenter "$MOUNT_NS" mount --bind \
+            "$CUSTOM_PATH/hosts" /etc/hosts
+        [ -e "$CUSTOM_PATH/resolv.conf" ] && nsenter "$MOUNT_NS" mount \
+            --bind "$CUSTOM_PATH/resolv.conf" /etc/resolv.conf
+    fi
+fi
+
+if [ -n "$EXISTING" ]; then
+    # Get the existing subnet number
+    NNUM=$(iptables-save | grep "for $NETNS" | head -n1 | cut -d' ' -f4 | cut -d'.' -f3)
+    export NNUM
+
+    SUBNET="10.$MNUM.$NNUM"
+    export SUBNET
+else
+    # Find an unused subnet starting from 10.*.0.0/24 to 10.*.255.0/24
+    # Where * is $MNUM
+    NNUM=0
+    while [ $NNUM -le 255 ]; do
+        COUNT=$(iptables-save | grep -F -c "10.$MNUM.$NNUM.0" ; true)
+
+        if [ "$COUNT" = 0 ]; then
+            break
+        fi
+
+        NNUM=$((NNUM + 1))
+    done
+
+    # No free subnets - probably something's wrong with iptables
+    [ $NNUM = 256 ] && exit 1
+
+    export NNUM
+
+    SUBNET="10.$MNUM.$NNUM"
+    export SUBNET
+
+    # Create network namespace
+    ip netns add "$NETNS"
+
+    # Not using 'ip -n' because it's not supported
+    # by old versions of iproute2
+    ip netns exec "$NETNS" ip link set dev lo up
+
+    # Create veth pair
+    ip link add "$VETH0" type veth peer name "$VETH1"
+    ip link set "$VETH1" netns "$NETNS"
+
+    # Setup the pair
+    ip netns exec "$NETNS" ip addr add "$SUBNET.1/24" dev "$VETH1"
+    ip addr add "$SUBNET.2/24" dev "$VETH0"
+    ip netns exec "$NETNS" ip link set "$VETH1" up
+    ip link set "$VETH0" up
+
+    # Add default route inside NS
+    ip netns exec "$NETNS" ip route add default via "$SUBNET.2" dev "$VETH1"
+
+    # Enable routing
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+
+    # Allow forwarding of packages form our subnet
+    iptables -A FORWARD -s "$SUBNET.0/24" -j ACCEPT -m comment --comment "for $NETNS"
+
+    # Create nat rule
+    iptables -t nat -A POSTROUTING -s "$SUBNET.0/24" \
+        -m comment --comment "for $NETNS" -j MASQUERADE
+
+    # Execute custom user hooks
+    for hook in "$CUSTOM_PATH"/pre.d/*; do
+        [ -x "$hook" ] && "$hook"
+    done
+fi
+
+# Workaround pwd bug
+if [ "$*" = "" ]; then
+    COMMAND="cd $PWD; exec $SHELL"
+else
+    COMMAND="cd $PWD; exec "
+
+    # Passing arguments containing a whitespace character
+    # doesn't work without this workaround
+    for arg in "$@"; do
+        COMMAND="$COMMAND \"$arg\""
+    done
+fi
+
+# Clear sudo credential cache
+sudo -k
+
+NSENTER_CMD='nsenter'
+
+# Add mount namespace for custom resolv.conf and hosts
+# Thanks to @ischoonover for noticing this bug and providing a solution
+if [ "$MOUNT_NS" ] ; then
+        NSENTER_CMD="$NSENTER_CMD $MOUNT_NS"
+fi
+
+# Use sudo to drop priveleges inside the namespace
+$NSENTER_CMD "$NETWORK_NS" sudo -Eu "$SUDO_USER" -- "$SHELL" -c "$COMMAND"

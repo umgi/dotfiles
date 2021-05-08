@@ -21,4 +21,6 @@ esac
 
 [ -z $wifistatus ] && [ -z $ethstatus ] && [ $(nmcli networking) = "enabled" ] && echo "👽" && exit 0
 
-printf "%s%s\n" "$wifistatus" "$ethstatus"
+[ -n "$(pidof openvpn)" ] && openvpn="🔒"
+
+printf "%s%s%s\n" $openvpn $wifistatus $ethstatus

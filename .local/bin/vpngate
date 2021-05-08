@@ -1,0 +1,21 @@
+#!/bin/sh
+
+listaddr="http://www.vpngate.net/api/iphone/"
+
+# $2 ip
+# $5 speed
+# $8 NumVpnSessions
+# $15
+
+list=$(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(jp|JP)," | awk -F, '{print $5 "," $8 "," $2 "," $15 }' | sort -g -r -t ',')
+
+printf "vpn\nvpn" > /tmp/vpngate.creds
+
+for entry in $list; do
+  ip=$(echo $entry | awk -F, '{print $3}')
+  echo "Trying $ip..."
+  echo $entry | awk -F, '{print $4}' | base64 -d > /tmp/vpngate.conf
+  vpnify sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10
+done
+
+exit 1
