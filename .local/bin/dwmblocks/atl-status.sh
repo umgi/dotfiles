@@ -12,6 +12,37 @@ seconds=$((diff % 60))
 minutes=$((diff / 60 % 60))
 hours=$((diff / 3600))
 
+total=0
+is_start=0
+last_act=""
+
+if [ $icon="💚" ] ; then
+  if [ $n_act != 'anki' ] ; then
+    mins=$(date "+%M")
+    if [ $mins -le 1 ] && [ $mins -gt 0 ]; then
+      now=$(date "+%s")
+      echo "end,$((now - 1)),$n_act" >> $log
+      echo "start,$now,anki" >> $log
+      pkill -RTMIN+15 dwmblocks
+      exit 0
+    fi
+  else
+    dd=$(($(date "+%s") - n_time))
+
+    if [ $dd -gt 100 ]; then
+      now=$(date "+%s")
+      n2=$(cat $log | tail -n 2 | head -n 1)
+      n2_status=$(echo $n2 | awk -F, '{print $1}')
+      n2_act=$(echo $n2 | awk -F, '{print $3}')
+      echo "end,$((now - 1)),anki" >> $log
+      echo "start,$now,$n2_act" >> $log # hopes that anki dont run twice which couldn't...
+      pkill -RTMIN+15 dwmblocks
+      exit 0
+    fi
+  fi
+fi
+
+
 if [ $minutes = '0' ]; then
   time="${seconds}s"
 elif [ $hours = '0' ]; then
