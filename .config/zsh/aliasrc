@@ -13,7 +13,8 @@ alias \
   mv="mv -iv" \
   rm="rm -vI" \
   mkd="mkdir -pv" \
-  ffmpeg="ffmpeg -hide_banner"
+  ffmpeg="ffmpeg -hide_banner" \
+  ..="cd .."
 
 alias \
   ls="ls --color=auto --group-directories-first" \
@@ -35,19 +36,18 @@ alias \
   cfa="nvim ~/.config/zsh/aliasrc" \
   cfn="nvim ~/.config/nvim/init.vim" \
   cfd="nvim ~/.config/dwm/config.h" \
-  cfdd="nvim ~/.config/dwmblocks/config.h"
-
-
+  cfdd="nvim ~/.config/dwmblocks/config.h" \
+  cfs="nvim ~/.config/st/config.h"
 
 alias \
   gs="git status" \
   ga="git add" \
   gc="git commit -m" \
-  gpu="git push -u origin main"
+  gp="git push -u origin main"
 
 alias \
   dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME" \
-  dds="dot status" \
-  dda="dot add" \
-  ddc="dot commit -m" \
-  ddp="dot push -u origin main"
+  ds="dot status" \
+  da="dot add" \
+  dc="dot commit -m" \
+  dp="dot push -u origin main"
