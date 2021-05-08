@@ -41,6 +41,7 @@ alias \
 
 alias \
   gs="git status" \
+  gss="git status -v | $PAGER" \
   ga="git add" \
   gc="git commit -m" \
   gp="git push -u origin main"
@@ -48,6 +49,7 @@ alias \
 alias \
   dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME" \
   ds="dot status" \
+  dss="dot status -v | $PAGER" \
   da="dot add" \
   dc="dot commit -m" \
   dp="dot push -u origin main"
