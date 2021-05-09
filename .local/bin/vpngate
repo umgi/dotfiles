@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Todo:
+#   + used 10 min ago
+
 listaddr="http://www.vpngate.net/api/iphone/"
 
 # $2 ip
@@ -7,15 +10,30 @@ listaddr="http://www.vpngate.net/api/iphone/"
 # $8 NumVpnSessions
 # $15
 
-list=$(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(jp|JP)," | awk -F, '{print $5 "," $8 "," $2 "," $15 }' | sort -g -r -t ',')
+dunst_id="string:x-dunst-stack-tag:vpngate"
+dunst_title="vpngate"
+
+dunstify -h "$dunst_id" "$dunst_title - loading"
+
+read -r -d "\n" -a list <<< $(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(jp|JP)," | awk -F, '{print $5 "," $8 "," $2 "," $15 }' | sort -g -r -t ',' )
 
 printf "vpn\nvpn" > /tmp/vpngate.creds
 
-for entry in $list; do
-  ip=$(echo $entry | awk -F, '{print $3}')
-  echo "Trying $ip..."
-  echo $entry | awk -F, '{print $4}' | base64 -d > /tmp/vpngate.conf
-  vpnify sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10
-done
+chosen=$(
+  for index in ${!list[@]}; do
+    params=($(echo ${list[$index]} | tr "," "\n"))
+    printf "%2d) %4sB - %d sessions - %s\n" "$index" "$(numfmt --to=iec ${params[0]})" "${params[1]}" "${params[2]}"
+  done | dmenu -i -f -l 5 -p vpngate:
+)
 
-exit 1
+[ -z "$chosen" ] && exit 0
+
+index=$(echo "$chosen" | awk -F ')' '{print $1}')
+params=($( echo ${list[$index]} | tr "," "\n" ))
+echo "${params[3]}" | base64 -d > /tmp/vpngate.conf
+
+( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
+vpnify sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10 --connect-retry-max 1 # --resolv-retry 10 --connect-retry-max 1
+[ $? = "1" ] && status="failed" || status="closed"
+dunstify -h "$dunst_id" "$dunst_title - $status"
+pkill -RTMIN+5 dwmblocks

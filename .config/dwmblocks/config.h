@@ -31,6 +31,7 @@ static const Block blocks[] = {
 	{ "",	PATH("sb-ip"),		60,	1 },
 	{ "",	PATH("sb-ttl"),		4,	1 },
 	{ "",	PATH("sb-volume"),	0,	10 },
+	{ "",	PATH("sb-vpnify"),	0,	5 },
 	{ "",	PATH("sb-network"),	5,	4 },
 	{ "",	PATH("sb-battery"),	5,	3 },
 	{ "",	PATH("sb-clock"),	60,	1 },
