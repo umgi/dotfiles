@@ -1,0 +1,43 @@
+[global]
+  geometry = "300x5-4+27"
+  indicate_hidden = no
+  shrink = no
+  padding = 8
+  horizontal_padding = 8
+  separator_height = 2
+  separator_color = "#1c1c1c"
+  frame_width = 2
+  frame_color="#d4b261"
+  sort = yes
+  idle_threshold = 120
+  font = Monospace 12
+  line_height = 0
+  markup = full
+  format = "🔔 <b>%s</b>\n%b"
+  alignment = left
+  word_wrap = yes
+
+  stack_duplicates = true
+  hide_duplicate_count = yes
+  show_indicators = true
+  history_length = 20
+
+  dmenu = /usr/bin/dmenu -p dunst:
+  browser = /usr/bin/firefox -new-tab
+  always_run_script = true
+  timeout = 5
+
+[urgency-critical]
+  background="#111111"
+  foreground="#9b9b9b"
+  timeout = 0
+
+[urgency-normal]>
+  background="#111111"
+  foreground="#9b9b9b"
+  timeout = 5
+
+[urgency_low]
+  background="#111111"
+  foreground="#9b9b9b"
+  timeout = 5
