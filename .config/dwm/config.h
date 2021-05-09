@@ -148,16 +148,16 @@ static Key keys[] = {
 
 
 	/* params */
-	{ MODKEY,		XK_z,		incrgaps,	{.i = +3 } },	/* gaps */
-	{ MODKEY|ShiftMask,	XK_z,		incrgaps,	{.i = -3 } },
+	{ MODKEY,		XK_z,		incrgaps,	{ .i = +3 } },	/* gaps */
+	{ MODKEY|ShiftMask,	XK_z,		incrgaps,	{ .i = -3 } },
 	{ MODKEY,		XK_o,		incnmaster,	{ .i = +1 } },	/* master count */
 	{ MODKEY|ShiftMask,	XK_o,		incnmaster,	{ .i = -1 } },
-	{ MODKEY,		XK_h,		setmfact,	{.f = -0.05} },	/* master width */
-	{ MODKEY,		XK_l,		setmfact,      	{.f = +0.05} },
+	{ MODKEY,		XK_h,		setmfact,	{ .f = -0.05}},	/* master width */
+	{ MODKEY,		XK_l,		setmfact,	{ .f = +0.05}},
 	{ MODKEY,		XK_m,		shiftview,	{ .i = +1 } },	/* shift view */
 	{ MODKEY,		XK_n,		shiftview,	{ .i = -1 } },
 	{ MODKEY|ShiftMask,	XK_m,		shifttag,	{ .i = +1 } },	/* shift tag */
-	{ MODKEY|ShiftMask,	XK_n,		shifttag,	{ .i = +1 } },
+	{ MODKEY|ShiftMask,	XK_n,		shifttag,	{ .i = -1 } },
 
 	/* TODO monitors support
 	{ MODKEY,		XK_Left,	focusmon,	{.i = -1 } },
