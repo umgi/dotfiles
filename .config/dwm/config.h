@@ -64,7 +64,6 @@ static int nmaster     = 1;    /* number of clients in master area */
 static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
-#include "layouts.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
  	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
@@ -83,7 +82,7 @@ static const Layout layouts[] = {
 	{ "HHH",	grid },
 	{ "###",	nrowgrid },
 	{ "---",	horizgrid },
-	{ ":::",	gaplesgrid },
+	{ ":::",	gaplessgrid },
 
 	{ "><>",	NULL },			/* no layout function means floating behavior */
 	{ NULL,		NULL },
@@ -134,9 +133,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[5]} },	/* monocle */
 	{ MODKEY,		XK_y,	setlayout,	{.v = &layouts[6]} },	/* centeredmaster */
 	{ MODKEY|ShiftMask,	XK_y,	setlayout,	{.v = &layouts[7]} },	/* centeredfloatingmaster */
-	{ MODKEY,		XK_u,	setlayout,	{.v = &layouts[8]} },
+	{ MODKEY,		XK_u,	cyclelayout,	{.i = +1} },		/* cycle layouts */
+	{ MODKEY,		XK_i,	cyclelayout,	{.i = -1} },
 	/*{ MODKEY|ShiftMask,	XK_u,	setlayout,	{.v = &layouts[]} },
-	{ MODKEY,		XK_i,	setlayout,	{.v = &layouts[]} },
 	{ MODKEY|ShiftMask,	XK_i,	setlayout,	{.v = &layouts[]} }, */
 	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[14]} },	/* floating */
 
