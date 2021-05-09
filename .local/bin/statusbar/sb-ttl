@@ -1,0 +1,12 @@
+#!/bin/sh
+case $BLOCK_BUTTON in
+  6) "$TERMINAL" -e "$EDITOR" "$0"
+esac
+
+ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
+
+case $ttl in
+  64) status="!"
+esac
+
+echo $status

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 log=$XDG_DATA_HOME/atl/log
 
 n=$(cat $log | tail -n 1)

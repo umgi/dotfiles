@@ -1,7 +1,7 @@
 /* vim: set ts=8 sw=8 tw=0 noet : */
 //Modify this file to change what commands output to your statusbar, and recompile using the make command.
 
-#define PATH(name) "~/.local/bin/dwmblocks/"name
+#define PATH(name) "~/.local/bin/statusbar/"name
 static const Block blocks[] = {
 	/*Icon*/	/*Command*/		/*Update Interval*/	/*Update Signal*/
 	/* {"⌨", "sb-kbselect", 0, 30}, */
@@ -27,13 +27,13 @@ static const Block blocks[] = {
 	{"",	"sb-clock",	60,	1},
 	{"",	"sb-help-icon",	0,	15},*/
 
-	{ "",	PATH("atl-status.sh"),	15,	15 },
-	{ "",	PATH("ip.sh"),		60,	1 },
-	{ "",	PATH("ttl.sh"),		4,	1 },
-	{ "",	PATH("volume.sh"),	0,	10 },
-	{ "",	PATH("network.sh"),	5,	4 },
-	{ "",	PATH("battery.sh"),	5,	3 },
-	{ "",	PATH("clock.sh"),	60,	1 },
+	/*{ "",	PATH("atl-status.sh"),	15,	15 },*/
+	{ "",	PATH("sb-ip"),		60,	1 },
+	{ "",	PATH("sb-ttl"),		4,	1 },
+	{ "",	PATH("sb-volume"),	0,	10 },
+	{ "",	PATH("sb-network"),	5,	4 },
+	{ "",	PATH("sb-battery"),	5,	3 },
+	{ "",	PATH("sb-clock"),	60,	1 },
 };
 
 //Sets delimiter between status commands. NULL character ('\0') means no delimiter.
