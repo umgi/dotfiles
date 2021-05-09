@@ -202,6 +202,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_F3,		spawn, SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,		XK_F4,		spawn, SHCMD("mpc toggle") },
 	{ MODKEY,		XK_F5,		spawn, SHCMD("dmenu-nm.sh") },
+	{ MODKEY,		XK_F6,		spawn, SHCMD("mpv-toggle.sh") },
 
 	/* backlight */
  	{ MODKEY,		XK_F9,		spawn, SHCMD("xbacklight -dec 3") },
@@ -232,6 +233,12 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_bracketright,	spawn,		SHCMD("mpc seek +60") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
+
+	/* dunst */
+	{ MODKEY|ShiftMask,		XK_F1,			spawn,		SHCMD("dunstctl close-all") },
+	{ MODKEY|ShiftMask,		XK_F2,			spawn,		SHCMD("dunstctl close") },
+	{ MODKEY|ShiftMask,		XK_F3,			spawn,		SHCMD("dunstctl history-pop") },
+	{ MODKEY|ShiftMask,		XK_F4,			spawn,		SHCMD("dunstctl context") },
 
 	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
 	{ MODKEY,			XK_0,		view,		{.ui = ~0 } },
@@ -283,12 +290,12 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_Page_Down,	shifttag,	{ .i = +1 } },
 	{ MODKEY,			XK_Insert,	spawn,		SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") },
 
-	{ MODKEY,			XK_F1,		spawn,		SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
+	/*{ MODKEY,			XK_F1,		spawn,		SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
 	{ MODKEY,			XK_F2,		spawn,		SHCMD("tutorialvids") },
 	{ MODKEY,			XK_F3,		spawn,		SHCMD("displayselect") },
-	/*{ MODKEY,			XK_F4,		spawn,		SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },*/
+	{ MODKEY,			XK_F4,		spawn,		SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },*/
 	/* { MODKEY,			XK_F5,		xrdb,		{.v = NULL } }, */
-	{ MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },
+	/*{ MODKEY,			XK_F6,		spawn,		SHCMD("torwrap") },*/
 	{ MODKEY,			XK_F7,		spawn,		SHCMD("td-toggle") },
 	//{ MODKEY,			XK_F8,		spawn,		SHCMD("mw -Y") },
 	//{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
