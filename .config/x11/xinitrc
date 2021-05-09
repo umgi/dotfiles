@@ -14,5 +14,6 @@ xrdb $XDG_CONFIG_HOME/x11/xresources
 fcitx5 -d &
 mpd &
 unclutter &
+dunst &
 dwmblocks &
 exec dwm
