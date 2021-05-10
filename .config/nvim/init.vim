@@ -21,8 +21,12 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'dense-analysis/ale'
   Plug 'tpope/vim-commentary'
   Plug 'dominikduda/vim_current_word'
+  Plug 'rkitover/vimpager'
 
 call plug#end()
+
+set shortmess=at
+set cmdheight=2
 
 set tabstop=2
 set expandtab
@@ -96,8 +100,8 @@ nnoremap <C-,> :vertical resize -5<CR>
 nnoremap <C-.> :vertical resize +5<CR>
 
 nnoremap <C-w>m :
-nnoremap <C-w>,
-nnoremap <C-w>.
+"nnoremap <C-w>,
+"nnoremap <C-w>.
 tmap <F1> <C-\><C-n> " close term
 
 
