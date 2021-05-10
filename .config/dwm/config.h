@@ -200,7 +200,13 @@ static Key keys[] = {
 	{ MODKEY,			XK_w,			spawn,		SHCMD("$BROWSER") },
 	{ MODKEY,			XK_e,			spawn,		SHCMD("dmenu-nm.sh") },
 
+	/* a */
+	/* s */
 	{ MODKEY,			XK_d,			spawn,		SHCMD("dmenu_run") },
+	/* f */
+	{ MODKEY,			XK_g,			spawn,		SHCMD("pomodoro") },
+
+
 
 	{ MODKEY|ShiftMask,		XK_h,			spawn,		SHCMD(TERMINAL " -e htop") },
 	{ MODKEY,			XK_apostrophe,		togglescratch,	{ .ui = 1 } },	/* calc */

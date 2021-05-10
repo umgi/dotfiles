@@ -27,7 +27,7 @@ static const Block blocks[] = {
 	{"",	"sb-clock",	60,	1},
 	{"",	"sb-help-icon",	0,	15},*/
 
-	/*{ "",	PATH("atl-status.sh"),	15,	15 },*/
+	{ "",	PATH("sb-pomodoro"),	15,	15 },
 	{ "",	PATH("sb-ip"),		60,	1 },
 	{ "",	PATH("sb-ttl"),		4,	1 },
 	{ "",	PATH("sb-volume"),	0,	10 },

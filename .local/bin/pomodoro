@@ -1,0 +1,28 @@
+#!/bin/sh
+
+log=$XDG_DATA_HOME/atl/log
+
+pkill -RTMIN+15 dwmblocks
+
+last=$(cat $log | tail -n 1)
+if [ -n $last ]; then
+  status=$(echo "$last" | awk -F, '{print $1}')
+  time=$(echo "$last" | awk -F, '{print $2}')
+  prev_act=$(echo "$last" | awk -F, '{print $3}')
+
+  if [ "$status" = "start" ] ; then
+     reset="\nreset"
+  fi
+fi
+
+new_act=$( printf "tomato\\nshort\\nlong$reset" | dmenu -i -p "time:")
+now=$(date "+%s")
+
+case $new_act in
+  tomato) echo "start,$now,time25" >> $log ;;
+  short) echo "start,$now,time5" >> $log ;;
+  long) echo "start,$now,time15" >> $log ;;
+  reset) echo "end,$now,$prev_act" >> $log ;;
+esac
+
+pkill -RTMIN+15 dwmblocks
