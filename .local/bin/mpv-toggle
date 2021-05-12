@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# based on changed version of mpvSockets -- just add spawn time to socket file name
+# dependency: mpvSockets, socat, grep
+#                  pause last launched mpv
+# -a|--pause-all - pauses all instances
+
+arg=$1
+printf '"%s"' "$arg"
+
+sockets=$(find /tmp/mpvSockets -type s 2> /dev/null) # reversed order always ???
+[ -z "$sockets" ] && exit 0
+
+case $arg in
+  "--pause-all"|"-a") force_pause="1" ;;
+  "") sockets="$(echo "$sockets"| head -n 1)" ;;
+esac
+
+
+for s in $sockets; do
+  status=$(echo '{"command":["get_property_string", "pause"]}' | socat - "$s" | grep -Eo "yes|no")
+
+  case $status in
+    yes) send="false" ;;
+    no) send="true" ;;
+    *) exit 0;;
+  esac
+
+  [ "$force_pause" ] && send="true"
+
+echo "{\"command\": [\"set_property\", \"pause\", $send]}" | socat - "$s"
+done
