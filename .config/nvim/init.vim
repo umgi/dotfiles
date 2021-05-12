@@ -5,6 +5,11 @@ if ! filereadable(system('echo -n "$XDG_DATA_HOME/nvim/site/autoload/plug.vim"')
   autocmd VimEnter * PlugInstall
 endif
 
+" remap caps to ctrl but when in combo otherwise escape
+" setxkbmap -option "ctrl:nocaps"
+" xcape -t 200
+
+
 call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
   Plug 'rafi/awesome-vim-colorschemes'
@@ -22,6 +27,7 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'tpope/vim-commentary'
   Plug 'dominikduda/vim_current_word'
   Plug 'rkitover/vimpager'
+  Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -45,13 +51,19 @@ set modeline
 set listchars=eol:\\,tab:--,trail:.,extends:>,precedes:<
 set list
 
+" no arrows
 noremap <Up> <NOP>
 noremap <Left> <NOP>
 noremap <Down> <NOP>
 noremap <Right> <NOP>
 
-let mapleader = " "
-let g:user_emmet_leader_key = " "
+" quick exit
+imap jk <Esc>
+
+
+
+let mapleader = ","
+"let g:user_emmet_leader_key = " "
 set timeoutlen=500
 
 set relativenumber
@@ -59,15 +71,23 @@ set number
 
 noremap <F3> :so $MYVIMRC<CR>
 
+filetype plugin on
 syntax on
 set termguicolors
 set background=dark
 "colorscheme spacecamp
 "
+autocmd ColorScheme * hi Normal cterm=NONE guibg=NONE
+autocmd ColorScheme * hi LineNr ctermfg=NONE guifg=NONE
+autocmd ColorScheme * hi CursorLineNr ctermbg=NONE guibg=NONE
+autocmd ColorScheme * hi FoldColumn ctermbg=NONE guibg=NONE
+
 let g:neodark#background = '#111111'
 let g:neodark#use_256color = 0
 let g:neodark#use_custom_terminal_theme = 1
+let g:neodark#terminal_transparent = 0
 colorscheme neodark
+
 
 
 " nerd tree
@@ -80,24 +100,11 @@ let NERDTreeWinSize = 31
 
 nmap <F1> :NERDTreeFocus<CR>
 nmap <F2> :NERDTreeToggle<CR>
+nnoremap <F9> :PlugInstall<CR>
 
 nnoremap <C-d> :echo expand('<cword>')<CR>
 
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
 
-nnoremap <C-u> :tabnext<CR>
-nnoremap <C-i> :tabprevious<CR>
-nnoremap <C-o> :tabm +1<CR>
-nnoremap <C-p> :tabm -1<CR>
-
-" resizing
-nnoremap <C-n> :res -5<CR>
-nnoremap <C-m> :res +5<CR>
-nnoremap <C-,> :vertical resize -5<CR>
-nnoremap <C-.> :vertical resize +5<CR>
 
 nnoremap <C-w>m :
 "nnoremap <C-w>,
@@ -149,7 +156,37 @@ let g:ale_fixers = {
   \ 'javascript': ['prettier'],
   \ 'css': ['prettier'],
   \ 'svelte': ['prettier'],
-  \ 'json': ['prettier']
+  \ 'json': ['prettier'],
+  \ 'shell': ['shellcheck']
   \ }
 
 let g:ale_fix_on_save = 1
+
+" save files as sudo on files that require root permission
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
+" vimwiki
+let g:vimwiki_list = [{'path': '~/Documents/vimwiki'}]
+let g:vimwiki_autowriteall = 1 " saves file when replacing current window
+
+set autowrite " when changing current file just save without warning
+
+" splitting windows -- usr_08.txt
+" resizing
+nnoremap <C-n> :res -5<CR>
+nnoremap <C-m> :res +5<CR>
+nnoremap <C-,> :vertical resize -5<CR>
+nnoremap <C-.> :vertical resize +5<CR>
+
+nnoremap <C-h> <C-w><C-h>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+
+nnoremap <C-u> :tabnext<CR>
+nnoremap <C-i> :tabprevious<CR>
+nnoremap <C-o> :tabm +1<CR>
+nnoremap <C-p> :tabm -1<CR>
+
+"folding -- check :h usr_28.txt
+set foldcolumn=2
