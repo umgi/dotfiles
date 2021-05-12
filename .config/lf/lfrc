@@ -1,0 +1,11 @@
+
+cmd open ${{
+  case ${f##*.} in
+    apkg) setsid -f anki "$f" ;;
+  esac
+
+  case $(file --mime-type -b $f) in
+    video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+    *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done ;;
+  esac
+}}
