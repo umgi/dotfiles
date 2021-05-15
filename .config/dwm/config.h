@@ -190,7 +190,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_F6,			spawn,		SHCMD("mpc seek +10") },
 	{ MODKEY|ShiftMask,		XK_F6,			spawn,		SHCMD("mpc next") },
 	{ MODKEY,			XK_F7,			spawn,		SHCMD("mpc toggle") },
-	{ MODKEY|ShiftMask,		XK_F7,			spawn,		SHCMD("mpc pause ; pauseallmpv") }, /* TODO */
+	{ MODKEY|ShiftMask,		XK_F7,			spawn,		SHCMD("mpc pause ; mpv-toggle --pause-all") },
  	{ MODKEY,			XK_F9,			spawn,		SHCMD("xbacklight -dec 3") },	/* backlight */
  	{ MODKEY,			XK_F10,			spawn,		SHCMD("xbacklight -inc 3") },
 	{ MODKEY,			XK_F12,			spawn,		SHCMD("toggle-touchpad.sh") },	/* touchpad */
@@ -211,7 +211,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_h,			spawn,		SHCMD(TERMINAL " -e htop") },
 	{ MODKEY,			XK_apostrophe,		togglescratch,	{ .ui = 1 } },	/* calc */
 
-	{ MODKEY,			XK_x,			spawn,		SHCMD("mpv-toggle.sh") },
+	{ MODKEY,			XK_x,			spawn,		SHCMD("mpv-toggle") },
 
 	{ MODKEY|ShiftMask,		XK_q,			spawn,		SHCMD("sysact.sh") },
 	{ MODKEY|ShiftMask,		XK_w,			spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
