@@ -8,6 +8,16 @@
 - alpha
 - attackdirection
 
+## Layouts - Super + Shift + <key>
+
++ t - tile
++ b - bstack
++ d - deck
++ c - monocle
++ v - centeredmaster
++ g - grid
++ f - float
+
 
 ## Patches and features
 

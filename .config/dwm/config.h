@@ -88,13 +88,13 @@ static const Layout layouts[] = {
  	{ "[M]",	monocle },		/* All windows on top of eachother */
 
 	{ "|M|",	centeredmaster },		/* Master in middle, slaves on sides */
-	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
+/*	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
 
-	{ "===",	bstackhoriz},
+/*	{ "===",	bstackhoriz}, */
 	{ "HHH",	grid },
-	{ "###",	nrowgrid },
-	{ "---",	horizgrid },
-	{ ":::",	gaplessgrid },
+/*	{ "###",	nrowgrid },*/
+/*	{ "---",	horizgrid },
+/*	{ ":::",	gaplessgrid }, */
 
 	{ "><>",	NULL },			/* no layout function means floating behavior */
 	{ NULL,		NULL },
@@ -139,17 +139,13 @@ static Key keys[] = {
 	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
 
 	/* layouts */
-	{ MODKEY,		XK_r,	setlayout,	{.v = &layouts[0]} },	/* tile */
-	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[1]} },	/* bstack */
-	{ MODKEY,		XK_t,	setlayout,	{.v = &layouts[4]} },	/* deck */
-	{ MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[5]} },	/* monocle */
-	{ MODKEY,		XK_y,	setlayout,	{.v = &layouts[6]} },	/* centeredmaster */
-	{ MODKEY|ShiftMask,	XK_y,	setlayout,	{.v = &layouts[7]} },	/* centeredfloatingmaster */
-	{ MODKEY,		XK_u,	cyclelayout,	{.i = +1} },		/* cycle layouts */
-	{ MODKEY,		XK_i,	cyclelayout,	{.i = -1} },
-	/*{ MODKEY|ShiftMask,	XK_u,	setlayout,	{.v = &layouts[]} },
-	{ MODKEY|ShiftMask,	XK_i,	setlayout,	{.v = &layouts[]} }, */
-	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[11]} },	/* floating */
+	{ MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[0]} },	/* tile */
+	{ MODKEY|ShiftMask,	XK_b,	setlayout,	{.v = &layouts[1]} },	/* bstack */
+	{ MODKEY|ShiftMask,	XK_d,	setlayout,	{.v = &layouts[2]} },	/* deck */
+	{ MODKEY|ShiftMask,	XK_c,	setlayout,	{.v = &layouts[3]} },	/* monocle */
+	{ MODKEY|ShiftMask,	XK_v,	setlayout,	{.v = &layouts[4]} },	/* centeredmaster */
+	{ MODKEY|ShiftMask,	XK_g,	setlayout,	{.v = &layouts[5]} },	/* grid */
+	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[6]} },	/* floating */
 
 
 	/* toggles */
