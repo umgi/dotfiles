@@ -17,6 +17,7 @@ mpd &
 unclutter &
 xcape -t 200 &
 picom --experimental-backends &
+syncthing &
 dunst &
 dwmblocks &
 exec dwm
