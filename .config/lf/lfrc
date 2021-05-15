@@ -6,13 +6,14 @@ cmd open ${{
 
   case $(file --mime-type -b $f) in
     video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+    image/*) setsid -f feh "$f" ;;
     *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done ;;
   esac
 }}
 
 cmd mpv-sub ${{
   sub=$(find "$(pwd)" -type f -regex ".*\.\(ass\|srt\)" -printf "%f\n" | sort | dmenu -i -l 8)
-  setsid -f mpv "$f" --sub-files="$sub"
+  mpv "$f" --sub-files="$sub"
 }}
 
 map S mpv-sub
