@@ -69,8 +69,8 @@ static const Layout layouts[] = {
  	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
 	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
 
-	{ "[@]",	spiral },		/* unused - Fibonacci spiral */
-	{ "[\\]",	dwindle },		/* unuser - Decreasing in size right and leftward */
+/*	{ "[@]",	spiral },		/* unused - Fibonacci spiral */
+/*	{ "[\\]",	dwindle },		/* unuser - Decreasing in size right and leftward */
 
 	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
  	{ "[M]",	monocle },		/* All windows on top of eachother */
@@ -127,8 +127,8 @@ static Key keys[] = {
 	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
 
 	/* layouts */
-	{ MODKEY,		XK_r,	setlayout,	{.v = &layouts[1]} },	/* tile */
-	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[2]} },	/* bstack */
+	{ MODKEY,		XK_r,	setlayout,	{.v = &layouts[0]} },	/* tile */
+	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[1]} },	/* bstack */
 	{ MODKEY,		XK_t,	setlayout,	{.v = &layouts[4]} },	/* deck */
 	{ MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[5]} },	/* monocle */
 	{ MODKEY,		XK_y,	setlayout,	{.v = &layouts[6]} },	/* centeredmaster */
@@ -137,7 +137,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_i,	cyclelayout,	{.i = -1} },
 	/*{ MODKEY|ShiftMask,	XK_u,	setlayout,	{.v = &layouts[]} },
 	{ MODKEY|ShiftMask,	XK_i,	setlayout,	{.v = &layouts[]} }, */
-	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[14]} },	/* floating */
+	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[11]} },	/* floating */
 
 
 	/* toggles */
