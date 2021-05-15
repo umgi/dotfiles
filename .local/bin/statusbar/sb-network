@@ -16,7 +16,7 @@ result="$(cat /sys/class/net/w*/operstate 2> /dev/null)"
 wifistatus=""
 case "$result" in
   down) wifistatus="" ;;
-  up) wifistatus="$ip 📶$(awk '/^s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)" ;;
+  up) wifistatus="$ip 📶$(awk '/^s*w/ { print int($3 * 99 / 70) }' /proc/net/wireless)" ;;
 esac
 
 ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
