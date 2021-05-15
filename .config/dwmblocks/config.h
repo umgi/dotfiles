@@ -28,8 +28,6 @@ static const Block blocks[] = {
 	{"",	"sb-help-icon",	0,	15},*/
 
 	{ "",	PATH("sb-pomodoro"),	15,	15 },
-	{ "",	PATH("sb-ip"),		60,	1 },
-	{ "",	PATH("sb-ttl"),		4,	1 },
 	{ "",	PATH("sb-volume"),	0,	10 },
 	{ "",	PATH("sb-vpnify"),	0,	5 },
 	{ "",	PATH("sb-network"),	5,	4 },

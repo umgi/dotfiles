@@ -5,20 +5,27 @@ case $BLOCK_BUTTON in
   6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
+# first check networking
+[ "$(nmcli networking)" = "disabled" ] && exit 0
+
+# try ip
+ip="$(ip route get 1 2> /dev/null | awk '{print $(NF-2); exit}')"
+
 
 result="$(cat /sys/class/net/w*/operstate 2> /dev/null)"
 wifistatus=""
 case "$result" in
   down) wifistatus="" ;;
-  up) wifistatus="📶$(awk '/^s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)" ;;
+  up) wifistatus="$ip 📶$(awk '/^s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)" ;;
 esac
 
-ethstatus=""
-case "$(cat /sys/class/net/e*/operstate 2>/dev/null)" in
-  down) ethstatus="" ;;
-  up) ethstatus="$(sed "s/down//;s/up/👽/" /sys/class/net/e*/operstate 2>/dev/null)" ;;
-esac
+ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
+[ "$ttl" = "64" ] && ttl="!" || ttl=""
 
-[ -z $wifistatus ] && [ -z $ethstatus ] && [ $(nmcli networking) = "enabled" ] && echo "👽" && exit 0
+# if wifi works then printf quality with ttl
+[ -n "$wifistatus" ] && printf '%s%s' "$wifistatus" "$ttl" && exit 0
 
-printf "%s%s%s\n" $openvpn_status $wifistatus $ethstatus
+nconn="$(nmcli connection | tail -n +2 | grep -v '\-\- *$' | wc -l)"
+
+# else if no connections then you are weird. why you dont disable networking?
+[ "$nconn" -gt "0" ] && echo "$ip" || echo "👽"
