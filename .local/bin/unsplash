@@ -1,0 +1,8 @@
+#!/bin/sh
+
+dest="$XDG_DATA_HOME/wallpaper"
+photo_id=$(xclip -o | grep -Po '(?<=unsplash\.com\/photos\/)(.{11})')
+filename="$dest/$photo_id"
+[ -z "$photo_id" ] && dunstify "unsplash 🏞️" "No url in clipboard is provide" && exit
+wget -c "https://unsplash.com/photos/$photo_id/download?force=true" -O "$filename"
+feh --bg-fill "$filename"
