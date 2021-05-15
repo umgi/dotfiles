@@ -193,6 +193,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_F7,			spawn,		SHCMD("mpc pause ; mpv-toggle --pause-all") },
  	{ MODKEY,			XK_F9,			spawn,		SHCMD("xbacklight -dec 3") },	/* backlight */
  	{ MODKEY,			XK_F10,			spawn,		SHCMD("xbacklight -inc 3") },
+ 	{ MODKEY,			XK_F11,			spawn,		SHCMD("[ \"$(pidof picom)\" ] && killall picom || setsid -f picom --experimental-backends") },
 	{ MODKEY,			XK_F12,			spawn,		SHCMD("toggle-touchpad.sh") },	/* touchpad */
 
 

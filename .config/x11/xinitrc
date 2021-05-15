@@ -12,7 +12,7 @@ xrdb "$XDG_CONFIG_HOME/x11/xresources"
 
 # bg
 fcitx5 -d &
-feh --bg-fill --randomize ~/.local/share/wallpaper/nature/* &
+feh --bg-fill --randomize ~/.local/share/wallpaper/* &
 mpd &
 unclutter &
 xcape -t 200 &
