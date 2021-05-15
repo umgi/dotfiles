@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# shows with wifi only if ip_default_ttl = 64
+# detects wifi
+# then eth
+# then nmcli networking
+
 case $BLOCK_BUTTON in
   1) "$TERMINAL" -e nmtui; pkill -RT+4 dwmblocks ;;
   6) "$TERMINAL" -e "$EDITOR" "$0" ;;
@@ -20,7 +25,7 @@ case "$result" in
 esac
 
 ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
-[ "$ttl" = "64" ] && ttl="!" || ttl=""
+[ "$ttl" = "64" ] && ttl=" 🔐" || ttl=""
 
 # if wifi works then printf quality with ttl
 [ -n "$wifistatus" ] && printf '%s%s' "$wifistatus" "$ttl" && exit 0
