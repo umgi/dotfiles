@@ -15,22 +15,16 @@ dunst_title="vpngate"
 
 dunstify -h "$dunst_id" "$dunst_title - loading"
 
-read -r -d "\n" -a list <<< $(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(jp|JP)," | awk -F, '{print $5 "," $8 "," $2 "," $15 }' | sort -g -r -t ',' )
+list=$(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(jp|JP)," | awk -F, '{print $5 "," $8 "," $2 "," $15 }' | sort -g -r -t ',' )
 
 printf "vpn\nvpn" > /tmp/vpngate.creds
 
-chosen=$(
-  for index in ${!list[@]}; do
-    params=($(echo ${list[$index]} | tr "," "\n"))
-    printf "%2d) %4sB - %d sessions - %s\n" "$index" "$(numfmt --to=iec ${params[0]})" "${params[1]}" "${params[2]}"
-  done | dmenu -i -f -l 5 -p vpngate:
-)
-
+IFS=''
+chosen=$(echo "$list" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }' | dmenu -i -f -l 5 -p vpngate:)
 [ -z "$chosen" ] && exit 0
 
-index=$(echo "$chosen" | awk -F ')' '{print $1}')
-params=($( echo ${list[$index]} | tr "," "\n" ))
-echo "${params[3]}" | base64 -d > /tmp/vpngate.conf
+index=${chosen%%)*}
+echo "$list" | head -n "$index" | tail -n 1 | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
 
 ( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
 vpnify sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10 --connect-retry-max 1 # --resolv-retry 10 --connect-retry-max 1
