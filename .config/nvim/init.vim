@@ -29,10 +29,21 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'rkitover/vimpager'
   Plug 'vimwiki/vimwiki'
 
+  Plug 'othree/yajs.vim' " not good on performance
+  Plug 'HerringtonDarkholme/yats.vim'
+  Plug 'neoclide/coc.nvim'
+
 call plug#end()
+
+" neoclide/coc-tsserver
+" neoclide/coc-eslint
+" fannheyward/coc-styled-components
+" fannheyward/coc-react-refactor
+
 
 set shortmess=at
 set cmdheight=2
+
 
 set tabstop=2
 set expandtab
@@ -40,6 +51,10 @@ set shiftwidth=2
 set autoindent
 set smartindent
 set cindent
+
+set autoread " Reload changed files
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime " trigger reload on cursor stop
+autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Node
 
 set incsearch
 set hlsearch
@@ -161,6 +176,7 @@ let g:ale_fixers = {
   \ }
 
 let g:ale_fix_on_save = 1
+" let g:ale_completion_enabled = 1
 
 " save files as sudo on files that require root permission
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
@@ -190,3 +206,22 @@ nnoremap <C-p> :tabm -1<CR>
 
 "folding -- check :h usr_28.txt
 set foldcolumn=2
+
+
+
+" coc
+call coc#config('suggest', {
+  \ 'timeout': 500
+  \})
+
+"set updatetime=300
+"autocmd CursorHold * silent call CocActionAsync('doHover')
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim', 'help'], &filetype) >= 0)
+    echo "hi there"
+    execute 'h '.expand("<cword>")
+  else
+    call CocAction('doHover')
+  endif
+endfunction
