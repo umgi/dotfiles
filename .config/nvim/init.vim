@@ -33,6 +33,8 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'neoclide/coc.nvim'
 
+  Plug 'junegunn/goyo.vim'
+
 call plug#end()
 
 " neoclide/coc-tsserver
