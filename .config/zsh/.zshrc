@@ -38,6 +38,7 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -v '^?' backward-delete-char
+bindkey -M viins '\C-e' end-of-line
 
 
 
