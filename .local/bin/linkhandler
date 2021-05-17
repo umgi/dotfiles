@@ -13,7 +13,7 @@ MPV="mpv --title='popup' -quiet --geometry=-10x+-10"
 
 case "$1" in
 	*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*hooktube.com*|*bitchute.com*|*videos.lukesmith.xyz*)
-		setsid -f mpv --title='popup' --geometry="480x270-0+0" -quiet "$1" >/dev/null 2>&1 ;;
+    setsid -f sh -c "mpv --title=popup --geometry=480x270-0+0 -quiet '$1' >/dev/null 2>&1 ; [ $(echo '$?') != '0' ] && notify-send 'linkhandler' 'mpv cant open:\n$1'" ;;
 	*png|*jpg|*jpe|*jpeg|*gif)
 		curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && feh --title "popup" --geometry="480x270-0+0" --scale-down "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
 	*pdf|*cbz|*cbr)
