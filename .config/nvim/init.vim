@@ -67,15 +67,18 @@ set listchars=eol:\\,tab:--,trail:.,extends:>,precedes:<
 set list
 
 " no arrows
-noremap <Up> <NOP>
-noremap <Left> <NOP>
-noremap <Down> <NOP>
-noremap <Right> <NOP>
+" noremap <Up> <NOP>
+" noremap <Left> <NOP>
+" noremap <Down> <NOP>
+" noremap <Right> <NOP>
+"
 
-" quick exit
-imap jk <Esc>
+" life changer
+imap <C-l> <Esc>A
 
-
+" Usual tabs
+nmap <Tab> >>
+nmap <S-Tab> <<
 
 let mapleader = ","
 "let g:user_emmet_leader_key = " "
@@ -194,15 +197,28 @@ nnoremap <C-m> :res +5<CR>
 nnoremap <C-,> :vertical resize -5<CR>
 nnoremap <C-.> :vertical resize +5<CR>
 
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
+"
+"nnoremap <C-h> <C-w><C-h>
+"nnoremap <C-j> <C-w><C-j>
+"nnoremap <C-k> <C-w><C-k>
+"nnoremap <C-l> <C-w><C-l>
 
-nnoremap <C-u> :tabnext<CR>
-nnoremap <C-i> :tabprevious<CR>
 nnoremap <C-o> :tabm +1<CR>
 nnoremap <C-p> :tabm -1<CR>
+
+"{count}<C-w> n - hor split {count} pane
+"<C-w> q - :q
+"<C-w> o - :only
+"<C-w> f - split for file under cursor
+" <C-w> T - move to new tab
+"
+" tab left right
+" tab shift left right
+" inc dec ver size
+" inc dec hor size
+" vsplit
+" termsplit
+"
 
 "folding -- check :h usr_28.txt
 set foldcolumn=2
@@ -225,3 +241,5 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+echo ">^.^<"
