@@ -35,12 +35,19 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
   Plug 'junegunn/goyo.vim'
 
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+  Plug 'airblade/vim-rooter'
+
 call plug#end()
 
 " neoclide/coc-tsserver
 " neoclide/coc-eslint
 " fannheyward/coc-styled-components
 " fannheyward/coc-react-refactor
+
+
+source $XDG_CONFIG_HOME/nvim/fzf.vim
 
 
 set shortmess=at
@@ -231,6 +238,12 @@ set foldcolumn=2
 call coc#config('suggest', {
   \ 'timeout': 500
   \})
+call coc#config('preferences', {
+  \ 'jumpCommand': 'split'
+  \})
+
+" jump C
+nnoremap <leader> d <Plug>(coc-definition)
 
 "set updatetime=300
 "autocmd CursorHold * silent call CocActionAsync('doHover')
