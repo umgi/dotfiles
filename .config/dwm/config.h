@@ -242,9 +242,9 @@ static Key keys[] = {
 	{ 0,				XF86XK_PowerOff,	spawn,		SHCMD("sysact.sh") },
 
 	/* screenshot */
-	{ 0,				XK_Print,	spawn,		SHCMD("scrot '%y%m%d-%H%M%S-$wx$h.png'") },		/* fullscreen */
-	{ ShiftMask,			XK_Print,	spawn,		SHCMD("scrot '%y%m%d-%H%M%S-$wx$h.png' -u") },		/* active window */
-	{ MODKEY,			XK_Print,	spawn,		SHCMD("scrot '%y%m%d-%H%M%S-$wx$h.png' -s -f") },	/* picker */
+	{ 0,				XK_Print,	spawn,		SHCMD("sscrot.sh") },		/* fullscreen */
+	{ ShiftMask,			XK_Print,	spawn,		SHCMD("sscrot.sh focus") },	/* active window */
+	{ MODKEY,			XK_Print,	spawn,		SHCMD("sscrot.sh picker") },	/* picker */
 
 
 	TAGKEYS( XK_1, 0)
