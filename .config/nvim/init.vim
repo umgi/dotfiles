@@ -48,6 +48,7 @@ call plug#end()
 
 
 source $XDG_CONFIG_HOME/nvim/fzf.vim
+source $XDG_CONFIG_HOME/nvim/vimwiki.vim
 
 
 set shortmess=at
@@ -83,7 +84,7 @@ set list
 "
 
 " life changer
-imap <C-l> <Esc>A
+imap <C-l> <Right>
 
 " Usual tabs
 nmap <Tab> >>
@@ -193,16 +194,13 @@ let g:ale_fix_on_save = 1
 " save files as sudo on files that require root permission
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" vimwiki
-let g:vimwiki_list = [{'path': '~/Documents/vimwiki'}]
-let g:vimwiki_autowriteall = 1 " saves file when replacing current window
 
 set autowrite " when changing current file just save without warning
 
 " splitting windows -- usr_08.txt
 " resizing
-nnoremap <C-n> :res -5<CR>
-nnoremap <C-m> :res +5<CR>
+"nnoremap <C-n> :res -5<CR>
+"nnoremap <C-m> :res +5<CR>
 nnoremap <C-,> :vertical resize -5<CR>
 nnoremap <C-.> :vertical resize +5<CR>
 

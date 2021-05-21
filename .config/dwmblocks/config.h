@@ -32,11 +32,11 @@ static const Block blocks[] = {
 	{ "",	PATH("sb-vpnify"),	0,	5 },
 	{ "",	PATH("sb-network"),	5,	4 },
 	{ "",	PATH("sb-battery"),	5,	3 },
-	{ "",	PATH("sb-clock"),	60,	1 },
+	{ "",	PATH("sb-clock"),	120,	1 },
 };
 
 //Sets delimiter between status commands. NULL character ('\0') means no delimiter.
-static char *delim = " ";
+static char *delim = " | ";
 
 // Have dwmblocks automatically recompile and run when you edit this file in
 // vim with the following line in your vimrc/init.vim:

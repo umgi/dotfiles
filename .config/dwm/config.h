@@ -79,20 +79,20 @@ static int attachdirection = 4; /* 0 default, 1 above, 2 aside, 3 below, 4 botto
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[]=",	tile },			/* Default: Master on left, slaves on right */
-	{ "TTT",	bstack },		/* Master on top, slaves on bottom */
+ 	{ "[]+",	tiletwo },
+	/* { "TTT",	bstack },		/1* Master on top, slaves on bottom *1/ */
 
 /*	{ "[@]",	spiral },		/* unused - Fibonacci spiral */
 /*	{ "[\\]",	dwindle },		/* unuser - Decreasing in size right and leftward */
 
-	{ "[D]",	deck },			/* Master on left, slaves in monocle-like mode on right */
- 	{ "[M]",	monocle },		/* All windows on top of eachother */
+	/* { "[D]",	deck },			/1* Master on left, slaves in monocle-like mode on right *1/ */
+ 	/* { "[M]",	monocle },		/1* All windows on top of eachother *1/ */
 
-	{ "|M|",	centeredmaster },		/* Master in middle, slaves on sides */
+	/* { "|M|",	centeredmaster },		/1* Master in middle, slaves on sides *1/ */
 /*	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
 
 /*	{ "===",	bstackhoriz}, */
-	{ "HHH",	grid },
+	/* { "HHH",	grid }, */
 /*	{ "###",	nrowgrid },*/
 /*	{ "---",	horizgrid },
 /*	{ ":::",	gaplessgrid }, */
@@ -140,13 +140,14 @@ static Key keys[] = {
 	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
 
 	/* layouts */
-	{ MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[0]} },	/* tile */
-	{ MODKEY|ShiftMask,	XK_b,	setlayout,	{.v = &layouts[1]} },	/* bstack */
-	{ MODKEY|ShiftMask,	XK_d,	setlayout,	{.v = &layouts[2]} },	/* deck */
-	{ MODKEY|ShiftMask,	XK_c,	setlayout,	{.v = &layouts[3]} },	/* monocle */
-	{ MODKEY|ShiftMask,	XK_v,	setlayout,	{.v = &layouts[4]} },	/* centeredmaster */
-	{ MODKEY|ShiftMask,	XK_g,	setlayout,	{.v = &layouts[5]} },	/* grid */
-	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[6]} },	/* floating */
+	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[0]} },	/* tiletwo */
+	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[1]} },	/* floating */
+	/* { MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[0]} },	/1* tile *1/ */
+	/* { MODKEY|ShiftMask,	XK_b,	setlayout,	{.v = &layouts[1]} },	/1* bstack *1/ */
+	/* { MODKEY|ShiftMask,	XK_d,	setlayout,	{.v = &layouts[2]} },	/1* deck *1/ */
+	/* { MODKEY|ShiftMask,	XK_c,	setlayout,	{.v = &layouts[3]} },	/1* monocle *1/ */
+	/* { MODKEY|ShiftMask,	XK_v,	setlayout,	{.v = &layouts[4]} },	/1* centeredmaster *1/ */
+	/* { MODKEY|ShiftMask,	XK_g,	setlayout,	{.v = &layouts[5]} },	/1* grid *1/ */
 
 
 	/* toggles */
@@ -155,6 +156,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_b,		togglebar,	{0} },	/* toggle bar */
 	{ MODKEY,		XK_f,		togglefullscr,	{0} },	/* fullscreen */
 	{ MODKEY,		XK_q,		killclient,	{0} },	/* kill window */
+	{ MODKEY|ShiftMask|ControlMask, XK_q,	quit,		{0} },
 
 	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },		/* floating */
 	{ MODKEY,		XK_s,		togglesticky,	{0} },		/* sticky */

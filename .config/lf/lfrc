@@ -1,3 +1,8 @@
+set shell bash
+set ifs "\n"
+set shellopts '-eu'
+
+# @depends: !anki setsid $OPENER mpv dmenu find !notify-send popup.sh !sed !fzf
 
 cmd open ${{
   case ${f##*.} in
@@ -5,8 +10,10 @@ cmd open ${{
   esac
 
   case $(file --mime-type -b $f) in
-    video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
-    image/*) setsid -f feh "$f" ;;
+    video/*) popup.sh video "$f" ;;
+    image/*) popup.sh image "$f" ;;
+    audio/*) popup.sh audio "$f" ;;
+    application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
     *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done ;;
   esac
 }}
@@ -16,4 +23,36 @@ cmd mpv-sub ${{
   mpv "$f" --sub-files="$sub"
 }}
 
+cmd delete ${{
+  clear; tput cup 0 0; tput bold
+  set -f
+  printf "%s " "$fx"
+  printf "delete?[y/N]"
+  read ans
+  [ "$ans" = "y" ] && rm -rf -- $fx
+}}
+
+cmd mv-image ${{
+  for x in $fx; do
+    mv -n "$x" "/home/dt/Images/"
+  done
+}}
+
+cmd moveto ${{
+  clear; tput cup 0 0; tput bold
+  set -f
+  clear; echo "Move to where?"
+  dest="$(cut -d' ' -f2- "$XDG_CONFIG_HOME/my-dirs" | sed -e 's/^[ \t]*//' | fzf)"
+  eval echo "$dest"
+  for x in $fx; do
+    eval mv -iv "'$x'" "\"$dest\""
+  done && notify-send "lf" "Files moved"
+}}
+
 map S mpv-sub
+map D delete
+map M moveto
+map <c-r> reload
+map I mv-image
+map <enter> shell
+map t toggle

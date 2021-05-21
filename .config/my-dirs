@@ -1,0 +1,15 @@
+cac ${XDG_CACHE_HOME:-$HOME/.cache}
+cf  ${XDG_CONFIG_HOME:-$HOME/.config}
+D   ${XDG_DOWNLOAD_DIR:-$HOME/Downloads}
+d   ${XDG_DOCUMENTS_DIR:-$HOME/Documents}
+dcs ${XDG_DOCUMENTS_DIR:-$HOME/Documents}/docs
+bo  ${XDG_DOCUMENTS_DIR:-$HOME/Documents}/books
+dt  ${XDG_DATA_HOME:-$HOME/.local/share}
+ww  ${XDG_DATA_HOME:-$HOME/.local/share}/wallpaper}
+h   $HOME
+m   ${XDG_MUSIC_DIR:-$HOME/Music}
+mn  /mnt
+pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
+ss  ${XDG_PICTURES_DIR:-$HOME/Pictures}/Screenshots
+sc  $HOME/.local/bin
+vv  ${XDG_VIDEOS_DIR:-$HOME/Videos}
