@@ -6,7 +6,7 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static unsigned int borderpx  = 1;        /* border pixel of windows */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 16;       /* snap pixel */
 static unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static unsigned int gappiv    = 10;       /* vert inner gap between windows */
@@ -18,24 +18,19 @@ static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static int focusonwheel       = 0;
 static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
-static char normfgcolor[]           = "#bbbbbb";
-static char selfgcolor[]            = "#eeeeee";
-static char normbgcolor[]           = "#111111";
-static char selbgcolor[]            = "#111111";
-static char normbordercolor[]       = "#111111";
-static char selbordercolor[]        = "#999999";
+
 static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+       /*		fg		bg		border   */
+       [SchemeNorm] = { "#bbbbbb",	"#111111",	"#111111" },
+       [SchemeSel]  = { "#eeeeee",	"#111111",	"#dc657c" },
 };
 
 static const unsigned int baralpha = 0xd0;
-static const unsigned int borderalpha = 0xd0;
+static const unsigned int borderalpha = 0;
 static const unsigned int alphas[][3] = {
 	/*			fg		bg		border */
-	[SchemeNorm] = {	OPAQUE,		baralpha,	borderalpha },
-	[SchemeSel]  = {	OPAQUE,		baralpha,	borderalpha },
+	[SchemeNorm] = {	OPAQUE,		200,		200 },
+	[SchemeSel]  = {	OPAQUE,		200,		255 },
 };
 
 
