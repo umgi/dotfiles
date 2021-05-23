@@ -13,7 +13,7 @@ nginx -c "$XDG_CONFIG_HOME " -p "$HOME/shared/"
 
 # bg
 fcitx5 -d &
-feh --bg-fill --randomize ~/.local/share/wallpaper/* &
+feh --bg-fill --randomize ~/.local/share/wallpaper/active/* &
 mpd &
 unclutter &
 xcape -t 200 &
