@@ -1,6 +1,5 @@
 /* vim: set ts=8 sw=8 tw=0 noet : */
 /* See LICENSE file for copyright and license details. */
-
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
@@ -182,65 +181,11 @@ static Key keys[] = {
 	/* fix strange KP_Enter position */
 	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd } },
 	{ MODKEY|ShiftMask,	XK_KP_Enter,	togglescratch,	{.ui = 0} },
+
 	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd } },
 	{ MODKEY|ShiftMask,	XK_Return,	togglescratch,	{.ui = 0} },
 
-	/* volume control */
-	{ MODKEY,			XK_F1,			spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_F2,			spawn,		SHCMD("pamixer --allow-boost -d 4; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_F3,			spawn,		SHCMD("pamixer --allow-boost -i 4; kill -44 $(pidof dwmblocks)") },
-	/* mpd */
-	{ MODKEY,			XK_F4,			spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
-	{ MODKEY,			XK_F5,			spawn,		SHCMD("mpc seek -10") },
-	{ MODKEY|ShiftMask,		XK_F5,			spawn,		SHCMD("mpc prev") },
-	{ MODKEY,			XK_F6,			spawn,		SHCMD("mpc seek +10") },
-	{ MODKEY|ShiftMask,		XK_F6,			spawn,		SHCMD("mpc next") },
-	{ MODKEY,			XK_F7,			spawn,		SHCMD("mpc toggle") },
-	{ MODKEY|ShiftMask,		XK_F7,			spawn,		SHCMD("mpc pause ; mpv-toggle --pause-all") },
- 	{ MODKEY,			XK_F9,			spawn,		SHCMD("xbacklight -dec 3") },	/* backlight */
- 	{ MODKEY,			XK_F10,			spawn,		SHCMD("xbacklight -inc 3") },
- 	{ MODKEY,			XK_F11,			spawn,		SHCMD("[ \"$(pidof picom)\" ] && killall picom || setsid -f picom --experimental-backends") },
-	{ MODKEY,			XK_F12,			spawn,		SHCMD("toggle-touchpad.sh") },	/* touchpad */
-
-
-	/* programs */
-	{ MODKEY,			XK_w,			spawn,		SHCMD("$BROWSER") },
-	{ MODKEY,			XK_e,			spawn,		SHCMD("dmenu-nm.sh") },
-
-	/* a */
-	/* s */
-	{ MODKEY,			XK_d,			spawn,		SHCMD("dmenu_run") },
-	/* f */
-	{ MODKEY,			XK_g,			spawn,		SHCMD("pomodoro") },
-
-
-
-	{ MODKEY|ShiftMask,		XK_h,			spawn,		SHCMD(TERMINAL " -e htop") },
 	{ MODKEY,			XK_apostrophe,		togglescratch,	{ .ui = 1 } },	/* calc */
-
-	{ MODKEY,			XK_x,			spawn,		SHCMD("mpv-toggle") },
-
-	{ MODKEY|ShiftMask,		XK_q,			spawn,		SHCMD("sysact.sh") },
-	{ MODKEY|ShiftMask,		XK_w,			spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
-
-	{ MODKEY|ShiftMask,		XK_s,			spawn,		SHCMD(TERMINAL) },
-
-	{ MODKEY|ShiftMask,		XK_F1,			spawn,		SHCMD("dunstctl close-all") },
-	{ MODKEY|ShiftMask,		XK_F2,			spawn,		SHCMD("dunstctl close") },
-	{ MODKEY|ShiftMask,		XK_F3,			spawn,		SHCMD("dunstctl history-pop") },
-	{ MODKEY|ShiftMask,		XK_F4,			spawn,		SHCMD("dunstctl context") },
-
-
-
-
-
-	{ 0,				XF86XK_PowerOff,	spawn,		SHCMD("sysact.sh") },
-
-	/* screenshot */
-	{ 0,				XK_Print,	spawn,		SHCMD("sscrot.sh") },		/* fullscreen */
-	{ ShiftMask,			XK_Print,	spawn,		SHCMD("sscrot.sh focus") },	/* active window */
-	{ MODKEY,			XK_Print,	spawn,		SHCMD("sscrot.sh picker") },	/* picker */
-
 
 	TAGKEYS( XK_1, 0)
 	TAGKEYS( XK_2, 1)

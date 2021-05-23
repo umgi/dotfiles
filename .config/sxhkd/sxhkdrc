@@ -1,0 +1,66 @@
+# pulseaudio
+super + {F1, F2, F3}
+  pamixer {-t, --allow-boost -d 4, --allow-boost -i 4}; kill -44 $(pidof dwmblocks)
+
+super + F4
+  $TERMINAL -e ncmpcpp
+
+super + {F5,F6,F7}
+  mpc {prev, next, toggle}
+
+super + F12
+  [ "$(pidof syncthing)" ] && \
+  (killall syncthing; notify-send 'syncthing killed') || \
+  (notify-send 'syncthing launching...'; setsid -f syncthing)
+
+super + shift + {F1,F2,F3,F4}
+  dunstctl {close-all, close, history-pop, context}
+
+super + shift + {F5,F6}
+  mpc seek {-10,+10}
+super + shift + F7
+  mpc pause; mpv-toggle --pause-all
+super + shift + F8
+  killall sxhkd; setsid -f sxhkd; notify-send 'sxhkd reloading'
+
+super + shift + {F9,F10}
+  xbacklight {-dec 3, -inc 3}
+super + shift + F11
+  [ "$(pidof picom)" ] && \
+  killall picom || \
+  setsid -f picom --experimental-backends
+super + shift + F12
+  toggle-touchpad.sh
+
+
+super + w
+  $BROWSER
+super + e
+  dmenu-nm.sh
+
+super + shift + q
+  sysact.sh
+super + shift + w
+  $TERMINAL -e sudo nmtui
+
+super + d
+  dmenu_run
+super + g
+  pomodoro
+
+super + shift + s
+  $TERMINAL
+
+
+super + shift + h
+  $TERMINAL -e htop
+
+super + x
+  mpv-toggle
+
+
+XF86PowerOff
+  sysact.sh
+
+{_, shift+, super+} Print
+  sscrot.sh {, focus, picker}
