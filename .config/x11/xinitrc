@@ -17,7 +17,8 @@ mpd &
 unclutter &
 xcape -t 200 &
 picom --experimental-backends &
-syncthing --no-browser &
+#syncthing --no-browser &
 dunst &
 dwmblocks &
+sxhkd &
 exec dwm
