@@ -39,6 +39,7 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'airblade/vim-rooter'
 
+  Plug 'baskerville/vim-sxhkdrc'
 call plug#end()
 
 " neoclide/coc-tsserver
@@ -49,6 +50,7 @@ call plug#end()
 
 source $XDG_CONFIG_HOME/nvim/fzf.vim
 source $XDG_CONFIG_HOME/nvim/vimwiki.vim
+source $XDG_CONFIG_HOME/nvim/auto.vim
 
 
 set shortmess=at
@@ -169,14 +171,6 @@ nmap <C-f>f :CtrlSFPrompt
 nnoremap <C-f>t :CtrlSFToggle<CR>
 inoremap <C-f>t <Esc>:CtrlSFToggle<CR>
 
-" autocomplile
-autocmd BufWritePost ~/.config/dwmblocks/config.h !cd ~/.config/dwmblocks/; sudo make install && {killall -q dwmblocks;setsid dwmblocks & }
-autocmd BufWritePost ~/.config/dwm/config.h !cd ~/.config/dwm/; sudo make install && {killall -q dwm;setsid dwm & }
-
-
-" xrdb
-autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
-autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 
 " ale
 let g:ale_fixers = {
