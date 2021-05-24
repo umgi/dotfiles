@@ -77,6 +77,7 @@ set modeline
 
 set listchars=eol:\\,tab:--,trail:.,extends:>,precedes:<
 set list
+set colorcolumn=80
 
 " no arrows
 " noremap <Up> <NOP>
