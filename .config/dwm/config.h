@@ -41,10 +41,12 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-f", "monospace:size=16", "-g", "120x34", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "ncmpcpp",  "-g", "80x15-20+40", "-f", "monospace:size=10", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
+	{"ncmpcpp",	spcmd3},
 };
 
 /* tagging */
@@ -61,6 +63,7 @@ static const Rule rules[] = {
 	{ NULL,		NULL,		"Event Tester",		0,		0,		0,		1,		-1 },
 	{ NULL,		"spterm",	NULL,			SPTAG(0),	1,		1,		0,		-1 },
 	{ NULL,		"spcalc",	NULL,			SPTAG(1),	1,		1,		0,		-1 },
+	{ NULL,		"ncmpcpp",	NULL,			SPTAG(2),	1,		1,		0,		-1 },
 	{ NULL,		NULL,		"popup",		0,		1,		0,		1,		-1 },
 };
 
@@ -166,10 +169,12 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_o,		incnmaster,	{ .i = -1 } },
 	{ MODKEY,		XK_h,		setmfact,	{ .f = -0.05}},	/* master width */
 	{ MODKEY,		XK_l,		setmfact,	{ .f = +0.05}},
-	{ MODKEY,		XK_m,		shiftview,	{ .i = +1 } },	/* shift view */
-	{ MODKEY,		XK_n,		shiftview,	{ .i = -1 } },
-	{ MODKEY|ShiftMask,	XK_m,		shifttag,	{ .i = +1 } },	/* shift tag */
-	{ MODKEY|ShiftMask,	XK_n,		shifttag,	{ .i = -1 } },
+	{ MODKEY,		XK_n,		togglescratch,	{ .ui = 2 } },	/* ncmpcpp */
+
+	/* { MODKEY,		XK_m,		shiftview,	{ .i = +1 } },	/1* shift view *1/ */
+	/* { MODKEY,		XK_n,		shiftview,	{ .i = -1 } }, */
+	/* { MODKEY|ShiftMask,	XK_m,		shifttag,	{ .i = +1 } },	/1* shift tag *1/ */
+	/* { MODKEY|ShiftMask,	XK_n,		shifttag,	{ .i = -1 } }, */
 
 	/* TODO monitors support
 	{ MODKEY,		XK_Left,	focusmon,	{.i = -1 } },
