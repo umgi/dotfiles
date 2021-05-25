@@ -1,0 +1,44 @@
+#!/bin/bash
+prefix="$XDG_CONFIG_HOME"
+pacn="$prefix/pacn"
+pacm="$prefix/pacm"
+
+show_usage() {
+  prog="$(basename $0)"
+
+  echo 'Usage:'
+  echo "  $prog -a -- append installed packages"
+  echo "  $prog -s -- sync with lists"
+}
+
+append() {
+  native_new="$(mktemp)"
+  pacman -Qenq > "$native_new"
+
+  native_old="$(mktemp)"
+  cp "$pacn" "$native_old"
+
+  grep -f "$native_old" -Fxv "$native_new" >> "$pacn"
+
+  foreign_new="$(mktemp)"
+  pacman -Qemq > "$foreign_new"
+
+  foreign_old="$(mktemp)"
+  cp "$pacm" "$foreign_old"
+
+  grep -f "$native_old" -Fxv "$native_new" >> "$pacm"
+}
+
+sync() {
+  sudo pacman -Syu --needed $(cat "$pacn")
+  yay -Syu --needed $(cat "$pacm")
+}
+
+while getopts as OPTION; do
+  case "$OPTION" in
+    a) append; exit 0 ;;
+    s) sync; exit 0 ;;
+  esac
+done
+show_usage;
+exit 1;
