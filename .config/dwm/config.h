@@ -18,10 +18,17 @@ static int topbar             = 1;	/* 0 means bottom bar */
 static int focusonwheel       = 0;
 static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 
+static char normfgcolor[] = "#bbbbbb";
+static char selfgcolor[]  = "#eeeeee";
+static char normbgcolor[] = "#111111";
+static char selbgcolor[]  = "#111111";
+static char normbordercolor[] = "#111111";
+static char selbordercolor[] = "#dc657c";
+
 static char *colors[][3] = {
        /*		fg		bg		border   */
-       [SchemeNorm] = { "#bbbbbb",	"#111111",	"#111111" },
-       [SchemeSel]  = { "#eeeeee",	"#111111",	"#dc657c" },
+       [SchemeNorm] = { normfgcolor,	normbgcolor,	normbordercolor },
+       [SchemeSel]  = { selfgcolor,	selbgcolor,	selbordercolor },
 };
 
 static const unsigned int baralpha = 0xd0;
@@ -81,7 +88,7 @@ static const Rule rules[] = {
 		}, {
 		NULL, "spterm", NULL,
 		SPTAG(0), 1, 1, 0, -1,
-		10, 10, 0, 0, 2
+		10, 10, 0, 0, borderpx
 	}, {
 		NULL, "spcalc", NULL,
 		SPTAG(1), 1, 1, 0, -1,
@@ -89,15 +96,15 @@ static const Rule rules[] = {
 	}, {
 		NULL, "spncmpcpp", NULL,
 		SPTAG(2),1, 1, 0, 1,
-		-40, 40, 0, 0, 0
+		-40, 40, 0, 0, borderpx
 	}, {
 		NULL, "spvim1", NULL,
 		SPTAG(3),1, 1, 0, 1,
-		40, 40, 0, 0, 0
+		40, 40, 0, 0, borderpx
 	}, {
 		"firefox", NULL, NULL,
 		SPTAG(4),1, 1, 0, 1,
-		804, 40, 1076, 990, 0
+		804, 40, 1076, 990, borderpx
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, -1,
@@ -114,24 +121,6 @@ static int attachdirection = 4; /* 0 default, 1 above, 2 aside, 3 below, 4 botto
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[]+",	tiletwo },
-	/* { "TTT",	bstack },		/1* Master on top, slaves on bottom *1/ */
-
-/*	{ "[@]",	spiral },		/* unused - Fibonacci spiral */
-/*	{ "[\\]",	dwindle },		/* unuser - Decreasing in size right and leftward */
-
-	/* { "[D]",	deck },			/1* Master on left, slaves in monocle-like mode on right *1/ */
- 	/* { "[M]",	monocle },		/1* All windows on top of eachother *1/ */
-
-	/* { "|M|",	centeredmaster },		/1* Master in middle, slaves on sides *1/ */
-/*	{ ">M>",	centeredfloatingmaster },	/* Same but master floats */
-
-/*	{ "===",	bstackhoriz}, */
-	/* { "HHH",	grid }, */
-/*	{ "###",	nrowgrid },*/
-/*	{ "---",	horizgrid },
-/*	{ ":::",	gaplessgrid }, */
-
 	{ "><>",	NULL },			/* no layout function means floating behavior */
 	{ NULL,		NULL },
 };
@@ -154,7 +143,12 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-	{ "smartgaps",		INTEGER, &smartgaps },
+	{ "foreground",		STRING,		&normfgcolor },
+	{ "foreground",		STRING,		&selfgcolor },
+	{ "background",		STRING,		&normbgcolor },
+	{ "background",		STRING,		&selbgcolor },
+	{ "background",		STRING,		&normbordercolor },
+	{ "color7",		STRING,		&selbordercolor },
 };
 
 #include <X11/XF86keysym.h>
@@ -167,78 +161,17 @@ ResourcePref resources[] = {
 static Key keys[] = {
 	/* modifier		key	function	 argument */
 
-	{ MODKEY,		XK_j,		focusstack,	{.i = INC(+1) } },	/* move focus */
-	{ MODKEY,		XK_k,		focusstack,	{.i = INC(-1) } },
-	{ MODKEY,		XK_v,		focusstack,	{.i = 0 } },
-	{ MODKEY|ShiftMask,	XK_j,		pushstack,	{.i = INC(+1) } },	/* move window */
-	{ MODKEY|ShiftMask,	XK_k,		pushstack,	{.i = INC(-1) } },
-	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
-
-	/* layouts */
-	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[0]} },	/* tiletwo */
-	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[1]} },	/* floating */
-	/* { MODKEY|ShiftMask,	XK_t,	setlayout,	{.v = &layouts[0]} },	/1* tile *1/ */
-	/* { MODKEY|ShiftMask,	XK_b,	setlayout,	{.v = &layouts[1]} },	/1* bstack *1/ */
-	/* { MODKEY|ShiftMask,	XK_d,	setlayout,	{.v = &layouts[2]} },	/1* deck *1/ */
-	/* { MODKEY|ShiftMask,	XK_c,	setlayout,	{.v = &layouts[3]} },	/1* monocle *1/ */
-	/* { MODKEY|ShiftMask,	XK_v,	setlayout,	{.v = &layouts[4]} },	/1* centeredmaster *1/ */
-	/* { MODKEY|ShiftMask,	XK_g,	setlayout,	{.v = &layouts[5]} },	/1* grid *1/ */
-
-
-	/* toggles */
-	{ MODKEY,		XK_a,		togglegaps,	{0} },	/* toggle gaps */
-	{ MODKEY|ShiftMask,	XK_a,		defaultgaps,	{0} },	/* reset gaps*/
 	{ MODKEY,		XK_b,		togglebar,	{0} },	/* toggle bar */
 	{ MODKEY,		XK_f,		togglefullscr,	{0} },	/* fullscreen */
-	{ MODKEY,		XK_q,		killclient,	{0} },	/* kill window */
-	{ MODKEY|ShiftMask|ControlMask, XK_q,	quit,		{0} },
+	{ MODKEY|ControlMask,	XK_q,		quit,		{0} },
 
-	{ MODKEY|ShiftMask,	XK_space,	togglefloating,	{0} },		/* floating */
-	{ MODKEY,		XK_s,		togglesticky,	{0} },		/* sticky */
-	{ MODKEY,		XK_0,		view,		{.ui = ~0 } },	/* view all windows */
-	{ MODKEY|ShiftMask,	XK_0,		tag,		{.ui = ~0 } },	/* window anywhere */
-	{ MODKEY,		XK_Tab,		view,		{0} },		/* prev tag */
+	{ MODKEY,		XK_q,		killclient,	{0} },
+	{ MODKEY,		XK_w,		togglescratch,	{.ui = 4} },	/* browser */
+	{ MODKEY,		XK_n,		togglescratch,	{.ui = 2} },	/* ncmpcpp */
 
-	{ MODKEY,		XK_w,		togglescratch,	{.ui = 4 } },
-
-	/* params */
-	{ MODKEY,		XK_z,		incrgaps,	{ .i = +3 } },	/* gaps */
-	{ MODKEY|ShiftMask,	XK_z,		incrgaps,	{ .i = -3 } },
-	{ MODKEY,		XK_o,		incnmaster,	{ .i = +1 } },	/* master count */
-	{ MODKEY|ShiftMask,	XK_o,		incnmaster,	{ .i = -1 } },
-	{ MODKEY,		XK_h,		setmfact,	{ .f = -0.05}},	/* master width */
-	{ MODKEY,		XK_l,		setmfact,	{ .f = +0.05}},
-	{ MODKEY,		XK_n,		togglescratch,	{ .ui = 2 } },	/* ncmpcpp */
-
-	/* { MODKEY,		XK_m,		shiftview,	{ .i = +1 } },	/1* shift view *1/ */
-	/* { MODKEY,		XK_n,		shiftview,	{ .i = -1 } }, */
-	/* { MODKEY|ShiftMask,	XK_m,		shifttag,	{ .i = +1 } },	/1* shift tag *1/ */
-	/* { MODKEY|ShiftMask,	XK_n,		shifttag,	{ .i = -1 } }, */
-
-	/* TODO monitors support
-	{ MODKEY,		XK_Left,	focusmon,	{.i = -1 } },
-	{ MODKEY|ShiftMask,	XK_Left,	tagmon,		{.i = -1 } },
-	{ MODKEY,		XK_Right,	focusmon,	{.i = +1 } },
-	{ MODKEY|ShiftMask,	XK_Right,	tagmon,		{.i = +1 } }, */
-
-
-	/* fix strange KP_Enter position */
-	{ MODKEY,		XK_KP_Enter,	togglescratch,	{.ui = 3 } },
-	{ MODKEY,		XK_Return,	togglescratch,	{.ui = 3 } },
-	{ MODKEY|ShiftMask,	XK_KP_Enter,	togglescratch,	{.ui = 0} },
-	{ MODKEY|ShiftMask,	XK_Return,	togglescratch,	{.ui = 0} },
-
-	{ MODKEY,			XK_apostrophe,		togglescratch,	{ .ui = 1 } },	/* calc */
+	{ MODKEY,		XK_j,	togglescratch,	{.ui = 3} },	/* vim_one */
 
 	TAGKEYS( XK_1, 0)
-	TAGKEYS( XK_2, 1)
-	TAGKEYS( XK_3, 2)
-	TAGKEYS( XK_4, 3)
-	TAGKEYS( XK_5, 4)
-	TAGKEYS( XK_6, 5)
-	TAGKEYS( XK_7, 6)
-	TAGKEYS( XK_8, 7)
-	TAGKEYS( XK_9, 8)
 };
 
 /* button definitions */

@@ -1905,6 +1905,7 @@ setmfact(const Arg *arg)
 	arrange(selmon);
 }
 
+
 void
 setup(void)
 {
