@@ -87,7 +87,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime " trigger reload
 autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Node
 
 
-set listchars=eol:%,tab:--\|,trail:-,extends:>,precedes:<
+set listchars=eol:%,tab:>\ ,trail:-,extends:>,precedes:<
 set list
 set colorcolumn=80
 
@@ -117,6 +117,7 @@ set relativenumber
 set number
 
 noremap <F3> :so $MYVIMRC<CR>
+noremap <F4> :edit $MYVIMRC<CR>
 
 set termguicolors
 set background=light
