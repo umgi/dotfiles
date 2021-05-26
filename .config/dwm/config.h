@@ -5,7 +5,7 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static unsigned int borderpx  = 2;	/* border pixel of windows */
+static const unsigned int borderpx  = 2;	/* border pixel of windows */
 static unsigned int snap      = 16;	/* snap pixel */
 static unsigned int gappih    = 80;	/* horiz inner gap between windows */
 static unsigned int gappiv    = 80;	/* vert inner gap between windows */
@@ -41,12 +41,16 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-f", "monospace:size=16", "-g", "120x34", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
-const char *spcmd3[] = {TERMINAL, "-n", "ncmpcpp",  "-g", "80x15-20+40", "-f", "monospace:size=10", "-e", "ncmpcpp", NULL };
+const char *spncmpcpp[] = {TERMINAL, "-n", "spncmpcpp",  "-g", "80x15", "-f", "monospace:size=10", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
-	{"ncmpcpp",	spcmd3},
+	{"spncmpcpp",	spncmpcpp},
+		/* {"spvim1",	spvim1}, */
+	/* {"spvim2",	spvim2}, */
+	/* {"spbrowser",	spbrowser}, */
+	/* {"splfcd",	splfcd}, */
 };
 
 /* tagging */
@@ -57,14 +61,38 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	*/
-	/* class	instance	title			tags mask	isfloating	isterminal	noswallow	monitor */
-	{ "Gimp",	NULL,		NULL,			1 << 8,		0,		0,		0,		-1 },
-	{ TERMCLASS,	NULL,		NULL,			0,		0,		1,		0,		-1 },
-	{ NULL,		NULL,		"Event Tester",		0,		0,		0,		1,		-1 },
-	{ NULL,		"spterm",	NULL,			SPTAG(0),	1,		1,		0,		-1 },
-	{ NULL,		"spcalc",	NULL,			SPTAG(1),	1,		1,		0,		-1 },
-	{ NULL,		"ncmpcpp",	NULL,			SPTAG(2),	1,		1,		0,		-1 },
-	{ NULL,		NULL,		"popup",		0,		1,		0,		1,		-1 },
+	/* class, instance, title,
+	 * tags mask, isfloating, isterminal, noswallow, monitor
+	 * x, y, w, h, floatborderpx -- applies only on floating*/
+	{
+		"Gimp", NULL, NULL,
+		1 << 8, 0, 0, 0, -1,
+		0, 0, 0, 0, 2
+	},{
+		TERMCLASS, NULL, NULL,
+		0, 0, 1, 0, -1,
+		0, 0, 0, 0, 2
+	}, {
+		NULL, NULL, "Event Tester",
+		0, 0, 0, 1, -1,
+		0, 0, 0, 0, 2
+		}, {
+		NULL, "spterm", NULL,
+		SPTAG(0), 1, 1, 0, -1,
+		10, 10, 0, 0, 2
+	}, {
+		NULL, "spcalc", NULL,
+		SPTAG(1), 1, 1, 0, -1,
+		50, 0, 0, 0, borderpx
+	}, {
+		NULL, "spncmpcpp", NULL,
+		SPTAG(2),1, 1, 0, 1,
+				-20, 20, 0, 0, 2
+	}, {
+		NULL, NULL, "popup",
+		0, 1, 0, 1, -1,
+		-100, 40, 160, 90, borderpx
+	},
 };
 
 /* layout(s) */

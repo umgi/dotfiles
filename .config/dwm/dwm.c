@@ -108,6 +108,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow, issticky;
+  int floatborderpx;
 	pid_t pid;
 	Client *next;
 	Client *snext;
@@ -164,6 +165,8 @@ typedef struct {
 	int isterminal;
 	int noswallow;
 	int monitor;
+	int floatx, floaty, floatw, floath;
+	int floatborderpx;
 } Rule;
 
 /* Xresources preferences */
@@ -385,6 +388,16 @@ applyrules(Client *c)
 			c->isfloating = r->isfloating;
 			c->noswallow  = r->noswallow;
 			c->tags |= r->tags;
+
+      c->floatborderpx = r->floatborderpx;
+      if (r->isfloating) {
+        if (r->floatw) c->w = r->floatw;
+        if (r->floath) c->h = r->floath;
+        if (r->floatx < 0) c->x = c->mon->wx + c->mon->ww + r->floatx - c->w;
+        else c->x = c->mon->wx + r->floatx;
+        if (r->floaty < 0) c->y = c->mon->wy + c->mon->wh + r->floaty - c->h;
+        else c->y = c->mon->wy + r->floaty;
+      }
 
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -1591,7 +1604,10 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldy = c->y; c->y = wc.y = y;
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
-	wc.border_width = c->bw;
+	if (c->isfloating)
+		wc.border_width = c->floatborderpx;
+	else
+		wc.border_width = c->bw;
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
@@ -2037,7 +2053,7 @@ sigdwmblocks(const Arg *arg)
 #endif
 
 void
-spawn(const Arg *arg)
+  spawn(const Arg *arg)
 {
 	if (fork() == 0) {
 		if (dpy)
@@ -2118,14 +2134,14 @@ togglescratch(const Arg *arg)
 	for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
 	if (found) {
 		unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
-		if (newtagset) {
+    if ((ISVISIBLE(c)) && selmon->sel != c) {
+      focus(c);
+      restack(selmon);
+    } else if (newtagset) {
 			selmon->tagset[selmon->seltags] = newtagset;
-			focus(NULL);
+      if (ISVISIBLE(c)) focus(c);
+      else focus(NULL);
 			arrange(selmon);
-		}
-		if (ISVISIBLE(c)) {
-			focus(c);
-			restack(selmon);
 		}
 	} else {
 		selmon->tagset[selmon->seltags] |= scratchtag;
@@ -2758,7 +2774,6 @@ void
 zoom(const Arg *arg)
 {
 	Client *c = selmon->sel;
-
 	if (!selmon->lt[selmon->sellt]->arrange
 	|| (selmon->sel && selmon->sel->isfloating))
 		return;
