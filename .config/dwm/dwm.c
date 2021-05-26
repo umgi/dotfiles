@@ -75,7 +75,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeAccent }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -1023,13 +1023,22 @@ drawbar(Monitor *m)
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+		if (m->tagset[m->seltags] & 1 << i) {
+			drw_setscheme(drw, scheme[SchemeAccent]);
+			drw_rect(drw, x+linegap/2, bh - lineheight, w - linegap, lineheight, 1, 0);
+		}
 		x += w;
 	}
 	for (i = 0; i < LENGTH(scratchpads); i++) {
-		scratchtag = 1 << SPTAG(i);
+		scratchtag = SPTAG(i);
 		w = TEXTW(scratchpads[i].name);
-		drw_setscheme(drw, scheme[m->tagset[m->seltags] & scratchtag ? SchemeSel : SchemeNorm]);
+		drw_setscheme(drw, scheme[selmon->tagset[selmon->seltags] & scratchtag ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, scratchpads[i].name, urg & scratchtag);
+		for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
+		if (found) {
+			drw_setscheme(drw, scheme[SchemeAccent]);
+			drw_rect(drw, x+linegap/2, bh-lineheight, w - linegap, lineheight, 1, 0);
+		}
 
 		x += w;
 	}
@@ -1939,7 +1948,7 @@ setup(void)
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 	lrpad = drw->fonts->h;
-	bh = drw->fonts->h + 2;
+	bh = drw->fonts->h + 2 + lineheight;
 	updategeom();
 	/* init atoms */
 	utf8string = XInternAtom(dpy, "UTF8_STRING", False);

@@ -16,19 +16,25 @@ static int smartgaps          = 0;	/* 1 means no outer gap when there is only on
 static int showbar            = 1;	/* 0 means no bar */
 static int topbar             = 1;	/* 0 means bottom bar */
 static int focusonwheel       = 0;
+static int lineheight         = 2;
+static int linegap            = 3;
 static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[]  = "#eeeeee";
+static char accfgcolor[] = "#dc657c";
 static char normbgcolor[] = "#111111";
 static char selbgcolor[]  = "#111111";
+static char accbgcolor[] = "#111111";
 static char normbordercolor[] = "#111111";
 static char selbordercolor[] = "#dc657c";
+static char accbordercolor[] = "#111111";
 
 static char *colors[][3] = {
        /*		fg		bg		border   */
        [SchemeNorm] = { normfgcolor,	normbgcolor,	normbordercolor },
        [SchemeSel]  = { selfgcolor,	selbgcolor,	selbordercolor },
+       [SchemeAccent]  = { accfgcolor,	accbgcolor,	accbordercolor },
 };
 
 static const unsigned int baralpha = 0xd0;
@@ -150,6 +156,7 @@ ResourcePref resources[] = {
 	{ "background",		STRING,		&selbgcolor },
 	{ "background",		STRING,		&normbordercolor },
 	{ "color7",		STRING,		&selbordercolor },
+	{ "color5",		STRING,		&accfgcolor },
 };
 
 #include <X11/XF86keysym.h>
