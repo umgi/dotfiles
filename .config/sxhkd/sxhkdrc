@@ -35,9 +35,6 @@ super + shift + F11
 super + shift + F12
   toggle-touchpad.sh
 
-
-super + w
-  $BROWSER
 super + e
   dmenu-nm.sh
 
