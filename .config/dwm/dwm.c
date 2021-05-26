@@ -1,3 +1,4 @@
+/* vim: set ts=8 sw=8 tw=0 noet : */
 /* See LICENSE file for copyright and license details.
  *
  * dynamic window manager is designed like any other X client as well. It is
@@ -998,7 +999,7 @@ drawbar(Monitor *m)
 	int x, w, tw = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
-	unsigned int i, occ = 0, urg = 0;
+	unsigned int i, occ = 0, urg = 0, scratchtag = 0, found = 0;
 	Client *c;
 
 	/* draw status first so it can be overdrawn by tags later */
@@ -1024,6 +1025,15 @@ drawbar(Monitor *m)
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		x += w;
 	}
+	for (i = 0; i < LENGTH(scratchpads); i++) {
+		scratchtag = 1 << SPTAG(i);
+		w = TEXTW(scratchpads[i].name);
+		drw_setscheme(drw, scheme[m->tagset[m->seltags] & scratchtag ? SchemeSel : SchemeNorm]);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, scratchpads[i].name, urg & scratchtag);
+
+		x += w;
+	}
+
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
