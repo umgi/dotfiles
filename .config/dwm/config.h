@@ -52,18 +52,18 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-f", "monospace:size=16", "-g", "120x34", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
-const char *spncmpcpp[] = {TERMINAL, "-n", "spncmpcpp",  "-g", "80x15", "-e", "ncmpcpp", NULL };
+const char *spncmpcpp[] = {TERMINAL, "-n", "ncmpcpp",  "-g", "80x15", "-e", "ncmpcpp", NULL };
+const char *splfcd[] = {TERMINAL, "-n", "lfcd",  "-g", "80x15", "-e", "zsh", "-i", "-c", "lfcd", NULL };
 const char *spvim1[] = {TERMINAL, "-n", "spvim1",  "-g", "90x58", NULL };
-	const char *spbrowser[] = {"firefox", NULL };
+const char *spvim2[] = {TERMINAL, "-n", "spvim2",  "-g", "90x58", NULL };
+const char *spbrowser[] = {"firefox", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spcalc",      spcmd2},
-	{"spncmpcpp",	spncmpcpp},
-	{"spvim1",	spvim1},
-	{"spbrowser",	spbrowser},
+	{"┻",	spvim1},
+	{"┫",	spvim2},
+	{"┗",	spbrowser},
+	{"♪",	spncmpcpp},
+	{"┐",	splfcd},
 	/* {"spvim2",	spvim2}, */
 	/* {"splfcd",	splfcd}, */
 };
@@ -91,30 +91,30 @@ static const Rule rules[] = {
 		NULL, NULL, "Event Tester",
 		0, 0, 0, 1, -1,
 		0, 0, 0, 0, 2
-		}, {
-		NULL, "spterm", NULL,
-		SPTAG(0), 1, 1, 0, -1,
-		10, 10, 0, 0, borderpx
-	}, {
-		NULL, "spcalc", NULL,
-		SPTAG(1), 1, 1, 0, -1,
-		50, 0, 0, 0, borderpx
-	}, {
-		NULL, "spncmpcpp", NULL,
-		SPTAG(2),1, 1, 0, 1,
-		-40, 40, 0, 0, borderpx
 	}, {
 		NULL, "spvim1", NULL,
-		SPTAG(3),1, 1, 0, 1,
+		SPTAG(0),1, 1, 0, 1,
+		40, 40, 0, 0, borderpx
+	}, {
+		NULL, "spvim2", NULL,
+		SPTAG(1),1, 1, 0, 1,
 		40, 40, 0, 0, borderpx
 	}, {
 		"firefox", NULL, NULL,
-		SPTAG(4),1, 1, 0, 1,
+		SPTAG(2),1, 1, 0, 1,
 		804, 40, 1076, 990, borderpx
+	}, {
+		NULL, "ncmpcpp", NULL,
+		SPTAG(3),1, 1, 0, 1,
+		-40, 40, 0, 0, borderpx
+	}, {
+		NULL, "lfcd", NULL,
+		SPTAG(4),1, 1, 0, 1,
+		-40, 339, 0, 0, borderpx
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, -1,
-		-100, 40, 160, 90, borderpx
+		-40, 638, 644, 259, borderpx
 	},
 };
 
@@ -188,11 +188,13 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,	XK_q,		quit,		{0} },
 
 	{ MODKEY,		XK_q,		killclient,	{0} },
-	{ MODKEY,		XK_w,		togglescratch,	{.ui = 4} },	/* browser */
-	{ MODKEY,		XK_n,		togglescratch,	{.ui = 2} },	/* ncmpcpp */
+	{ MODKEY,		XK_Return,	togglescratch,	{.ui = 0} },	/* vim_one */
+	{ MODKEY,		XK_KP_Enter,	togglescratch,	{.ui = 0} },	/* vim_one */
+	{ MODKEY,		XK_apostrophe,	togglescratch,	{.ui = 1} },	/* vim_two */
+	{ MODKEY,		XK_w,		togglescratch,	{.ui = 2} },	/* browser */
+	{ MODKEY,		XK_n,		togglescratch,	{.ui = 3} },	/* ncmpcpp */
+	{ MODKEY,		XK_m,		togglescratch,	{.ui = 4} },	/* lfcd    */
 
-	{ MODKEY,		XK_Return,	togglescratch,	{.ui = 3} },	/* vim_one */
-	{ MODKEY,		XK_KP_Enter,	togglescratch,	{.ui = 3} },	/* vim_one */
 	{ MODKEY|ShiftMask,	XK_Return,	spawn,		{.v = termcmd} },
 	{ MODKEY|ShiftMask,	XK_KP_Enter,	spawn,		{.v = termcmd} },
 
