@@ -41,15 +41,17 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-f", "monospace:size=16", "-g", "120x34", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
-const char *spncmpcpp[] = {TERMINAL, "-n", "spncmpcpp",  "-g", "80x15", "-f", "monospace:size=10", "-e", "ncmpcpp", NULL };
+const char *spncmpcpp[] = {TERMINAL, "-n", "spncmpcpp",  "-g", "80x15", "-e", "ncmpcpp", NULL };
+const char *spvim1[] = {TERMINAL, "-n", "spvim1",  "-g", "90x58", NULL };
+	const char *spbrowser[] = {"firefox", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
 	{"spncmpcpp",	spncmpcpp},
-		/* {"spvim1",	spvim1}, */
+	{"spvim1",	spvim1},
+	{"spbrowser",	spbrowser},
 	/* {"spvim2",	spvim2}, */
-	/* {"spbrowser",	spbrowser}, */
 	/* {"splfcd",	splfcd}, */
 };
 
@@ -87,7 +89,15 @@ static const Rule rules[] = {
 	}, {
 		NULL, "spncmpcpp", NULL,
 		SPTAG(2),1, 1, 0, 1,
-				-20, 20, 0, 0, 2
+		-40, 40, 0, 0, 0
+	}, {
+		NULL, "spvim1", NULL,
+		SPTAG(3),1, 1, 0, 1,
+		40, 40, 0, 0, 0
+	}, {
+		"firefox", NULL, NULL,
+		SPTAG(4),1, 1, 0, 1,
+		804, 40, 1076, 990, 0
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, -1,
@@ -189,6 +199,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_0,		tag,		{.ui = ~0 } },	/* window anywhere */
 	{ MODKEY,		XK_Tab,		view,		{0} },		/* prev tag */
 
+	{ MODKEY,		XK_w,		togglescratch,	{.ui = 4 } },
 
 	/* params */
 	{ MODKEY,		XK_z,		incrgaps,	{ .i = +3 } },	/* gaps */
@@ -212,10 +223,9 @@ static Key keys[] = {
 
 
 	/* fix strange KP_Enter position */
-	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd } },
+	{ MODKEY,		XK_KP_Enter,	togglescratch,	{.ui = 3 } },
+	{ MODKEY,		XK_Return,	togglescratch,	{.ui = 3 } },
 	{ MODKEY|ShiftMask,	XK_KP_Enter,	togglescratch,	{.ui = 0} },
-
-	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd } },
 	{ MODKEY|ShiftMask,	XK_Return,	togglescratch,	{.ui = 0} },
 
 	{ MODKEY,			XK_apostrophe,		togglescratch,	{ .ui = 1 } },	/* calc */
