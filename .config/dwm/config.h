@@ -121,7 +121,8 @@ static int attachdirection = 4; /* 0 default, 1 above, 2 aside, 3 below, 4 botto
 #include "vanitygaps.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "><>",	NULL },			/* no layout function means floating behavior */
+	{ "[]+",	tiletwo },
+	{ "><>",	NULL },
 	{ NULL,		NULL },
 };
 
@@ -160,6 +161,20 @@ ResourcePref resources[] = {
  * */
 static Key keys[] = {
 	/* modifier		key	function	 argument */
+	{ MODKEY,		XK_j,		focusstack,	{.i = INC(+1) } },	/* move focus */
+	{ MODKEY,		XK_k,		focusstack,	{.i = INC(-1) } },
+	{ MODKEY,		XK_v,		focusstack,	{.i = 0 } },
+	{ MODKEY|ShiftMask,	XK_j,		pushstack,	{.i = INC(+1) } },	/* move window */
+	{ MODKEY|ShiftMask,	XK_k,		pushstack,	{.i = INC(-1) } },
+	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
+
+	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[0]} },	/* tiletwo */
+	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[1]} },	/* floating */
+
+	{ MODKEY,		XK_o,		incnmaster,	{ .i = +1 } },	/* master count */
+	{ MODKEY|ShiftMask,	XK_o,		incnmaster,	{ .i = -1 } },
+	{ MODKEY,		XK_h,		setmfact,	{ .f = -0.05}},	/* master width */
+	{ MODKEY,		XK_l,		setmfact,	{ .f = +0.05}},
 
 	{ MODKEY,		XK_b,		togglebar,	{0} },	/* toggle bar */
 	{ MODKEY,		XK_f,		togglefullscr,	{0} },	/* fullscreen */
@@ -169,9 +184,20 @@ static Key keys[] = {
 	{ MODKEY,		XK_w,		togglescratch,	{.ui = 4} },	/* browser */
 	{ MODKEY,		XK_n,		togglescratch,	{.ui = 2} },	/* ncmpcpp */
 
-	{ MODKEY,		XK_j,	togglescratch,	{.ui = 3} },	/* vim_one */
+	{ MODKEY,		XK_Return,	togglescratch,	{.ui = 3} },	/* vim_one */
+	{ MODKEY,		XK_KP_Enter,	togglescratch,	{.ui = 3} },	/* vim_one */
+	{ MODKEY|ShiftMask,	XK_Return,	spawn,		{.v = termcmd} },
+	{ MODKEY|ShiftMask,	XK_KP_Enter,	spawn,		{.v = termcmd} },
 
 	TAGKEYS( XK_1, 0)
+	TAGKEYS( XK_2, 1)
+	TAGKEYS( XK_3, 2)
+	TAGKEYS( XK_4, 3)
+	TAGKEYS( XK_5, 4)
+	TAGKEYS( XK_6, 5)
+	TAGKEYS( XK_7, 6)
+	TAGKEYS( XK_8, 7)
+	TAGKEYS( XK_9, 8)
 };
 
 /* button definitions */
