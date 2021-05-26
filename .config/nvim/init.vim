@@ -12,6 +12,8 @@ endif
 
 call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
+  Plug 'itchyny/lightline.vim'
+
   Plug 'rafi/awesome-vim-colorschemes'
   "Plug 'mattn/emmet-vim'
   Plug 'evanleck/vim-svelte'
@@ -19,10 +21,10 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'ghifarit53/tokyonight-vim'
   "Plug 'altercation/vim-colors-solarized'
   Plug 'KeitaNakamura/neodark.vim'
-  Plug 'preservim/nerdtree'
+  " Plug 'preservim/nerdtree'
 
   Plug 'jiangmiao/auto-pairs'
-  Plug 'dyng/ctrlsf.vim'
+  " Plug 'dyng/ctrlsf.vim'
   Plug 'dense-analysis/ale'
   Plug 'tpope/vim-commentary'
   Plug 'dominikduda/vim_current_word'
@@ -53,9 +55,25 @@ source $XDG_CONFIG_HOME/nvim/vimwiki.vim
 source $XDG_CONFIG_HOME/nvim/auto.vim
 
 
-set shortmess=at
-set cmdheight=2
+set nocompatible " idk just on
+syntax on
+filetype plugin on
 
+set clipboard+=unnamedplus " use clipboard for yp
+set cmdheight=1 " text height
+set modeline " file-specific settings: vi:noai:sw=3 ts=6
+set shortmess=at
+" remove hit-enter prompts & trunc message
+set splitbelow " :split to right
+set splitright " :vsplit to bottom
+
+" find files
+set path+=** " search for file in sub-sub-dirs
+
+command! MakeTags !ctags -R
+
+set incsearch
+set hlsearch
 
 set tabstop=2
 set expandtab
@@ -68,20 +86,18 @@ set autoread " Reload changed files
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime " trigger reload on cursor stop
 autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Node
 
-set incsearch
-set hlsearch
 
-set splitbelow
-
-set modeline
-
-set listchars=eol:\\,tab:--,trail:.,extends:>,precedes:<
+set listchars=eol:%,tab:--\|,trail:-,extends:>,precedes:<
 set list
 set colorcolumn=80
 
+" netrw
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:altv=1
+
 " no arrows
 " noremap <Up> <NOP>
-" noremap <Left> <NOP>
 " noremap <Down> <NOP>
 " noremap <Right> <NOP>
 "
@@ -102,12 +118,10 @@ set number
 
 noremap <F3> :so $MYVIMRC<CR>
 
-filetype plugin on
-syntax on
 set termguicolors
-set background=dark
+set background=light
 "colorscheme spacecamp
-"
+
 autocmd ColorScheme * hi Normal cterm=NONE guibg=NONE
 autocmd ColorScheme * hi LineNr ctermfg=NONE guifg=NONE
 autocmd ColorScheme * hi CursorLineNr ctermbg=NONE guibg=NONE
@@ -122,15 +136,15 @@ colorscheme neodark
 
 
 " nerd tree
-let NERDTreeShowBookmarks = 1
-let NERDTreeShowHidden = 1
-let NERDTreeShowLineNumbers = 1
-let NERDTreeMinimalMenu = 1
-let NERDTreeWinPos = "left"
-let NERDTreeWinSize = 31
+" let NERDTreeShowBookmarks = 1
+" let NERDTreeShowHidden = 1
+" let NERDTreeShowLineNumbers = 1
+" let NERDTreeMinimalMenu = 1
+" let NERDTreeWinPos = "left"
+" let NERDTreeWinSize = 31
 
-nmap <F1> :NERDTreeFocus<CR>
-nmap <F2> :NERDTreeToggle<CR>
+" nmap <F1> :NERDTreeFocus<CR>
+" nmap <F2> :NERDTreeToggle<CR>
 nnoremap <F9> :PlugInstall<CR>
 
 nnoremap <C-d> :echo expand('<cword>')<CR>
@@ -146,8 +160,6 @@ tmap <F1> <C-\><C-n> " close term
 
 let g:AutoPairsShortcutToggle = '<C-{>'
 
-set splitbelow
-set splitright
 
 
 " vim_current_word
@@ -155,23 +167,6 @@ let g:vim_current_word#enabled = 1
 let g:vim_current_word#highlight_twins = 1
 let g:vim_current_word#highlight_current_word = 1
 "hi CurrentWord cterm=underline
-
-" ctrlsf
-let g:ctrlsf_backend = 'ack'
-let g:ctrlsf_auto_close = {"normal":0,"compact":0}
-let g:ctrlsf_auto_focus = {"at":"start"}
-let g:ctrlsf_auto_preview = 0
-let g:ctrlsf_case_sensitive = 'smart'
-let g:ctrlsf_regex_pattern = 0
-let g:ctrlsf_position = 'right'
-let g:ctrlsf_winsize = '46'
-let g:ctrlsf_default_root = 'cwd'
-
-nmap <C-f>f :CtrlSFPrompt
-"nnoremap <C-f>o :CtrlSFOpen<CR>
-nnoremap <C-f>t :CtrlSFToggle<CR>
-inoremap <C-f>t <Esc>:CtrlSFToggle<CR>
-
 
 " ale
 let g:ale_fixers = {
@@ -185,6 +180,9 @@ let g:ale_fixers = {
 
 let g:ale_fix_on_save = 1
 " let g:ale_completion_enabled = 1
+"
+"
+"
 
 " save files as sudo on files that require root permission
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
