@@ -25,3 +25,7 @@
 ! LightGrey + White
 *color7:  #ECC3C2
 *color15: #F2CC60
+
+dwm.normborder: #F8DFDF
+dwm.selborder: #CC9999
+dwm.accfgcolor: #CC9999

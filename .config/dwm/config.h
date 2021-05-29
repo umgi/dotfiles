@@ -5,7 +5,7 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static const unsigned int borderpx  = 2;	/* border pixel of windows */
+static const unsigned int borderpx  = 1;	/* border pixel of windows */
 static unsigned int snap      = 16;	/* snap pixel */
 static unsigned int gappih    = 80;	/* horiz inner gap between windows */
 static unsigned int gappiv    = 80;	/* vert inner gap between windows */
@@ -18,6 +18,10 @@ static int topbar             = 1;	/* 0 means bottom bar */
 static int focusonwheel       = 0;
 static int lineheight         = 2;
 static int linegap            = 3;
+static const int baseo        = 20;
+static const int basew        = 724;
+static const int baseh        = 1020; /* 1080 - gappih * 2 - bh */
+static const int base169      = 407;
 static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 
 static char normfgcolor[] = "#bbbbbb";
@@ -45,23 +49,20 @@ static const unsigned int alphas[][3] = {
 	[SchemeSel]  = {	OPAQUE,		200,		255 },
 };
 
-
-
-
 typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
 const char *spncmpcpp[] = {TERMINAL, "-n", "ncmpcpp",  "-g", "80x15", "-e", "ncmpcpp", NULL };
 const char *splfcd[] = {TERMINAL, "-n", "lfcd",  "-g", "80x15", "-e", "zsh", "-i", "-c", "lfcd", NULL };
-const char *spvim1[] = {TERMINAL, "-n", "spvim1",  "-g", "90x58", NULL };
-const char *spvim2[] = {TERMINAL, "-n", "spvim2",  "-g", "90x58", NULL };
+const char *spvim1[] = {TERMINAL, "-n", "spvim1", NULL };
+const char *spvim2[] = {TERMINAL, "-n", "spvim2", NULL };
 const char *spbrowser[] = {"firefox", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"┻",	spvim1},
 	{"┫",	spvim2},
-	{"┗",	spbrowser},
+	/* {"┗",	spbrowser}, */
 	{"♪",	spncmpcpp},
 	{"┐",	splfcd},
 	/* {"spvim2",	spvim2}, */
@@ -94,27 +95,27 @@ static const Rule rules[] = {
 	}, {
 		NULL, "spvim1", NULL,
 		SPTAG(0),1, 1, 0, 1,
-		40, 40, 0, 0, borderpx
+		20, 20, basew, baseh, borderpx
 	}, {
 		NULL, "spvim2", NULL,
 		SPTAG(1),1, 1, 0, 1,
-		40, 40, 0, 0, borderpx
+		20, 20, basew, baseh, borderpx
 	}, {
-		"firefox", NULL, NULL,
-		SPTAG(2),1, 1, 0, 1,
-		804, 40, 1076, 990, borderpx
-	}, {
+		/* "firefox", NULL, NULL, */
+		/* SPTAG(2),1, 1, 0, 1, */
+		/* 804, baseo, basew, baseh, borderpx */
+	/* }, { */
 		NULL, "ncmpcpp", NULL,
-		SPTAG(3),1, 1, 0, 1,
-		-40, 40, 0, 0, borderpx
+		SPTAG(2),1, 1, 0, 1,
+		20, 20, basew, base169, borderpx
 	}, {
 		NULL, "lfcd", NULL,
-		SPTAG(4),1, 1, 0, 1,
-		-40, 339, 0, 0, borderpx
+		SPTAG(3),1, 1, 0, 1,
+		20, 20, basew, base169, borderpx
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, -1,
-		-40, 638, 644, 259, borderpx
+		20, 20, basew, base169, borderpx
 	},
 };
 
@@ -154,9 +155,9 @@ ResourcePref resources[] = {
 	{ "foreground",		STRING,		&selfgcolor },
 	{ "background",		STRING,		&normbgcolor },
 	{ "background",		STRING,		&selbgcolor },
-	{ "background",		STRING,		&normbordercolor },
-	{ "color7",		STRING,		&selbordercolor },
-	{ "color5",		STRING,		&accfgcolor },
+	{ "normborder",		STRING,		&normbordercolor },
+	{ "selborder",		STRING,		&selbordercolor },
+	{ "accfgcolor",		STRING,		&accfgcolor },
 };
 
 #include <X11/XF86keysym.h>
@@ -175,8 +176,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_k,		pushstack,	{.i = INC(-1) } },
 	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
 
-	{ MODKEY|ShiftMask,	XK_r,	setlayout,	{.v = &layouts[0]} },	/* tiletwo */
-	{ MODKEY|ShiftMask,	XK_f,	setlayout,	{.v = &layouts[1]} },	/* floating */
+	{ MODKEY|ShiftMask,	XK_r,		setlayout,	{.v = &layouts[0]} },	/* tiletwo */
+	{ MODKEY|ShiftMask,	XK_f,		setlayout,	{.v = &layouts[1]} },	/* floating */
 
 	{ MODKEY,		XK_o,		incnmaster,	{ .i = +1 } },	/* master count */
 	{ MODKEY|ShiftMask,	XK_o,		incnmaster,	{ .i = -1 } },
@@ -186,17 +187,14 @@ static Key keys[] = {
 	{ MODKEY,		XK_b,		togglebar,	{0} },	/* toggle bar */
 	{ MODKEY,		XK_f,		togglefullscr,	{0} },	/* fullscreen */
 	{ MODKEY|ControlMask,	XK_q,		quit,		{0} },
-
 	{ MODKEY,		XK_q,		killclient,	{0} },
-	{ MODKEY,		XK_Return,	togglescratch,	{.ui = 0} },	/* vim_one */
-	{ MODKEY,		XK_KP_Enter,	togglescratch,	{.ui = 0} },	/* vim_one */
-	{ MODKEY,		XK_apostrophe,	togglescratch,	{.ui = 1} },	/* vim_two */
-	{ MODKEY,		XK_w,		togglescratch,	{.ui = 2} },	/* browser */
-	{ MODKEY,		XK_n,		togglescratch,	{.ui = 3} },	/* ncmpcpp */
-	{ MODKEY,		XK_m,		togglescratch,	{.ui = 4} },	/* lfcd    */
+	{ MODKEY,		XK_e,		togglescratch,	{.ui = 0} },	/* vim_one */
+	{ MODKEY,		XK_r,		togglescratch,	{.ui = 1} },	/* vim_two */
+	{ MODKEY,		XK_n,		togglescratch,	{.ui = 2} },	/* ncmpcpp */
+	{ MODKEY,		XK_m,		togglescratch,	{.ui = 3} },	/* lfcd    */
 
-	{ MODKEY|ShiftMask,	XK_Return,	spawn,		{.v = termcmd} },
-	{ MODKEY|ShiftMask,	XK_KP_Enter,	spawn,		{.v = termcmd} },
+	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd} },
+	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd} },
 
 	TAGKEYS( XK_1, 0)
 	TAGKEYS( XK_2, 1)
