@@ -45,7 +45,7 @@ local config = {
     snapshot_quality = 15,         -- from 0=lowest to 100=highest
     snapshot_width = -2,           -- a positive integer or -2 for auto
     snapshot_height = 200,         -- same
-    audio_format = "opus",         -- opus or mp3
+      audio_format = "opus",         -- opus or mp3
     audio_bitrate = "18k",         -- from 16k to 32k
     audio_padding = 0.12,          -- Set a pad to the dialog timings. 0.5 = audio is padded by .5 seconds. 0 = disable.
     tie_volumes = false,           -- if set to true, the volume of the outputted audio file depends on the volume of the player at the time of export
@@ -76,6 +76,8 @@ local config = {
     use_forvo = "yes",                  -- 'yes', 'no', 'always'
     vocab_field = "VocabKanji",         -- target word field
     vocab_audio_field = "VocabAudio",   -- target word audio
+
+    anki_audio_file_prefix = "mpvacious",  -- audiofilename prefix
 }
 
 local mp = require('mp')
@@ -533,6 +535,7 @@ local filename_factory = (function()
         filename = remove_extension(filename)
         filename = remove_text_in_brackets(filename)
         filename = remove_special_characters(filename)
+        filename = config.anki_audio_file_prefix .. filename
     end
 
     local make_audio_filename = function(speech_start, speech_end)
