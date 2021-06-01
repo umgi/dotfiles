@@ -62,7 +62,7 @@ filetype plugin on
 set clipboard+=unnamedplus " use clipboard for yp
 set cmdheight=1 " text height
 set modeline " file-specific settings: vi:noai:sw=3 ts=6
-set shortmess=at
+set shortmess=aT
 " remove hit-enter prompts & trunc message
 set splitbelow " :split to right
 set splitright " :vsplit to bottom
@@ -70,7 +70,7 @@ set splitright " :vsplit to bottom
 " find files
 set path+=** " search for file in sub-sub-dirs
 
-command! MakeTags !ctags -R
+command! MakeTags !ctags -R \.
 
 set incsearch
 set hlsearch
@@ -128,11 +128,7 @@ autocmd ColorScheme * hi LineNr ctermfg=NONE guifg=NONE
 autocmd ColorScheme * hi CursorLineNr ctermbg=NONE guibg=NONE
 autocmd ColorScheme * hi FoldColumn ctermbg=NONE guibg=NONE
 
-let g:neodark#background = '#111111'
-let g:neodark#use_256color = 0
-let g:neodark#use_custom_terminal_theme = 1
-let g:neodark#terminal_transparent = 0
-colorscheme neodark
+colorscheme noelle
 
 
 
@@ -248,5 +244,3 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
-echo ">^.^<"
