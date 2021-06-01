@@ -20,7 +20,8 @@ static int lineheight         = 2;
 static int linegap            = 3;
 static const int baseo        = 20;
 static const int basew        = 724;
-static const int baseh        = 1020; /* 1080 - gappih * 2 - bh */
+/* static const int baseh        = 1020; /1* 1080 - gappih * 2 - bh *1/ */
+static const int baseh        = 964; /* 1080 - gappih * 2 - bh */
 static const int base169      = 407;
 static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 
@@ -114,7 +115,7 @@ static const Rule rules[] = {
 		20, 20, basew, base169, borderpx
 	}, {
 		NULL, NULL, "popup",
-		0, 1, 0, 1, -1,
+		0, 1, 0, 1, 1,
 		10, 10, 0, 90, borderpx
 	},
 };
