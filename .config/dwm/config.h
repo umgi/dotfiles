@@ -115,7 +115,7 @@ static const Rule rules[] = {
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, -1,
-		20, 20, basew, base169, borderpx
+		10, 10, 0, 90, borderpx
 	},
 };
 
