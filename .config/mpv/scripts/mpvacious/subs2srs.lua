@@ -591,6 +591,19 @@ local function export_to_anki(gui)
     subs.clear()
 end
 
+local function export_cond_audio(gui)
+    local sub = subs.get()
+    if sub == nil then
+        return
+    end
+
+    local audio_filename = filename_factory.make_audio_filename(sub['start'], sub['end'])
+    encoder.create_audio_no_anki(sub['start'], sub['end'], audio_filename)
+    subs.clear()
+
+    notify('.', 'warn',1)
+end
+
 local function update_last_note(overwrite)
     local sub = subs.get()
     local last_note_id = ankiconnect.get_last_note_id()
@@ -945,6 +958,41 @@ encoder.create_snapshot = function(timestamp, filename)
         os.remove(output_path)
     end
     subprocess(args, on_finish)
+end
+
+encoder.create_audio_no_anki = function(start_timestamp, end_timestamp, filename)
+    local source_path = mp.get_property("path")
+    local audio_track = encoder.get_active_track('audio')
+    local audio_track_id = mp.get_property("aid")
+    local output_path = table.concat({utils.getcwd(), '/cond/', filename})
+
+    if audio_track and audio_track.external == true then
+        source_path = audio_track['external-filename']
+        audio_track_id = 'auto'
+    end
+
+    start_timestamp, end_timestamp = encoder.pad_timings(start_timestamp, end_timestamp)
+
+    local args = {
+        'mpv',
+        source_path,
+        '--loop-file=no',
+        '--video=no',
+        '--no-ocopy-metadata',
+        '--no-sub',
+        '--audio-channels=mono',
+        '--oacopts-add=vbr=on',
+        '--oacopts-add=application=voip',
+        '--oacopts-add=compression_level=10',
+        table.concat { '--oac=', config.audio_codec },
+        table.concat { '--start=', start_timestamp },
+        table.concat { '--end=', end_timestamp },
+        table.concat { '--aid=', audio_track_id },
+        table.concat { '--volume=', config.tie_volumes and mp.get_property('volume') or '100' },
+        table.concat { '--oacopts-add=b=', config.audio_bitrate },
+        table.concat { '-o=', output_path }
+    }
+    subprocess(args)
 end
 
 encoder.create_audio = function(start_timestamp, end_timestamp, filename)
@@ -1346,8 +1394,7 @@ end)()
 ------------------------------------------------------------
 --
 function my_export_to_anki()
-  print('exporting...')
-  export_to_anki()
+  export_cond_audio()
 end
 --
 autoexport = (function()
