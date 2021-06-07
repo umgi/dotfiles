@@ -187,6 +187,8 @@ static Key keys[] = {
 
 	{ MODKEY,		XK_b,		togglebar,	{0} },	/* toggle bar */
 	{ MODKEY,		XK_f,		togglefullscr,	{0} },	/* fullscreen */
+	{ MODKEY,		XK_c,		togglefloating,	{0} },
+	{ MODKEY,		XK_s,		togglesticky,	{0} },
 	{ MODKEY|ControlMask,	XK_q,		quit,		{0} },
 	{ MODKEY,		XK_q,		killclient,	{0} },
 	{ MODKEY,		XK_e,		togglescratch,	{.ui = 0} },	/* vim_one */
