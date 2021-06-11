@@ -14,13 +14,15 @@ if [ -n "$last" ]; then
   fi
 fi
 
-new_act=$( printf "tomato\\nshort\\nlong$reset" | dmenu -i -p "time:")
+new_act=$( printf "tomato50\\ntomato25\\nshort5\\nmiddle10\\nlong15$reset" | dmenu -i -p "time:")
 now=$(date "+%s")
 
 case $new_act in
-  tomato) echo "start,$now,time25" >> "$log" ;;
-  short) echo "start,$now,time5" >> "$log" ;;
-  long) echo "start,$now,time15" >> "$log" ;;
+  tomato50) echo "start,$now,time50" >> "$log" ;;
+  tomato25) echo "start,$now,time25" >> "$log" ;;
+  short5) echo "start,$now,time5" >> "$log" ;;
+  middle10) echo "start,$now,time10" >> "$log" ;;
+  long15) echo "start,$now,time15" >> "$log" ;;
   reset) echo "end,$now,$prev_act" >> "$log" ;;
 esac
 
