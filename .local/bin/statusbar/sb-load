@@ -1,0 +1,2 @@
+#!/bin/sh
+uptime | tr -d ',' | awk '{ print $8 " " $9 " " $10 }'

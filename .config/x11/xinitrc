@@ -23,6 +23,7 @@ mpd &
 unclutter &
 xcape -t 200 -e "Super_L=Tab;Control_L=Escape"&
 picom --experimental-backends &
+gazou & # japanese ocr
 # syncthing --no-browser &
 dunst &
 dwmblocks &
