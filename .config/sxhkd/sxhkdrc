@@ -1,21 +1,28 @@
+button8; ~button8
+  echo "just b8"
 button8; 5
   notify-send "anki"; anki
 # todo: run and raise window
-
 button8; w
   notify-send "browser"; firefox
 
+button8; a
+  xvkbd -no-jump-pointer -xsendevent -text '\Ca'
+button8; s
+  xvkbd -no-jump-pointer -xsendevent -text '\Cs'
+button8; d
+  mpv-toggle
 button8; f
   notify-send "linkhandlerで開く"; linkhandler "$(xsel --output --clipboard)"
 
-F2
+button8; z
+  xvkbd -no-jump-pointer -xsendevent -text '\Cz'
+button8; x
   xvkbd -no-jump-pointer -xsendevent -text '\Cx'
-F3
+button8; c
   xvkbd -no-jump-pointer -xsendevent -text '\Cc'
-F4
+button8; v
   xvkbd -no-jump-pointer -xsendevent -text '\Cv'
-# {F2,F3,F4}
-#   xvkbd -no-jump-pointer -xsendevent -text {'\Cx', '\Cc', '\Cv'} & notify-send "hi" {'\Cx','\Cc','\Cv'}
 
 # pulseaudio
 super + {F1, F2, F3}
@@ -81,8 +88,6 @@ super + shift + s
 super + shift + h
   $TERMINAL -e htop
 
-super + x
-  mpv-toggle
 
 
 XF86PowerOff
