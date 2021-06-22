@@ -9,6 +9,10 @@ http {
   fastcgi_temp_path /tmp/my_nginx_fastcgi;
   uwsgi_temp_path /tmp/my_nginx_uwsgi;
   scgi_temp_path /tmp/my_nginx_scgi;
+
+  # create_full_put_path on; 
+# dav_access user:rw group:rw all:rw;
+# dav_methods PUT DELETE MKCOL COPY MOVE;
   server {
     access_log off;
     listen 8001;
