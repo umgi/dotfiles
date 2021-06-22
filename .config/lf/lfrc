@@ -49,6 +49,10 @@ cmd moveto ${{
   done && notify-send "lf" "Files moved"
 }}
 
+cmd mpv ${{
+  mpv "$f" >/dev/null 2>&1
+}}
+
 map S mpv-sub
 map D delete
 map M moveto
@@ -56,3 +60,5 @@ map <c-r> reload
 map I mv-image
 map <enter> shell
 map t toggle
+map A mpv
+map H set hidden!

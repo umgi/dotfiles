@@ -14,8 +14,8 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
   Plug 'itchyny/lightline.vim'
 
-  Plug 'rafi/awesome-vim-colorschemes'
-  "Plug 'mattn/emmet-vim'
+  " Plug 'rafi/awesome-vim-colorschemes'
+Plug 'mattn/emmet-vim'
   Plug 'evanleck/vim-svelte'
   Plug 'joshdick/onedark.vim'
   Plug 'ghifarit53/tokyonight-vim'
@@ -29,7 +29,7 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
   Plug 'tpope/vim-commentary'
   Plug 'dominikduda/vim_current_word'
   Plug 'rkitover/vimpager'
-  Plug 'vimwiki/vimwiki'
+    Plug 'vimwiki/vimwiki'
 
   Plug 'othree/yajs.vim' " not good on performance
   Plug 'HerringtonDarkholme/yats.vim'
@@ -107,11 +107,11 @@ imap <C-l> <Right>
 
 " Usual tabs
 nmap <Tab> >>
-nmap <S-Tab> <<
+nmap <S-Tab> <!-- <<
 
 let mapleader = ","
-"let g:user_emmet_leader_key = " "
-set timeoutlen=500
+set timeoutlen=300
+let g:user_emmet_leader_key=','
 
 set relativenumber
 set number
@@ -119,17 +119,6 @@ set number
 noremap <F3> :so $MYVIMRC<CR>
 noremap <F4> :edit $MYVIMRC<CR>
 
-set termguicolors
-set background=dark
-let g:neodark#background = '#111111'
-colorscheme neodark
-
-autocmd ColorScheme * hi Normal cterm=NONE guibg=NONE
-autocmd ColorScheme * hi LineNr ctermfg=NONE guifg=NONE
-autocmd ColorScheme * hi CursorLineNr ctermbg=NONE guibg=NONE
-autocmd ColorScheme * hi FoldColumn ctermbg=NONE guibg=NONE
-
-" colorscheme noelle
 
 
 
@@ -173,6 +162,7 @@ let g:ale_fixers = {
   \ 'css': ['prettier'],
   \ 'svelte': ['prettier'],
   \ 'json': ['prettier'],
+  \ 'html': ['prettier'],
   \ 'shell': ['shellcheck']
   \ }
 
@@ -183,7 +173,7 @@ let g:ale_fix_on_save = 1
 "
 
 " save files as sudo on files that require root permission
-cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+cnoremap w!! execute 'silent! write !sudo tee % > -->/dev/null' <bar> edit!
 
 
 set autowrite " when changing current file just save without warning
@@ -245,3 +235,27 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+
+
+set termguicolors
+set background=dark
+let g:neodark#background = '#111111'
+" let g:neodark#terminal_transparent = 1
+colorscheme neodark
+autocmd ColorScheme * hi Normal cterm=NONE guibg=NONE
+autocmd ColorScheme * hi LineNr ctermfg=NONE guifg=NONE
+autocmd ColorScheme * hi CursorLineNr ctermbg=NONE guibg=NONE
+autocmd ColorScheme * hi FoldColumn ctermbg=NONE guibg=NONE
+let g:lightline = {}
+let g:lightline.colorscheme = 'neodark'
+
+" set background=light
+" let g:gruvbox_bold=1
+" let g:gruvbox_italic = 1
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_contrast_light = 'hard'
+
+" set t_ZH=^[[3m
+" set t_ZR=^[[23
+" colorscheme noelle

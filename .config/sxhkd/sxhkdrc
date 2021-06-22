@@ -35,6 +35,7 @@ super + shift + F11
 super + shift + F12
   toggle-touchpad.sh
 
+
 super + w
   $BROWSER
 
@@ -45,6 +46,9 @@ super + shift + q
   sysact.sh
 super + shift + w
   $TERMINAL -e sudo nmtui
+super + shift + e
+  notify-send 'keys reloaded'; \
+  remaps.sh
 
 super + d
   dmenu_run
