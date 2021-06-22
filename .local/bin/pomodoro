@@ -14,11 +14,12 @@ if [ -n "$last" ]; then
   fi
 fi
 
-new_act=$( printf "tomato\\nshort\\nlong$reset" | dmenu -i -p "time:")
+new_act=$( printf "30\\ntomato\\nshort\\nlong$reset" | dmenu -i -p "time:")
 now=$(date "+%s")
 
 case $new_act in
   tomato) echo "start,$now,time25" >> "$log" ;;
+  30) echo "start,$now,time30" >> "$log" ;;
   short) echo "start,$now,time5" >> "$log" ;;
   long) echo "start,$now,time15" >> "$log" ;;
   reset) echo "end,$now,$prev_act" >> "$log" ;;
