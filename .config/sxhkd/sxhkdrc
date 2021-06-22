@@ -1,5 +1,12 @@
-Button9
-  xvkbd -text '\C'
+button8; 5
+  notify-send "anki"; anki
+# todo: run and raise window
+
+button8; w
+  notify-send "browser"; firefox
+
+button8; f
+  notify-send "linkhandlerで開く"; linkhandler "$(xsel --output --clipboard)"
 
 F2
   xvkbd -no-jump-pointer -xsendevent -text '\Cx'
