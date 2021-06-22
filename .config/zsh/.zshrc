@@ -10,7 +10,7 @@ zstyle ':vcs_info:*' formats " %s(%b)"
 
 # prompt
 prompt () {
-  PS1="%F{red}%n%F{magenta}@%F{yellow}%m%f %F{green}%~%f$vcs_info_msg_1_ $ "
+  PS1="%F{red}ディ%F{magenta}@%F{yellow}アーチ%f %F{green}%~%f$vcs_info_msg_1_ $ "
 }
 
 precmd_functions+=( vcs_info prompt )

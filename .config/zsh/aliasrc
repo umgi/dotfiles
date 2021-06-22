@@ -67,3 +67,7 @@ lfcd () {
     fi
   fi
 }
+
+alias \
+  ytv="youtube-dl -f bestvideo+bestaudio" \
+  yta="youtube-dl -f 'bestaudio' --ignore-errors --continue --playlist-random --no-overwrites --extract-audio --audio-format mp3 --prefer-avconv --add-metadata --output '%(title)s.%(ext)s'"
