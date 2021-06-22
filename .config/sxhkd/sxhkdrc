@@ -1,3 +1,15 @@
+Button9
+  xvkbd -text '\C'
+
+F2
+  xvkbd -no-jump-pointer -xsendevent -text '\Cx'
+F3
+  xvkbd -no-jump-pointer -xsendevent -text '\Cc'
+F4
+  xvkbd -no-jump-pointer -xsendevent -text '\Cv'
+# {F2,F3,F4}
+#   xvkbd -no-jump-pointer -xsendevent -text {'\Cx', '\Cc', '\Cv'} & notify-send "hi" {'\Cx','\Cc','\Cv'}
+
 # pulseaudio
 super + {F1, F2, F3}
   pamixer {-t, --allow-boost -d 4, --allow-boost -i 4}; kill -44 $(pidof dwmblocks)
