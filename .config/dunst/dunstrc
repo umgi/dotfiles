@@ -1,12 +1,12 @@
 [global]
-  geometry = "300x5-4+27"
+  geometry = "300x5-0+24"
   indicate_hidden = no
   shrink = no
   padding = 8
   horizontal_padding = 8
   separator_height = 2
   separator_color = "#1c1c1c"
-  frame_width = 2
+  frame_width = 1
   frame_color="#d4b261"
   sort = yes
   idle_threshold = 120
@@ -25,12 +25,11 @@
   dmenu = /usr/bin/dmenu -p dunst:
   browser = /usr/bin/firefox -new-tab
   always_run_script = true
-  timeout = 5
 
 [urgency-critical]
   background="#111111"
   foreground="#9b9b9b"
-  timeout = 0
+  timeout = 60
 
 [urgency-normal]>
   background="#111111"

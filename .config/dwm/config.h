@@ -58,6 +58,8 @@ const char *spncmpcpp[] = {TERMINAL, "-n", "ncmpcpp",  "-g", "80x15", "-e", "ncm
 const char *splfcd[] = {TERMINAL, "-n", "lfcd",  "-g", "80x15", "-e", "zsh", "-i", "-c", "lfcd", NULL };
 const char *spvim1[] = {TERMINAL, "-n", "spvim1", NULL };
 const char *spvim2[] = {TERMINAL, "-n", "spvim2", NULL };
+const char *sqbittorrent[] = {"qbittorrent", NULL };
+const char *sncpamixer[] = {TERMINAL, "-n", "ncpamixer", "-e", "ncpamixer", NULL };
 const char *spbrowser[] = {"firefox", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -66,6 +68,8 @@ static Sp scratchpads[] = {
 	/* {"┗",	spbrowser}, */
 	{"🎐",	spncmpcpp},
 	{"🌵",	splfcd},
+	{"🍉",	sqbittorrent},
+	{"🔈",	sncpamixer },
 	/* {"spvim2",	spvim2}, */
 	/* {"splfcd",	splfcd}, */
 };
@@ -113,6 +117,14 @@ static const Rule rules[] = {
 		NULL, "lfcd", NULL,
 		SPTAG(3),1, 1, 0, 1,
 		20, 20, basew, base169, borderpx
+	}, {
+		NULL, "qbittorrent", NULL,
+		SPTAG(4),1, 1, 0, 1,
+		20, 20, 1880, 1000, borderpx
+	}, {
+		NULL, "ncpamixer", NULL,
+		SPTAG(5),1, 1, 0, 1,
+		20, 20, 1880, 1000, borderpx
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, 1,
@@ -197,6 +209,8 @@ static Key keys[] = {
 	{ MODKEY,		XK_r,		togglescratch,	{.ui = 1} },	/* vim_two */
 	{ MODKEY,		XK_n,		togglescratch,	{.ui = 2} },	/* ncmpcpp */
 	{ MODKEY,		XK_m,		togglescratch,	{.ui = 3} },	/* lfcd    */
+	{ MODKEY,		XK_y,		togglescratch,	{.ui = 4} },	/* qbittorrent    */
+	{ MODKEY,		XK_F4,		togglescratch,	{.ui = 5} },	/* ncpamixer    */
 
 	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd} },
 	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd} },
