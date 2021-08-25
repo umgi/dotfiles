@@ -9,7 +9,9 @@ case $BLOCK_BUTTON in
 esac
 
 vol="$(pamixer --get-volume)"
-icon=""
-[ $(pamixer --get-mute) = true ] && icon="消音"
+icon="🔊"
+[ "$vol" -le "0" ] && icon="🔈"
+[ "$vol" -le "20" ] && icon="🔉"
+[ $(pamixer --get-mute) = true ] && icon="🔇"
 
-echo "音量$vol$icon"
+echo "$icon$vol"
