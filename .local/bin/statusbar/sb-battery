@@ -21,8 +21,21 @@ for battery in /sys/class/power_supply/BAT?*; do
     "Unknown") status="♻️" ;;
   esac
 
+
   capacity=$(cat "$battery/capacity")
+
+  msg_b="バッテリー残量が"
+  msg_a="％未満です。\nデバイスを充電してください。"
+  path="/tmp/$(echo -n "$battery" | tr '/' '_')_$capacity"
+
   [ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="❗"
+
+  if [ "$status" = "🔋" ]; then
+    if [ "$capacity" -eq 100 ] || [ "$capacity" -eq 10 ] || [ "$capacity" -eq 5 ] ; then
+      notify-send "バッテリー 🔋" "$msg_b$capacity$msg_a"
+    fi
+  fi
+
 
   printf "%s%d%s" "$status" "$capacity" "$warn"; unset warn
 
