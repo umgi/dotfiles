@@ -609,8 +609,8 @@ local function update_last_note(overwrite)
     local last_note_id = ankiconnect.get_last_note_id()
 
     if sub == nil or is_empty(sub['text']) then
-        notify("Nothing to export. Have you set the timings?", "warn", 2)
-        return
+        notify("Empty subtitle. Adding anyway", "warn", 2)
+        sub['text'] = ''
     end
 
     if last_note_id < minutes_ago(10) then
