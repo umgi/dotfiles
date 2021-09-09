@@ -31,7 +31,7 @@ for battery in /sys/class/power_supply/BAT?*; do
   [ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="❗"
 
   if [ "$status" = "🔋" ]; then
-    if [ "$capacity" -eq 100 ] || [ "$capacity" -eq 10 ] || [ "$capacity" -eq 5 ] ; then
+    if [ "$capacity" -eq 10 ] || [ "$capacity" -eq 5 ] ; then
       notify-send "バッテリー 🔋" "$msg_b$capacity$msg_a"
     fi
   fi
