@@ -187,7 +187,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_v,		focusstack,	{.i = 0 } },
 	{ MODKEY|ShiftMask,	XK_j,		pushstack,	{.i = INC(+1) } },	/* move window */
 	{ MODKEY|ShiftMask,	XK_k,		pushstack,	{.i = INC(-1) } },
-	{ MODKEY,		XK_space,	zoom,		{0} }, 			/* win focus */
+	/*{ MODKEY,		XK_space,	zoom,		{0} },*/ 			/* win focus */
 
 	{ MODKEY|ShiftMask,	XK_r,		setlayout,	{.v = &layouts[0]} },	/* tiletwo */
 	{ MODKEY|ShiftMask,	XK_f,		setlayout,	{.v = &layouts[1]} },	/* floating */
