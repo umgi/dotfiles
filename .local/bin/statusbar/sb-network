@@ -16,6 +16,8 @@ esac
 # try ip
 ip="$(ip route get 1 2> /dev/null | awk '{print $(NF-2); exit}')"
 
+[ -n "$ip" ] && ip="🥀$ip"
+
 
 result="$(cat /sys/class/net/w*/operstate 2> /dev/null)"
 wifistatus=""
