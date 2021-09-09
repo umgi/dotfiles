@@ -5,6 +5,9 @@ export QT_IM_MODULE="fcitx5"
 export SDL_IM_MODULE="fcitx5"
 export XMODIFIERS="@im=fcitx5"
 
+eval $(gnome-keyring-daemon --start)
+export SSH_AUTH_SOCK
+
 # keymaps
 xrdb "$XDG_CONFIG_HOME/x11/xresources"
 nginx -c "$XDG_CONFIG_HOME/nginx/shared" -p "$HOME/shared/"
@@ -14,12 +17,12 @@ hsetroot -solid '#111111'
 # bg
 remaps.sh &
 fcitx5 -d &
-redshift &
+# redshift &
 # feh --bg-fill --randomize ~/.local/share/wallpaper/active/* &
 mpd &
 unclutter &
-picom --experimental-backends &
-gazou & # japanese ocr
+# picom --experimental-backends &
+# gazou & # japanese ocr
 # syncthing --no-browser &
 dunst &
 dwmblocks &
