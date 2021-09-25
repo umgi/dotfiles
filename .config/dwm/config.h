@@ -23,7 +23,7 @@ static const int basew        = 724;
 /* static const int baseh        = 1020; /1* 1080 - gappih * 2 - bh *1/ */
 static const int baseh        = 964; /* 1080 - gappih * 2 - bh */
 static const int base169      = 407;
-static char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
+static char *fonts[]          = { "Unifont\\-JP:pixelsize=16", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[]  = "#eeeeee";
