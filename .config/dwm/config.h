@@ -1,4 +1,4 @@
-/* vim: set ts=8 sw=8 tw=0 noet : */
+	/* vim: set ts=8 sw=8 tw=0 noet : */
 /* See LICENSE file for copyright and license details. */
 /* Constants */
 #define TERMINAL "st"
@@ -74,6 +74,11 @@ static Sp scratchpads[] = {
 	/* {"splfcd",	splfcd}, */
 };
 
+#define SPAPP(INSTANCE, TAG, X, Y, W, H) {\
+	NULL, INSTANCE, NULL,\
+	SPTAG(TAG), 1, 1, 0, 1,\
+	X, Y, W, H, borderpx },
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -98,38 +103,16 @@ static const Rule rules[] = {
 		0, 0, 0, 1, -1,
 		0, 0, 0, 0, 2
 	}, {
-		NULL, "spvim1", NULL,
-		SPTAG(0),1, 1, 0, 1,
-		20, 20, basew, baseh, borderpx
-	}, {
-		NULL, "spvim2", NULL,
-		SPTAG(1),1, 1, 0, 1,
-		20, 20, basew, baseh, borderpx
-	}, {
-		/* "firefox", NULL, NULL, */
-		/* SPTAG(2),1, 1, 0, 1, */
-		/* 804, baseo, basew, baseh, borderpx */
-	/* }, { */
-		NULL, "ncmpcpp", NULL,
-		SPTAG(2),1, 1, 0, 1,
-		20, 20, basew, base169, borderpx
-	}, {
-		NULL, "lfcd", NULL,
-		SPTAG(3),1, 1, 0, 1,
-		20, 20, basew, base169, borderpx
-	}, {
-		NULL, "qbittorrent", NULL,
-		SPTAG(4),1, 1, 0, 1,
-		20, 20, 1880, 1000, borderpx
-	}, {
-		NULL, "ncpamixer", NULL,
-		SPTAG(5),1, 1, 0, 1,
-		20, 20, 1880, 1000, borderpx
-	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, 1,
 		10, 10, 0, 90, borderpx
 	},
+	SPAPP("spvim1", 0, 20, 20, basew, baseh)
+	SPAPP("spvim2", 1, 20, 20, basew, baseh)
+	SPAPP("ncmpcpp",2, 20, 20, basew, base169)
+	SPAPP("lfcd",   3, 20, 20, basew, base169)
+	SPAPP("qbittorrent", 4, 20, 20, 1880, 1000)
+	SPAPP("ncpamixer", 5, 20, 20, 1880, 1000)
 };
 
 /* layout(s) */
