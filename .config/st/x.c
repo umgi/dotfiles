@@ -1517,7 +1517,8 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 			base.fg = defaultattr;
 	} else if ((base.mode & ATTR_ITALIC && dc.ifont.badslant) ||
 	    (base.mode & ATTR_BOLD && dc.bfont.badweight)) {
-		base.fg = defaultattr;
+		//base.fg = defaultattr;
+		//base.mode |= ATTR_UNDERLINE;
 	}
 
 	if (IS_TRUECOL(base.fg)) {
