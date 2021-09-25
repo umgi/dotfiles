@@ -1,4 +1,10 @@
-" auto install plug
+" soon...
+" https://icyphox.sh/blog/nvim-lua/
+" https://github.com/nanotee/nvim-lua-guide
+" https://learnxinyminutes.com/docs/lua/
+" https://github.com/savq/paq-nvim/
+"
+"" auto install plug
 if ! filereadable(system('echo -n "$XDG_DATA_HOME/nvim/site/autoload/plug.vim"'))
   echo "Downloading junegunn/vim-plug to manage plugins..."
   silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
