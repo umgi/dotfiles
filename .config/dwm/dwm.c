@@ -110,6 +110,7 @@ struct Client {
 	unsigned int tags;
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow, issticky;
 	int floatborderpx, oldfloatborderpx;
+	float fl, ft, fr, fb; /* fixed position applied for scratchpads */
 	pid_t pid;
 	Client *next;
 	Client *snext;
@@ -166,7 +167,7 @@ typedef struct {
 	int isterminal;
 	int noswallow;
 	int monitor;
-	int floatx, floaty, floatw, floath;
+	float fl, ft, fr, fb;
 	int floatborderpx;
 } Rule;
 
@@ -187,6 +188,7 @@ typedef struct {
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
 static void arrange(Monitor *m);
+static void arrangefixedfloat(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
 static void attachabove(Client *c);
@@ -390,15 +392,13 @@ applyrules(Client *c)
 			c->noswallow  = r->noswallow;
 			c->tags |= r->tags;
 
-      c->floatborderpx = r->floatborderpx;
-      if (r->isfloating) {
-        if (r->floatw) c->w = r->floatw;
-        if (r->floath) c->h = r->floath;
-        if (r->floatx < 0) c->x = c->mon->wx + c->mon->ww + r->floatx - c->w;
-        else c->x = c->mon->wx + r->floatx;
-        if (r->floaty < 0) c->y = c->mon->wy + c->mon->wh + r->floaty - c->h;
-        else c->y = c->mon->wy + r->floaty;
-      }
+			c->floatborderpx = r->floatborderpx;
+			if (r->isfloating) {
+				if (r->fl) c->fl = r->fl;
+				if (r->fr) c->fr = r->fr;
+				if (r->ft) c->ft = r->ft;
+				if (r->fb) c->fb = r->fb;
+			}
 
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -444,7 +444,7 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
 		*h = bh;
 	if (*w < bh)
 		*w = bh;
-	if (resizehints || c->isfloating || !c->mon->lt[c->mon->sellt]->arrange) {
+	if (resizehints || (c->isfloating && !(c->tags & SPTAGMASK)) || !c->mon->lt[c->mon->sellt]->arrange) {
 		/* see last two sentences in ICCCM 4.1.2.3 */
 		baseismin = c->basew == c->minw && c->baseh == c->minh;
 		if (!baseismin) { /* temporarily remove base dimensions */
@@ -487,10 +487,39 @@ arrange(Monitor *m)
 		showhide(m->stack);
 	if (m) {
 		arrangemon(m);
+		arrangefixedfloat(m);
 		restack(m);
 	} else for (m = mons; m; m = m->next)
 		arrangemon(m);
 }
+void
+arrangefixedfloat(Monitor* m)
+{
+	unsigned int n;
+	int l = 0, t = 0, r = 0, b = 0;
+	int oh, ov, ih, iv;
+	Client* c = m->clients;
+
+	getgaps(m, &oh, &ov, &ih, &iv, &n);
+
+	for(; c; c = c->next)
+		if (c->tags & SPTAGMASK && ISVISIBLE(c) && !c->isfullscreen && !c->issticky && c->isfloating)
+		{
+			l = r = m->ww - 4 * oh - 2 * c->bw;
+			t = b = m->wh - 4 * ov - 2 * c->bw;
+			l = (int)(((float)l) * c->fl);
+			r = (int)(((float)r) * c->fr);
+			t = (int)(((float)t) * c->ft);
+			b = (int)(((float)b) * c->fb);
+			if (c->fl != 0) l += (ih+1)/2;
+			if (c->ft != 0) t += (iv+1)/2;
+			if (c->fr != 0) r += (ih+1)/2;
+			if (c->fb != 0) b += (iv+1)/2;
+			resize(c, m->wx + 2 * oh + l, m->wy + 2 * ov + t, m->ww - 4 * oh - 2 * c->bw - l - r, m->wh - 4 * ov - 2 * c->bw - t - b, 0);
+
+		}
+}
+
 
 void
 arrangemon(Monitor *m)
@@ -2157,13 +2186,13 @@ togglescratch(const Arg *arg)
 	for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
 	if (found) {
 		unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
-    if ((ISVISIBLE(c)) && selmon->sel != c) {
-      focus(c);
-      restack(selmon);
-    } else if (newtagset) {
+		if ((ISVISIBLE(c)) && (selmon->sel != c || c->issticky)) {
+			focus(c);
+			restack(selmon);
+		} else if (newtagset) {
 			selmon->tagset[selmon->seltags] = newtagset;
-      if (ISVISIBLE(c)) focus(c);
-      else focus(NULL);
+			if (ISVISIBLE(c)) focus(c);
+			else focus(NULL);
 			arrange(selmon);
 		}
 	} else {

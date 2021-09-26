@@ -61,6 +61,7 @@ const char *spvim2[] = {TERMINAL, "-n", "spvim2", NULL };
 const char *sqbittorrent[] = {"qbittorrent", NULL };
 const char *sncpamixer[] = {TERMINAL, "-n", "ncpamixer", "-e", "ncpamixer", NULL };
 const char *spbrowser[] = {"firefox", NULL };
+const char *sptelegram[] = {"telegram-desktop", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"🌸",	spvim1},
@@ -70,14 +71,15 @@ static Sp scratchpads[] = {
 	{"🌵",	splfcd},
 	{"🍉",	sqbittorrent},
 	{"🔈",	sncpamixer },
+	{"📟",	sptelegram },
 	/* {"spvim2",	spvim2}, */
 	/* {"splfcd",	splfcd}, */
 };
 
-#define SPAPP(INSTANCE, TAG, X, Y, W, H) {\
+#define SPAPP(INSTANCE, TAG, LEFT, TOP, RIGHT, BOTTOM) {\
 	NULL, INSTANCE, NULL,\
 	SPTAG(TAG), 1, 1, 0, 1,\
-	X, Y, W, H, borderpx },
+	LEFT, TOP, RIGHT, BOTTOM, borderpx },
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -89,7 +91,7 @@ static const Rule rules[] = {
 	*/
 	/* class, instance, title,
 	 * tags mask, isfloating, isterminal, noswallow, monitor
-	 * x, y, w, h, floatborderpx -- applies only on floating*/
+	 * left, top, right, bottom, floatborderpx -- applies only on floating*/
 	{
 		"Gimp", NULL, NULL,
 		1 << 8, 0, 0, 0, -1,
@@ -105,14 +107,15 @@ static const Rule rules[] = {
 	}, {
 		NULL, NULL, "popup",
 		0, 1, 0, 1, 1,
-		10, 10, 0, 90, borderpx
+		0, 0, 0, 0, borderpx
 	},
-	SPAPP("spvim1", 0, 20, 20, basew, baseh)
-	SPAPP("spvim2", 1, 20, 20, basew, baseh)
-	SPAPP("ncmpcpp",2, 20, 20, basew, base169)
-	SPAPP("lfcd",   3, 20, 20, basew, base169)
-	SPAPP("qbittorrent", 4, 20, 20, 1880, 1000)
-	SPAPP("ncpamixer", 5, 20, 20, 1880, 1000)
+	SPAPP("spvim1",		0, 0, 0, 0.6, 0)
+	SPAPP("spvim2",		1, 0, 0, 0.6, 0)
+	SPAPP("ncmpcpp",	2, 0, 0, 0.6, 0) /* be careful with 0.3333333 */
+	SPAPP("lfcd",		3, 0, 0, 0.6, 0)
+	SPAPP("qbittorrent",	4, 0, 0, 0, 0)
+	SPAPP("ncpamixer",	5, 0.3, 0.3, 0.3, 0.3)
+	SPAPP("telegram",	6, 0, 0, 0.7, 0)
 };
 
 /* layout(s) */
@@ -194,6 +197,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_m,		togglescratch,	{.ui = 3} },	/* lfcd    */
 	{ MODKEY,		XK_y,		togglescratch,	{.ui = 4} },	/* qbittorrent    */
 	{ MODKEY,		XK_F4,		togglescratch,	{.ui = 5} },	/* ncpamixer    */
+	{ MODKEY,		XK_F11,		togglescratch,	{.ui = 6} },	/* ncpamixer    */
 
 	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd} },
 	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd} },
