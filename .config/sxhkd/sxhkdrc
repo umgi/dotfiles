@@ -1,10 +1,10 @@
-button8; ~button8
-  echo "just b8"
+# Tab; ~Tab
+#  echo "just b8"
 button8; 5
   notify-send "anki"; anki
 # todo: run and raise window
-button8; w
-  notify-send "browser"; firefox
+# Tab; w
+#  notify-send "browser"; firefox
 button8; r
   node ~/Documents/pl/anki-check/anki-check.js "$(xsel --output --clipboard)"
 
@@ -43,8 +43,8 @@ super + F10
   (killall redshift) || \
   (setsid -f redshift)
 
-super + F11
-  feh --bg-fill --randomize $XDG_DATA_HOME/wallpaper/active/*/*
+# super + F11
+#   feh --bg-fill --randomize $XDG_DATA_HOME/wallpaper/active/*/*
 
 super + F12
   [ "$(pidof syncthing)" ] && \
@@ -98,6 +98,8 @@ super + shift + h
   $TERMINAL -e htop
 
 
+super + i
+  notify-send "linkhandlerで開く" "$(xsel --output --clipboard)"; linkhandler "$(xsel --output --clipboard)"
 
 XF86PowerOff
   sysact.sh
