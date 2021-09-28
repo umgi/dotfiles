@@ -32,17 +32,24 @@ alias \
   wb="w3m -B"
 
 alias \
-  cfz="nvim ~/.config/zsh/.zshrc" \
-  cfa="nvim ~/.config/zsh/aliasrc" \
   cfn="nvim ~/.config/nvim/init.vim" \
   cfd="nvim ~/.config/dwm/config.h" \
   cfdd="nvim ~/.config/dwmblocks/config.h" \
   cfs="nvim ~/.config/st/config.h"
 
 alias \
+  zar='source $ZDOTDIR/aliasrc' \
+  zpr='source $ZDOTDIR/profile' \
+  zrr='source $ZDOTDIR/.zshrc' \
+  zae='nvim $ZDOTDIR/aliasrc' \
+  zpe='nvim $ZDOTDIR/profile' \
+  zre='nvim $ZDOTDIR/.zshrc'
+
+alias \
   gs="git status" \
   gss="git status -v | $PAGER" \
   ga="git add" \
+  gr="git restore --staged" \
   gc="git commit -m" \
   gp="git push -u origin main"
 
