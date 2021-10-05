@@ -26,8 +26,15 @@
 *color7:  #ECC3C2
 *color15: #F2CC60
 
-*border: $F8DFDF
+*border: #F8DFDF
 
 desktop.background: #F8DFDF
 nvim.scheme: neolle.vim
 *font: azukifontB:pixelsize=16
+
+! dmenu
+dmenu.font: azukifontB:pixelsize=16
+dmenu.normfgcolor: #250E07
+dmenu.normbgcolor: #FFFCFD
+dmenu.selfgcolor:  #FFFCFD
+dmenu.selbgcolor:  #D68482
