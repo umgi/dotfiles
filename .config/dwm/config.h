@@ -84,6 +84,9 @@ static Sp scratchpads[] = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+#define TH1 0.333333f
+#define TH2 0.666666f
+#define HF 0.5f
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -109,13 +112,13 @@ static const Rule rules[] = {
 		0, 1, 0, 1, 1,
 		0, 0, 0, 0, borderpx
 	},
-	SPAPP("spvim1",		0, 0, 0, 0.6, 0)
-	SPAPP("spvim2",		1, 0, 0, 0.6, 0)
-	SPAPP("ncmpcpp",	2, 0, 0, 0.6, 0) /* be careful with 0.3333333 */
-	SPAPP("lfcd",		3, 0, 0, 0.6, 0)
-	SPAPP("qbittorrent",	4, 0, 0, 0, 0)
-	SPAPP("ncpamixer",	5, 0.3, 0.3, 0.3, 0.3)
-	SPAPP("telegram",	6, 0, 0, 0.7, 0)
+	SPAPP("spvim1",		0,	0,	0,	TH2,	TH2)
+	SPAPP("spvim2",		1,	0,	TH1,	TH2,	TH1)
+	SPAPP("ncmpcpp",	2,	TH2,	0,	0,	HF) /* be careful with 0.3333333 */
+	SPAPP("lfcd",		3,	TH2,	HF,	0,	0)
+	SPAPP("qbittorrent",	4,	0, 0, 0, 0)
+	SPAPP("ncpamixer",	5,	0.3, 0.3, 0.3, 0.3)
+	SPAPP("telegram",	6,	TH1, 0, TH1, 0)
 };
 
 /* layout(s) */

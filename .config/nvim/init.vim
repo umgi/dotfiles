@@ -21,7 +21,7 @@
 source $XDG_CONFIG_HOME/nvim/settings.vim
 source $XDG_CONFIG_HOME/nvim/plugins.vim
 
-source $XDG_CONFIG_HOME/nvim/schemes/neodark.vim
+source $XDG_CONFIG_HOME/nvim/schemes/index.vim
 source $XDG_CONFIG_HOME/nvim/fzf.vim
 source $XDG_CONFIG_HOME/nvim/vimwiki.vim
 source $XDG_CONFIG_HOME/nvim/auto.vim
