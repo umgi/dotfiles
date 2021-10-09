@@ -202,6 +202,9 @@ static Key keys[] = {
 	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd} },
 	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd} },
 
+	{ 0,	XF86XK_MonBrightnessUp,		spawn,		SHCMD("xbacklight -inc 15") },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 15") },
+
 	TAGKEYS( XK_1, 0)
 	TAGKEYS( XK_2, 1)
 	TAGKEYS( XK_3, 2)
