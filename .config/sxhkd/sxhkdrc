@@ -61,8 +61,8 @@ super + shift + F7
 super + shift + F8
   killall sxhkd; setsid -f sxhkd; notify-send 'sxhkd reloading'
 
-super + shift + {F9,F10}
-  xbacklight {-dec 3, -inc 3}
+#super + shift + {F9,F10}
+#  xbacklight {-dec 3, -inc 3}
 super + shift + F11
   [ "$(pidof picom)" ] && \
   killall picom || \
@@ -106,3 +106,6 @@ XF86PowerOff
 
 Print
   maimpick
+
+XF86MonBrightness{Down,Up}
+  xbacklight {-dec,-inc} 15
