@@ -19,7 +19,7 @@ Plug 'mattn/emmet-vim'
 
   Plug 'jiangmiao/auto-pairs'
   " Plug 'dyng/ctrlsf.vim'
-  Plug 'dense-analysis/ale'
+  " Plug 'dense-analysis/ale'
   Plug 'tpope/vim-commentary'
   Plug 'dominikduda/vim_current_word'
   Plug 'rkitover/vimpager'
@@ -43,6 +43,9 @@ Plug 'mattn/emmet-vim'
   Plug 'codechips/coc-svelte', {'do': 'npm install'}
 
   Plug 'prettier/vim-prettier', {'do': 'npm install'}
+
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install' }
+
 call plug#end()
 
 source $XDG_CONFIG_HOME/nvim/plugins/coc.vim

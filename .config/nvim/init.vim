@@ -26,6 +26,7 @@ source $XDG_CONFIG_HOME/nvim/fzf.vim
 source $XDG_CONFIG_HOME/nvim/vimwiki.vim
 source $XDG_CONFIG_HOME/nvim/auto.vim
 source $XDG_CONFIG_HOME/nvim/keys.vim
+source $XDG_CONFIG_HOME/nvim/plugins/markdown-preview.vim
 
 
 
