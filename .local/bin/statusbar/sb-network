@@ -23,14 +23,14 @@ result="$(cat /sys/class/net/w*/operstate 2> /dev/null)"
 wifistatus=""
 case "$result" in
   down) wifistatus="" ;;
-  up) wifistatus="$ip 📶$(awk '/^s*w/ { print int($3 * 99 / 70) }' /proc/net/wireless)" ;;
+  up) wifistatus="📶$(awk '/^s*w/ { print int($3 * 99 / 70) }' /proc/net/wireless)" ;;
 esac
 
 ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
 [ "$ttl" = "64" ] && ttl=" 🔐" || ttl=""
 
 # if wifi works then printf quality with ttl
-[ -n "$wifistatus" ] && printf '%s%s' "$wifistatus" "$ttl" && exit 0
+[ -n "$wifistatus" ] && printf '%s %s %s%s' "$(netspeed)" "$ip" "$wifistatus" "$ttl" && exit 0
 
 nconn="$(nmcli connection | tail -n +2 | grep -v '\-\- *$' | wc -l)"
 

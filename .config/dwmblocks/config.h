@@ -29,6 +29,7 @@ static const Block blocks[] = {
 
 	{ "",	"shuf -n 1 ~/.local/share/kaomoji-ny.txt",	30,	11 },
 	{ "",	"df -h --output=avail /dev/sda2 | tail -n1",	3600,	15 },
+	{ "",   "netspeed",             5,     16 },
 	{ "",	PATH("sb-pomodoro"),	15,	15 },
 	{ "",	PATH("sb-load"),	15,	11 },
 	{ "",	PATH("sb-volume"),	0,	10 },
