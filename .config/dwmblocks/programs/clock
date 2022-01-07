@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+  6) "$TERMINAL" -e "$EDITOR"
+esac
+
+weekday="$(date "+%w")"
+case "$weekday" in
+  1) w="月" ;;
+  2) w="火" ;;
+  3) w="水" ;;
+  4) w="木" ;;
+  5) w="金" ;;
+  6) w="土" ;;
+  0) w="日" ;;
+esac
+
+date "+%y%m%d $w %H:%M"

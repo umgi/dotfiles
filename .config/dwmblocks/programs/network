@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# shows with wifi only if ip_default_ttl = 64
+# detects wifi
+# then eth
+# then nmcli networking
+
+case $BLOCK_BUTTON in
+  1) "$TERMINAL" -e nmtui; pkill -RT+4 dwmblocks ;;
+  6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+# first check networking
+[ "$(nmcli networking)" = "disabled" ] && exit 0
+
+# try ip
+ip="$(ip route get 1 2> /dev/null | awk '{print $(NF-2); exit}')"
+
+[ -n "$ip" ] && ip="🥀$ip"
+
+
+result="$(cat /sys/class/net/w*/operstate 2> /dev/null)"
+wifistatus=""
+case "$result" in
+  down) wifistatus="" ;;
+  up) wifistatus="📶$(awk '/^s*w/ { print int($3 * 99 / 70) }' /proc/net/wireless)" ;;
+esac
+
+ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
+[ "$ttl" = "64" ] && ttl=" 🔐" || ttl=""
+
+# if wifi works then printf quality with ttl
+[ -n "$wifistatus" ] && printf '%s %s %s%s' "$(netspeed)" "$ip" "$wifistatus" "$ttl" && exit 0
+
+nconn="$(nmcli connection | tail -n +2 | grep -v '\-\- *$' | wc -l)"
+
+# else if no connections then you are weird. why you dont disable networking?
+[ "$nconn" -gt "0" ] && echo "$ip" || echo "👽"

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+[ -n "$(pidof openvpn)" ] && status="🔒" || exit 0
+response=$(vpnify curl -s ipinfo.io --silent --connect-timeout 30 --max-time 30)
+[ $? != 0 ] && down="🔴"
+"$(echo "$response" | grep -q "RU")" && down="🔴"
+
+printf "%s%s" "$status" "$down"

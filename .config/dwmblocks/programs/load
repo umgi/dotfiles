@@ -1,0 +1,3 @@
+#!/bin/sh
+printf "🐴"
+uptime | tr -d ',' | awk -F'load average: ' '{ print $2 }'
