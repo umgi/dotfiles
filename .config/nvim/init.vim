@@ -22,6 +22,8 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
     Plug '~/repos/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'aqez/vim-test'
+
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 colorscheme onehalfdark
@@ -41,6 +43,7 @@ nmap <Leader>p :Telescope find_files<CR>
 " NerdTree
 nnoremap <Leader>t :NERDTreeToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeShowHidden = 1
 
 " Treesitter
 lua <<EOF
@@ -122,5 +125,17 @@ nnoremap <leader>gr :Telescope live_grep<CR>
 
 
 nnoremap <leader>rt :TestNearest<CR>
+
+" GO
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+let g:go_auto_type_info = 1
 
 source $XDG_CONFIG_HOME/nvim/auto.vim

@@ -1,12 +1,18 @@
 " General
+" see .local/bin/remaps.sh
 filetype plugin on
 filetype indent on
-set autoread
 let mapleader = " "
 set clipboard+=unnamedplus
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 set nocompatible
+
+" setxkbmap -option "ctrl:nocaps"
+" xcape -t 200
+set autoread " Reload changed files
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime " trigger reload on cursor stop
+autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Node
 
 " UI
 syntax on
@@ -36,6 +42,7 @@ set cmdheight=1
 set modeline
 set shortmess=aT
 
+
 "Files, backups and undo
 set nobackup
 set nowb
@@ -45,6 +52,8 @@ nnoremap <Leader>h <C-w>h
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>l <C-w>l
+set path+=**
+set autowrite
 
 " Text/Indent
 set expandtab
@@ -56,10 +65,13 @@ set smartindent
 set cindent
 set nowrap
 
-
 " Quick fix
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
+
+" vim - manpager
+set t_ZH=^[[3m
+set t_ZR=^[[23
 
 nnoremap <leader><F8> :source $MYVIMRC<CR>
 nnoremap <leader><F9> :source $MYVIMRC<CR>
