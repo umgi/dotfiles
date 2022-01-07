@@ -7,6 +7,10 @@ endif
 
 call plug#begin('$XDG_DATA_HOME/nvim/plugged')
 
+  Plug 'preservim/nerdtree'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+
   Plug 'itchyny/lightline.vim'
 
   " Plug 'rafi/awesome-vim-colorschemes'
@@ -15,21 +19,18 @@ Plug 'mattn/emmet-vim'
   Plug 'ghifarit53/tokyonight-vim'
   "Plug 'altercation/vim-colors-solarized'
   Plug 'KeitaNakamura/neodark.vim'
-  " Plug 'preservim/nerdtree'
 
   Plug 'jiangmiao/auto-pairs'
   " Plug 'dyng/ctrlsf.vim'
-  " Plug 'dense-analysis/ale'
+  Plug 'dense-analysis/ale'
   Plug 'tpope/vim-commentary'
   Plug 'dominikduda/vim_current_word'
   Plug 'rkitover/vimpager'
-    Plug 'vimwiki/vimwiki'
+  Plug 'vimwiki/vimwiki'
 
 
   Plug 'junegunn/goyo.vim'
 
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
   Plug 'airblade/vim-rooter'
 
   Plug 'baskerville/vim-sxhkdrc'
@@ -46,7 +47,13 @@ Plug 'mattn/emmet-vim'
 
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install' }
 
+  Plug 'OmniSharp/omnisharp-vim'
+
 call plug#end()
 
+source $XDG_CONFIG_HOME/nvim/plugins/nerdtree.vim
+source $XDG_CONFIG_HOME/nvim/plugins/fzf.vim
 source $XDG_CONFIG_HOME/nvim/plugins/coc.vim
 source $XDG_CONFIG_HOME/nvim/plugins/prettier.vim
+source $XDG_CONFIG_HOME/nvim/plugins/ale.vim
+source $XDG_CONFIG_HOME/nvim/plugins/omnisharp.vim

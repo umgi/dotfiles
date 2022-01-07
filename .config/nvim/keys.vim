@@ -15,4 +15,4 @@ inoremap <C-l> <Right>
 " inoremap <C-h> <Left> " not working
 
 
-nmap <leader>mv <Plug>MarkdownPreviewToggle
+map <leader>mv <Plug>MarkdownPreviewToggle
