@@ -3,9 +3,10 @@ filetype plugin on
 filetype indent on
 set autoread
 let mapleader = " "
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+set nocompatible
 
 " UI
 syntax on
@@ -15,7 +16,7 @@ set ignorecase
 set smartcase
 set incsearch
 set lazyredraw
-set nohlsearch
+set hlsearch
 set magic
 set showmatch
 set foldcolumn=1
@@ -27,6 +28,13 @@ set previewheight=10
 set laststatus=2
 set scrolloff=10
 set signcolumn=yes
+set splitbelow
+set splitright
+set list
+set listchars=eol:%,tab:>\ ,trail:-,extends:>,precedes:<
+set cmdheight=1
+set modeline
+set shortmess=aT
 
 "Files, backups and undo
 set nobackup
@@ -43,8 +51,9 @@ set expandtab
 set smarttab
 set shiftwidth=2
 set tabstop=2
-set ai
-set si
+set autoindent
+set smartindent
+set cindent
 set nowrap
 
 
