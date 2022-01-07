@@ -30,7 +30,7 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'aqez/vim-test'
 
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    Plug 'ray-x/go.nvim'
 
 call plug#end()
 
@@ -65,38 +65,38 @@ EOF
 " LSP
 lua << EOF
 
- require('telescope').setup {
-     defaults = {
-         file_sorter = require('telescope.sorters').get_fzy_sorter,
-         mappings = {
-             i = {
-                 ["<C-k>"] = require('telescope.actions').move_selection_previous,
-                 ["<C-j>"] = require('telescope.actions').move_selection_next,
-             }
-         }
-     },
-     extensions = {
-         fzy_native = {
-             override_generic_sorter = false,
-             override_file_sorter = true
-         }
-     }
- }
- require('telescope').load_extension('fzy_native')
+  require('telescope').setup {
+    defaults = {
+      file_sorter = require('telescope.sorters').get_fzy_sorter, mappings = {
+        i = {
+          ["<C-k>"] = require('telescope.actions').move_selection_previous,
+          ["<C-j>"] = require('telescope.actions').move_selection_next,
+        }
+      }
+    },
+    extensions = {
+      fzy_native = {
+        override_generic_sorter = false,
+        override_file_sorter = true
+      }
+    }
+  }
 
- local cmp = require'cmp'
-  cmp.setup({
+  require('telescope').load_extension('fzy_native')
+  require('go').setup()
+
+  require'cmp'.setup {
     snippet = {
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
     sources = {
-        { name = "nvim_lsp" },
-        { name = "vsnip" },
-        { name = "buffer" }
+      { name = "nvim_lsp" },
+      { name = "vsnip" },
+      { name = "buffer" }
     }
-  })
+  }
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
@@ -110,6 +110,7 @@ lua << EOF
   nvim_lsp.tsserver.setup{ capabilities = capabilities }
   nvim_lsp.cssls.setup{ capabilities = capabilities }
   nvim_lsp.html.setup{ capabilities = capabilities }
+  nvim_lsp.gopls.setup{ capabilities = capabilities }
 EOF
 
 nnoremap gd :Telescope lsp_definitions<CR>
@@ -140,7 +141,7 @@ let g:go_highlight_operators = 1
 
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
-
 let g:go_auto_type_info = 1
+au filetype go inoremap <buffer> . .<C-x><C-o>
 
 source $XDG_CONFIG_HOME/nvim/auto.vim
