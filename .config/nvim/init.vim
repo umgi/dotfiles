@@ -1,5 +1,12 @@
 source $XDG_CONFIG_HOME/nvim/common.vim
 
+" Auto install Plug
+if ! filereadable(system('echo -n "$XDG_DATA_HOME/nvim/site/autoload/plug.vim"'))
+  echo "Downloading junegunn/vim-plug to manage plugins..."
+  silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall
+endif
+
 " Vim Plug
 call plug#begin('$XDG_DATA_HOME/nvim/plugged')
     Plug 'morhetz/gruvbox'
@@ -24,12 +31,10 @@ call plug#begin('$XDG_DATA_HOME/nvim/plugged')
     Plug 'aqez/vim-test'
 
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 call plug#end()
 
-colorscheme onehalfdark
-let g:airline_theme = 'onehalfdark'
-set background=dark
-hi! Normal guibg=NONE ctermbg=NONE
+source $XDG_CONFIG_HOME/nvim/colorscheme.vim
 
 
 " Vimspector

@@ -42,6 +42,9 @@ set cmdheight=1
 set modeline
 set shortmess=aT
 
+set wildmenu
+set wildmode=list:longest
+
 
 "Files, backups and undo
 set nobackup
