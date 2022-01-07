@@ -51,3 +51,10 @@ set nowrap
 " Quick fix
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
+
+nnoremap <leader><F8> :source $MYVIMRC<CR>
+nnoremap <leader><F9> :source $MYVIMRC<CR>
+nnoremap <leader><F10> :PlugInstall<CR>
+
+" close term
+map <F1> <C-\><C-n>
