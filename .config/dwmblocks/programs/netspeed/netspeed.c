@@ -42,15 +42,25 @@ get_new_total (unsigned long long int *received, unsigned long long int *transmi
 }
 
 void
+format_speed(char *speedstr, double speed)
+{
+    if (speed >= 1024.0) {
+        speed /= 1024.0;
+        if (speed < 10.0) {
+            sprintf(speedstr, "%.1fM", speed);
+        } else {
+            sprintf(speedstr, "%.0fM", speed);
+        }
+    } else {
+        sprintf(speedstr, "%.0f", speed);
+    }
+}
+
+void
 calculate_speed(char *speedstr, unsigned long long int *newval, unsigned long long int *oldval){
     double speed;
     speed = (*newval - *oldval) / 1024.0; //result in KB/s
-    if (speed > 1024.0) { 
-        speed /= 1024.0;    //result in MB/s
-        sprintf (speedstr, "%.1fm", speed);
-    } else {
-        sprintf (speedstr, "%.0fk", speed);
-    }
+    format_speed(speedstr, speed);
 }
 
 int
@@ -77,7 +87,7 @@ main(){
     fprintf(rec, "%llu\n", received);
     fprintf(transm, "%llu\n", transmitted);
 
-    printf("%s🔗%s\n", downspeedstr, upspeedstr);
+    printf("⬇%s ⬆%s\n", downspeedstr, upspeedstr);
     fclose(rec);
     fclose(transm);
 }
