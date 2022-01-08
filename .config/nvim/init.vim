@@ -84,6 +84,7 @@ lua << EOF
 
   require('telescope').load_extension('fzy_native')
   require('go').setup()
+  vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
 
   require'cmp'.setup {
     snippet = {
@@ -131,17 +132,5 @@ nnoremap <leader>gr :Telescope live_grep<CR>
 
 
 nnoremap <leader>rt :TestNearest<CR>
-
-" GO
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_operators = 1
-
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
-let g:go_auto_type_info = 1
-au filetype go inoremap <buffer> . .<C-x><C-o>
 
 source $XDG_CONFIG_HOME/nvim/auto.vim
