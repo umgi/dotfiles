@@ -5,7 +5,7 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static const unsigned int borderpx  = 2;	/* border pixel of windows */
+static const unsigned int borderpx = 1;	/* border pixel of windows */
 static unsigned int snap      = 16;	/* snap pixel */
 static unsigned int gappih    = 20;	/* horiz inner gap between windows */
 static unsigned int gappiv    = 20;	/* vert inner gap between windows */
@@ -27,14 +27,15 @@ static char *fonts[]          = { /*"Unifont\\-JP:pixelsize=16",*/ "monospace:pi
 
 static char accent[] = "#b0416b";
 static char bg[] = "#111111";
+static char bordersel[] = "#eeeeee";
 
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[]  = "#eeeeee";
 
 static char *colors[][3] = {
        /*		fg		bg		border   */
-       [SchemeNorm] = { normfgcolor,	bg,	bg },
-       [SchemeSel]  = { selfgcolor,	bg,	accent },
+       [SchemeNorm] = { normfgcolor,	bg,	accent },
+       [SchemeSel]  = { selfgcolor,	bg,	bordersel },
        [SchemeAccent]  = { accent,	bg,	bg },
 };
 
