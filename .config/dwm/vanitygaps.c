@@ -381,11 +381,14 @@ tiletwo(Monitor *m)
 	int mrest = 0, srest = 0;
   int nbreak = -1;
   int sw = 0, sh = 0;
+	unsigned int be;
 	Client *c;
 
 	getgaps(m, &oh, &ov, &ih, &iv, &n);
 	if (n == 0)
 		return;
+
+  be = oh == 0;
 
 	/* initialize areas */
 	mx = m->wx + ov;
@@ -425,19 +428,19 @@ tiletwo(Monitor *m)
 	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
 		if (!m->nmaster || i < m->nmaster) {
 			/* nmaster clients are stacked vertically, in the center of the screen */
-			resize(c, mx, my, mw - (2*c->bw), (mh / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
-			my += HEIGHT(c) + ih;
+			resize(c, mx - be*c->bw, my - be*c->bw, mw - (!be*2*c->bw), (mh / mfacts) + (i < mrest ? 1 : 0) - (!be*2*c->bw), 0);
+			my += HEIGHT(c) + ih - be*c->bw;
 		} else {
 			/* side clients are grid */
       if ((i - m->nmaster) % 2 == 0 && n == i + 1) {
-				resize(c, lx, ly, 2*sw + iv - (2*c->bw), (sh / sfacts) - (2*c->bw), 0);
+				resize(c, lx, ly - be*c->bw, 2*sw + iv - ((!be)*2*c->bw), (sh / sfacts) - (!be*2*c->bw), 0);
       }
 			else if ((i - m->nmaster) % 2 ) {
-				resize(c, rx, ry, sw - (2*c->bw), (sh / sfacts) + ((i - 2*m->nmaster) < 2*srest ? 1 : 0) - (2*c->bw), 0);
-				ry += HEIGHT(c) + ih;
+				resize(c, rx, ry - be*c->bw, sw - (!be*2*c->bw), (sh / sfacts) + ((i - 2*m->nmaster) < 2*srest ? 1 : 0) - (!be*2*c->bw), 0);
+				ry += HEIGHT(c) + ih - be*c->bw;
 			} else {
-				resize(c, lx, ly, sw - (2*c->bw), (sh / sfacts) + ((i - 2*m->nmaster) < 2*srest ? 1 : 0) - (2*c->bw), 0);
-				ly += HEIGHT(c) + ih;
+				resize(c, lx, ly - be*c->bw, sw - ((2-be)*c->bw), (sh / sfacts) + ((i - 2*m->nmaster) < 2*srest ? 1 : 0) - (!be*2*c->bw), 0);
+				ly += HEIGHT(c) + ih - be*c->bw;
 			}
 		}
 	}

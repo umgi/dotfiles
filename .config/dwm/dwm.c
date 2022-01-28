@@ -1112,6 +1112,8 @@ expose(XEvent *e)
 void
 focus(Client *c)
 {
+	XWindowChanges wc;
+
 	if (!c || !ISVISIBLE(c))
 		for (c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
 	if (selmon->sel && selmon->sel != c)
@@ -1125,6 +1127,11 @@ focus(Client *c)
 		attachstack(c);
 		grabbuttons(c, 1);
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+		if (!c->isfloating) {
+			wc.sibling = selmon->barwin;
+			wc.stack_mode = Below;
+			XConfigureWindow(dpy, c->win, CWSibling | CWStackMode, &wc);
+		}
 		setfocus(c);
 	} else {
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
