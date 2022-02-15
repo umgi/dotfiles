@@ -36,5 +36,6 @@
 *.color7:       #5b5b5b
 *.color15:      #9b9b9b
 
-desktop.background: #000000
+desktop.background: #b0416b
+
 nvim.scheme: neodark.vim
