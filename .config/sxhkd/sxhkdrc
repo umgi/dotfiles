@@ -106,8 +106,15 @@ XF86MonBrightness{Down,Up}
 XF86Audio{Mute,LowerVolume,RaiseVolume}
   pamixer {-t, --allow-boost -d 4, --allow-boost -i 4}; kill -44 $(pidof dwmblocks)
 
+
 XF86AudioPlay
-  mpc pause; mpv-toggle --pause-all
+  mpc toggle; mpv-toggle --pause-all
+
+
+super + F8
+  notify-send "soundcloud"; firefox -kiosk -private-window "https://soundcloud.com/discover"
+super + F9
+  notify-send "spotify"; firefox -kiosk -private-window "https://open.spotify.com"
 
 super + F12
   [ "$(cat /etc/hostname)" = "arch" ] && toggle-touchpad.sh
