@@ -110,6 +110,8 @@ XF86Audio{Mute,LowerVolume,RaiseVolume}
 XF86AudioPlay
   mpc toggle; mpv-toggle --pause-all
 
+super + Up
+  wallpaper.sh
 
 super + F8
   notify-send "soundcloud"; firefox -kiosk -private-window "https://soundcloud.com/discover"
