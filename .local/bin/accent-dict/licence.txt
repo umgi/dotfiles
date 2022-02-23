@@ -1,0 +1,3 @@
+https://github.com/toasted-nutbread/yomichan-pitch-accent-dictionary
+https://github.com/mifunetoshiro/kanjium
+Creative Commons Attribution-ShareAlike 4.0 International license

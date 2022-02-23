@@ -1,5 +1,16 @@
 # dotfiles
 
+## japanese pitch accent
+
+```
+notify-send pitch accent for select
+called by key combination in sxhkd
+
+script at:
+  .local/bin/accent.sh
+  .local/bin/accent-dict/*
+```
+
 ## install
 
 ### before

@@ -94,6 +94,9 @@ super + shift + h
 super + i
   notify-send "linkhandlerで開く" "$(xsel --output --clipboard)"; linkhandler "$(xsel --output --clipboard)"
 
+super + x
+  accent.sh
+
 XF86PowerOff
   sysact.sh
 
