@@ -30,9 +30,10 @@ ttl="$(cat /proc/sys/net/ipv4/ip_default_ttl)"
 [ "$ttl" = "64" ] && ttl=" 🔐" || ttl=""
 
 # if wifi works then printf quality with ttl
-[ -n "$wifistatus" ] && printf '%s %s %s%s' "$(netspeed)" "$ip" "$wifistatus" "$ttl" && exit 0
+speed="$(netspeed)"
+[ -n "$wifistatus" ] && printf '%s %s %s%s' "$netspeed" "$ip" "$wifistatus" "$ttl" && exit 0
 
 nconn="$(nmcli connection | tail -n +2 | grep -v '\-\- *$' | wc -l)"
 
 # else if no connections then you are weird. why you dont disable networking?
-[ "$nconn" -gt "0" ] && echo "$ip" || echo "👽"
+[ "$nconn" -gt "0" ] && echo "$speed $ip" || echo "👽"
