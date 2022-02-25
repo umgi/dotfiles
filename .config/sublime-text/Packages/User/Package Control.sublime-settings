@@ -1,0 +1,24 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Babel",
+		"Clang Format",
+		"Gofmt",
+		"JsPrettier",
+		"LSP",
+		"Package Control",
+		"Panda Syntax Sublime",
+		"ProjectManager",
+		"Renpy Language",
+		"SCSS",
+		"SublimeLinter",
+		"SublimeLinter-eslint",
+		"Svelte",
+		"Sync Settings",
+		"Terminus",
+	],
+}

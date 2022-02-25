@@ -1,0 +1,16 @@
+// Settings in here override those in "/JsPrettier/JsPrettier.sublime-settings",
+
+{
+	"debug": true,
+	// "auto_format_on_save": true,
+	"auto_format_on_save_excludes": [
+		"*/node_modules/*",
+	],
+	"disable_prettier_cursor_offset": true,
+	"htmlWhitespaceSensitivity": "strict",
+	"prettier_options": {
+		"tabWidth": 2,
+		"singleQuote": true,
+		"semi": false,
+	}
+}
