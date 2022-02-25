@@ -12,7 +12,6 @@ export SSH_AUTH_SOCK
 xrdb "$XDG_CONFIG_HOME/x11/xresources"
 nginx -c "$XDG_CONFIG_HOME/nginx/shared" -p "$HOME/shared/"
 
-theme-set.sh &
 # b
 remaps.sh &
 fcitx5 -d &
@@ -26,4 +25,6 @@ unclutter &
 dunst &
 dwmblocks &
 sxhkd &
+wallpaper.sh &
+#exec openbox-session
 exec dwm

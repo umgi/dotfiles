@@ -27,7 +27,7 @@ index=${chosen%%)*}
 echo "$list" | head -n "$index" | tail -n 1 | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
 
 ( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
-vpnify sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10 --connect-retry-max 1 # --resolv-retry 10 --connect-retry-max 1
+sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10 --connect-retry-max 1 # --resolv-retry 10 --connect-retry-max 1
 [ $? = "1" ] && status="failed" || status="closed"
 dunstify -h "$dunst_id" "$dunst_title - $status"
 pkill -RTMIN+5 dwmblocks

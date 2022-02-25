@@ -5,7 +5,7 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static const unsigned int borderpx  = 1;	/* border pixel of windows */
+static const unsigned int borderpx = 1;	/* border pixel of windows */
 static unsigned int snap      = 16;	/* snap pixel */
 static unsigned int gappih    = 20;	/* horiz inner gap between windows */
 static unsigned int gappiv    = 20;	/* vert inner gap between windows */
@@ -23,23 +23,20 @@ static const int basew        = 724;
 /* static const int baseh        = 1020; /1* 1080 - gappih * 2 - bh *1/ */
 static const int baseh        = 964; /* 1080 - gappih * 2 - bh */
 static const int base169      = 407;
-static char *fonts[]          = { "Unifont\\-JP:pixelsize=16", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
+static char *fonts[]          = { /*"Unifont\\-JP:pixelsize=16",*/ "monospace:pixelsize=16", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
+
+static char accent[] = "#b0416b";
+static char bg[] = "#111111";
+static char bordersel[] = "#eeeeee";
 
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[]  = "#eeeeee";
-static char accfgcolor[] = "#dc657c";
-static char normbgcolor[] = "#111111";
-static char selbgcolor[]  = "#111111";
-static char accbgcolor[] = "#111111";
-static char normbordercolor[] = "#111111";
-static char selbordercolor[] = "#dc657c";
-static char accbordercolor[] = "#111111";
 
 static char *colors[][3] = {
        /*		fg		bg		border   */
-       [SchemeNorm] = { normfgcolor,	normbgcolor,	normbordercolor },
-       [SchemeSel]  = { selfgcolor,	selbgcolor,	selbordercolor },
-       [SchemeAccent]  = { accfgcolor,	accbgcolor,	accbordercolor },
+       [SchemeNorm] = { normfgcolor,	bg,	accent },
+       [SchemeSel]  = { selfgcolor,	bg,	bordersel },
+       [SchemeAccent]  = { accent,	bg,	bg },
 };
 
 static const unsigned int baralpha = 0xd0;
@@ -153,13 +150,14 @@ static const char *termcmd[]  = { TERMINAL, NULL };
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-	{ "foreground",		STRING,		&normfgcolor },
-	{ "foreground",		STRING,		&selfgcolor },
-	{ "background",		STRING,		&normbgcolor },
-	{ "background",		STRING,		&selbgcolor },
-	{ "normborder",		STRING,		&normbordercolor },
-	{ "selborder",		STRING,		&selbordercolor },
-	{ "accfgcolor",		STRING,		&accfgcolor },
+	{"accent", STRING, &accent },
+	//{ "foreground",		STRING,		&normfgcolor },
+	//{ "foreground",		STRING,		&selfgcolor },
+	//{ "background",		STRING,		&normbgcolor },
+	//{ "background",		STRING,		&selbgcolor },
+	//{ "normborder",		STRING,		&normbordercolor },
+	//{ "selborder",		STRING,		&selbordercolor },
+	//{ "accfgcolor",		STRING,		&accfgcolor },
 };
 
 #include <X11/XF86keysym.h>
@@ -204,6 +202,9 @@ static Key keys[] = {
 
 	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd} },
 	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd} },
+
+	{ 0,	XF86XK_MonBrightnessUp,		spawn,		SHCMD("xbacklight -inc 15") },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 15") },
 
 	TAGKEYS( XK_1, 0)
 	TAGKEYS( XK_2, 1)

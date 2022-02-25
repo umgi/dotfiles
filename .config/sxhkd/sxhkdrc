@@ -1,4 +1,4 @@
-# Tab; ~Tab
+#4 Tab; ~Tab
 #  echo "just b8"
 button8; 5
   notify-send "anki"; anki
@@ -26,9 +26,6 @@ button8; c
 button8; v
   xvkbd -no-jump-pointer -xsendevent -text '\Cv'
 
-# pulseaudio
-super + {F1, F2, F3}
-  pamixer {-t, --allow-boost -d 4, --allow-boost -i 4}; kill -44 $(pidof dwmblocks)
 
  super + F4
 #   $TERMINAL -e 'ncpamixer'
@@ -46,29 +43,25 @@ super + F10
 # super + F11
 #   feh --bg-fill --randomize $XDG_DATA_HOME/wallpaper/active/*/*
 
-super + F12
-  [ "$(pidof syncthing)" ] && \
-  (killall syncthing; dunstify -r 482819 'syncthing killed') || \
-  (dunstify -r 482819 'syncthing launching...'; setsid -f syncthing)
+#super + F12
+#  [ "$(pidof syncthing)" ] && \
+#  (killall syncthing; dunstify -r 482819 'syncthing killed') || \
+#  (dunstify -r 482819 'syncthing launching...'; setsid -f syncthing)
 
 super + shift + {F1,F2,F3,F4}
   dunstctl {close-all, close, history-pop, context}
 
 super + shift + {F5,F6}
   mpc seek {-10,+10}
-super + shift + F7
-  mpc pause; mpv-toggle --pause-all
 super + shift + F8
   killall sxhkd; setsid -f sxhkd; notify-send 'sxhkd reloading'
 
-super + shift + {F9,F10}
-  xbacklight {-dec 3, -inc 3}
+#super + shift + {F9,F10}
+#  xbacklight {-dec 3, -inc 3}
 super + shift + F11
   [ "$(pidof picom)" ] && \
   killall picom || \
   setsid -f picom --experimental-backends
-super + shift + F12
-  toggle-touchpad.sh
 
 
 super + w
@@ -101,8 +94,42 @@ super + shift + h
 super + i
   notify-send "linkhandlerで開く" "$(xsel --output --clipboard)"; linkhandler "$(xsel --output --clipboard)"
 
+super + x
+  accent.sh
+
 XF86PowerOff
   sysact.sh
 
 Print
   maimpick
+
+XF86MonBrightness{Down,Up}
+  xbacklight {-dec,-inc} 15
+
+XF86Audio{Mute,LowerVolume,RaiseVolume}
+  pamixer {-t, --allow-boost -d 4, --allow-boost -i 4}; kill -44 $(pidof dwmblocks)
+
+
+XF86AudioPlay
+  mpc toggle; mpv-toggle --pause-all
+
+super + Up
+  wallpaper.sh
+
+super + F8
+  notify-send "soundcloud"; firefox -kiosk -private-window "https://soundcloud.com/discover"
+super + F9
+  notify-send "spotify"; firefox -kiosk -private-window "https://open.spotify.com"
+
+super + F12
+  [ "$(cat /etc/hostname)" = "arch" ] && toggle-touchpad.sh
+
+super + shift + y
+  X_OUTPUT=$(xrandr | grep -oP '([a-zA-Z0-9]+)(?= connected)'); \
+  xrandr --output "$X_OUTPUT" --scale 0.5x0.5 --filter nearest; \
+  wallpaper.sh
+super + shift + u
+  X_OUTPUT=$(xrandr | grep -oP '([a-zA-Z0-9]+)(?= connected)'); \
+  xrandr --output "$X_OUTPUT" --scale 1x1; \
+  wallpaper.sh
+

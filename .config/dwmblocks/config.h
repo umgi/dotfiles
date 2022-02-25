@@ -1,7 +1,7 @@
 /* vim: set ts=8 sw=8 tw=0 noet : */
 //Modify this file to change what commands output to your statusbar, and recompile using the make command.
 
-#define PATH(name) "~/.local/bin/statusbar/"name
+#define PATH(name) "~/.config/dwmblocks/programs/"name
 static const Block blocks[] = {
 	/*Icon*/	/*Command*/		/*Update Interval*/	/*Update Signal*/
 	/* {"⌨", "sb-kbselect", 0, 30}, */
@@ -27,14 +27,16 @@ static const Block blocks[] = {
 	{"",	"sb-clock",	60,	1},
 	{"",	"sb-help-icon",	0,	15},*/
 
-	{ "",	"df -h --output=avail /dev/sda2 | tail -n1",	3600,	15 },
-	{ "",	PATH("sb-pomodoro"),	15,	15 },
-	{ "",	PATH("sb-load"),	15,	11 },
-	{ "",	PATH("sb-volume"),	0,	10 },
-	{ "",	PATH("sb-vpnify"),	0,	5 },
-	{ "",	PATH("sb-network"),	5,	4 },
-	{ "",	PATH("sb-battery"),	5,	3 },
-	{ "",	PATH("sb-clock"),	5,	1 },
+	//{ "",	"shuf -n 1 ~/.local/share/kaomoji-ny.txt",	30,	11 }, // happy new year
+	{ "",	"df -h --output=avail /dev/sda2 | tail -n1",	360,	15 },
+	{ "",	PATH("github"),	120,	15 },
+	{ "",	PATH("pomodoro"),	15,	15 },
+	{ "",	PATH("load"),	15,	11 },
+	{ "",	PATH("volume"),	0,	10 },
+	{ "",	PATH("vpnify"),	0,	5 },
+	{ "",	PATH("network"),	5,	4 },
+	{ "",	PATH("battery"),	5,	3 },
+	{ "",	PATH("clock"),	5,	1 },
 };
 
 //Sets delimiter between status commands. NULL character ('\0') means no delimiter.

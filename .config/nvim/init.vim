@@ -1,185 +1,136 @@
-" soon...
-" https://icyphox.sh/blog/nvim-lua/
-" https://github.com/nanotee/nvim-lua-guide
-" https://learnxinyminutes.com/docs/lua/
-" https://github.com/savq/paq-nvim/
-"
+source $XDG_CONFIG_HOME/nvim/common.vim
 
-" remap caps to ctrl but when in combo otherwise escape
-" setxkbmap -option "ctrl:nocaps"
-" xcape -t 200
+" Auto install Plug
+if ! filereadable(system('echo -n "$XDG_DATA_HOME/nvim/site/autoload/plug.vim"'))
+  echo "Downloading junegunn/vim-plug to manage plugins..."
+  silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall
+endif
+
+" Vim Plug
+call plug#begin('$XDG_DATA_HOME/nvim/plugged')
+    Plug 'morhetz/gruvbox'
+    Plug 'tpope/vim-fugitive'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'preservim/nerdtree'
+    Plug 'ntpeters/vim-better-whitespace'
+    "Plug 'puremourning/vimspector'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzy-native.nvim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'kabouzeid/nvim-lspinstall'
+    Plug 'sonph/onehalf', { 'rtp' : 'vim' }
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug '~/repos/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'aqez/vim-test'
+
+    Plug 'ray-x/go.nvim'
+
+call plug#end()
+
+source $XDG_CONFIG_HOME/nvim/colorscheme.vim
 
 
+" Vimspector
+"let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+"nnoremap <leader>vr :VimspectorReset<CR>
 
-" neoclide/coc-tsserver
-" neoclide/coc-eslint
-" fannheyward/coc-styled-components
-" fannheyward/coc-react-refactor
+" Telescope
+let $FZF_DEFAULT_COMMAND = 'rg --files'
+nmap <Leader>p :Telescope find_files<CR>
+
+" NerdTree
+nnoremap <Leader>t :NERDTreeToggle<CR>
+let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeShowHidden = 1
+
+" Treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = true,
+  },
+}
+EOF
 
 
+" LSP
+lua << EOF
 
-source $XDG_CONFIG_HOME/nvim/settings.vim
-source $XDG_CONFIG_HOME/nvim/plugins.vim
+  require('telescope').setup {
+    defaults = {
+      file_sorter = require('telescope.sorters').get_fzy_sorter, mappings = {
+        i = {
+          ["<C-k>"] = require('telescope.actions').move_selection_previous,
+          ["<C-j>"] = require('telescope.actions').move_selection_next,
+        }
+      }
+    },
+    extensions = {
+      fzy_native = {
+        override_generic_sorter = false,
+        override_file_sorter = true
+      }
+    }
+  }
 
-source $XDG_CONFIG_HOME/nvim/schemes/index.vim
-source $XDG_CONFIG_HOME/nvim/fzf.vim
-source $XDG_CONFIG_HOME/nvim/vimwiki.vim
+  require('telescope').load_extension('fzy_native')
+  require('go').setup()
+  vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+
+  require'cmp'.setup {
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
+    sources = {
+      { name = "nvim_lsp" },
+      { name = "vsnip" },
+      { name = "buffer" }
+    }
+  }
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+  local nvim_lsp = require('lspconfig')
+  local pid = vim.fn.getpid()
+  local omnisharp_bin = "omnisharp"
+  nvim_lsp.omnisharp.setup{ cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }, capabilities = capabilities }
+  nvim_lsp.rust_analyzer.setup{ capabilities = capabilities }
+  nvim_lsp.clangd.setup{ capabilities = capabilities }
+  nvim_lsp.tsserver.setup{ capabilities = capabilities }
+  nvim_lsp.cssls.setup{ capabilities = capabilities }
+  nvim_lsp.html.setup{ capabilities = capabilities }
+  nvim_lsp.gopls.setup{ capabilities = capabilities }
+EOF
+
+nnoremap gd :Telescope lsp_definitions<CR>
+nnoremap <Leader>fi :Telescope lsp_implementations<CR>
+nnoremap <Leader>fu :Telescope lsp_references<CR>
+nnoremap <leader>cf <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader><space> :Telescope lsp_code_actions<CR>
+vnoremap <leader><space> :Telescope lsp_range_code_actions<CR>
+nnoremap <F2> <cmd>lua vim.lsp.buf.rename()<CR>
+
+nnoremap <leader>gs :Telescope git_status<CR>
+nnoremap <leader>gb :Telescope git_branches<CR>
+nnoremap <leader>gc :Telescope git_commits<CR>
+nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+
+nnoremap <leader>gr :Telescope live_grep<CR>
+
+
+nnoremap <leader>rt :TestNearest<CR>
+
 source $XDG_CONFIG_HOME/nvim/auto.vim
-source $XDG_CONFIG_HOME/nvim/keys.vim
-
-
-
-
-" find files
-set path+=** " search for file in sub-sub-dirs
-
-command! MakeTags !ctags -R \.
-
-
-set autoread " Reload changed files
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime " trigger reload on cursor stop
-autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Node
-
-
-
-" netrw
-let g:netrw_banner=0
-let g:netrw_browse_split=4
-let g:altv=1
-
-" no arrows
-" noremap <Up> <NOP>
-" noremap <Down> <NOP>
-" noremap <Right> <NOP>
-"
-
-
-" Usual tabs
-nmap <Tab> >>
-nmap <S-Tab> <!-- <<
-
-
-let g:user_emmet_leader_key=','
-
-
-
-
-
-
-" nerd tree
-" let NERDTreeShowBookmarks = 1
-" let NERDTreeShowHidden = 1
-" let NERDTreeShowLineNumbers = 1
-" let NERDTreeMinimalMenu = 1
-" let NERDTreeWinPos = "left"
-" let NERDTreeWinSize = 31
-
-" nmap <F1> :NERDTreeFocus<CR>
-" nmap <F2> :NERDTreeToggle<CR>
-
-nnoremap <C-d> :echo expand('<cword>')<CR>
-
-
-
-nnoremap <C-w>m :
-"nnoremap <C-w>,
-"nnoremap <C-w>.
-
-
-
-let g:AutoPairsShortcutToggle = '<C-{>'
-
-
-
-" vim_current_word
-let g:vim_current_word#enabled = 1
-let g:vim_current_word#highlight_twins = 1
-let g:vim_current_word#highlight_current_word = 1
-"hi CurrentWord cterm=underline
-
-" ale
-let g:ale_fixers = {
-  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-  \ 'javascript': ['prettier'],
-  \ 'css': ['prettier'],
-  \ 'svelte': ['prettier'],
-  \ 'json': ['prettier'],
-  \ 'html': ['prettier'],
-  \ 'shell': ['shellcheck']
-  \ }
-
-let g:ale_fix_on_save = 1
-" let g:ale_completion_enabled = 1
-"
-"
-"
-
-" save files as sudo on files that require root permission
-cnoremap w!! execute 'silent! write !sudo tee % > -->/dev/null' <bar> edit!
-
-
-set autowrite " when changing current file just save without warning
-
-" splitting windows -- usr_08.txt
-" resizing
-"nnoremap <C-n> :res -5<CR>
-"nnoremap <C-m> :res +5<CR>
-nnoremap <C-,> :vertical resize -5<CR>
-nnoremap <C-.> :vertical resize +5<CR>
-
-"
-"nnoremap <C-h> <C-w><C-h>
-"nnoremap <C-j> <C-w><C-j>
-"nnoremap <C-k> <C-w><C-k>
-"nnoremap <C-l> <C-w><C-l>
-
-nnoremap <C-o> :tabm +1<CR>
-nnoremap <C-p> :tabm -1<CR>
-
-"{count}<C-w> n - hor split {count} pane
-"<C-w> q - :q
-"<C-w> o - :only
-"<C-w> f - split for file under cursor
-" <C-w> T - move to new tab
-"
-" tab left right
-" tab shift left right
-" inc dec ver size
-" inc dec hor size
-" vsplit
-" termsplit
-"
-
-"folding -- check :h usr_28.txt
-set foldcolumn=2
-
-
-
-
-" jump C
-nnoremap <leader> d <Plug>(coc-definition)
-
-"set updatetime=300
-"autocmd CursorHold * silent call CocActionAsync('doHover')
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim', 'help'], &filetype) >= 0)
-    echo "hi there"
-    execute 'h '.expand("<cword>")
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-
-
-
-" set background=light
-" let g:gruvbox_bold=1
-" let g:gruvbox_italic = 1
-" let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_contrast_light = 'hard'
-
-" set t_ZH=^[[3m
-" set t_ZR=^[[23
-" colorscheme noelle

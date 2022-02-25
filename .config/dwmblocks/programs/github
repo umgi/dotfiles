@@ -1,0 +1,23 @@
+#!/bin/bash
+
+URL="https://github.com/pgeowng/"
+TODAY="$(date +"%F")"
+M1="<rect.*?data-count=\"(\d+)\".*?data-date=\"$TODAY\".*?>"
+M2='(?<=data-count=")\d+(?=")'
+VALUE="$(curl "$URL" --silent | grep -Po "$M1" | grep -Po "$M2")"
+case $VALUE in
+  0)
+    ICO="🌱"
+    ;;
+  1|2|3)
+    ICO="🌴"
+    ;;
+  4|5|6)
+    ICO="🌸"
+    ;;
+  *)
+    ICO="💠"
+    ;;
+esac
+
+printf "$VALUE$ICO"
