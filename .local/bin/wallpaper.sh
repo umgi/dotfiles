@@ -15,5 +15,5 @@ echo "$FILE"
 BASENAME="$(basename "$FILE")"
 EXTNAME="${BASENAME##*.}"
 #hsetroot -add "$MAIN" -add "$SECOND" -gradient 0 -write /tmp/bg.png
-convert "$FILE" -ordered-dither o8x8,6 "/tmp/bg.$EXTNAME"
+convert "$FILE" -resize 640x\> -ordered-dither o8x8,6 -scale 300% "/tmp/bg.$EXTNAME"
 hsetroot -cover "/tmp/bg.$EXTNAME"
