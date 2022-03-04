@@ -1,12 +1,12 @@
 {
 	"ignored_packages": [
 	],
-	"color_scheme": "Breakers.sublime-color-scheme",
+	"color_scheme": "Packages/Panda Syntax Sublime/Panda/panda-syntax.tmTheme",
 	"theme": "Adaptive.sublime-theme",
 
 	"close_windows_when_empty": false,
 	"draw_white_space": "all",
-	"font_size":13,
+	"font_size":11,
 	"tab_size":2,
 	"translate_tabs_to_spaces": true,
 	"word_wrap": true,

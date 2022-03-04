@@ -10,6 +10,8 @@
 		"Gofmt",
 		"JsPrettier",
 		"LSP",
+		"LSP-typescript",
+		"MarkdownPreview",
 		"Package Control",
 		"Panda Syntax Sublime",
 		"ProjectManager",
