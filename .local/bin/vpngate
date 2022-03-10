@@ -19,15 +19,57 @@ list=$(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(
 
 printf "vpn\nvpn" > /tmp/vpngate.creds
 
-IFS=''
-chosen=$(echo "$list" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }' | dmenu -i -f -l 5 -p vpngate:)
-[ -z "$chosen" ] && exit 0
+#IFS=''
+#chosen=$(echo "$list" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }' | dmenu -f -l 5 -p vpngate:)
+#[ -z "$chosen" ] && exit 0
 
-index=${chosen%%)*}
-echo "$list" | head -n "$index" | tail -n 1 | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
+for line in $list; do
+  info=$(echo "$line" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }')
+  dunstify -h "$dunst_id" "$dunst_title - trying" "$info"
+  echo "$line" | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
+  sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 15 --connect-retry-max 3 & # --resolv-retry 10 --connect-retry-max 1 
+  running_pid=$!
 
-( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
-sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 10 --connect-retry-max 1 # --resolv-retry 10 --connect-retry-max 1
-[ $? = "1" ] && status="failed" || status="closed"
-dunstify -h "$dunst_id" "$dunst_title - $status"
-pkill -RTMIN+5 dwmblocks
+  sleep 10
+
+  region=""
+  success=0
+  while [ "$success" == "0" ]; do
+    sleep 15
+    curl_response=$(curl -s ipinfo.io --silent --connect-timeout 30 --max-time 30)
+    ( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
+    if [ "$?" != 0 ]; then
+      success="$?"
+    else
+      region=$(echo "$curl_response" | jq -r .country)
+      echo "$curl_response"
+      [ "$region" != "JP" ] && success="127" || success="0"
+    fi
+  done
+
+  status=""
+  case $success in
+    28)
+      status="curl timeout"
+      ;;
+    127)
+      status="bad region: $region"
+      ;;
+    *)
+      status="unknown err: $success"
+      ;;
+  esac
+
+  dunstify -h "$dunst_id" "$dunst_title - $status"
+  sudo killall "openvpn"
+  sleep 5
+done
+
+#echo "$list" > vpngate_res.txt
+
+#index=${chosen%%)*}
+#echo "$list" | head -n "$index" | tail -n 1 | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
+
+#[ $? = "1" ] && status="failed" || status="closed"
+#dunstify -h "$dunst_id" "$dunst_title - $status"
+#pkill -RTMIN+5 dwmblocks
