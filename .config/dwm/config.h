@@ -23,7 +23,12 @@ static const int basew        = 724;
 /* static const int baseh        = 1020; /1* 1080 - gappih * 2 - bh *1/ */
 static const int baseh        = 964; /* 1080 - gappih * 2 - bh */
 static const int base169      = 407;
-static char *fonts[]          = { /*"Unifont\\-JP:pixelsize=16",*/ "monospace:pixelsize=16", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
+static char *fonts[]          = {
+	/*"Unifont\\-JP:pixelsize=16",*/
+	"sans-serif:pixelsize=12",
+	"NotoSansCJKJP:pixelsize=12",
+	"monospace:pixelsize=16",
+	"JoyPixels:pixelsize=10:antialias=true:autohint=true" };
 
 static char accent[] = "#b0416b";
 static char bg[] = "#111111";
@@ -31,12 +36,15 @@ static char bordersel[] = "#eeeeee";
 
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[]  = "#eeeeee";
+static char normbordercolor[] = "#b0416b";
+static char selbordercolor[] = "#eeeeee";
+static char accbordercolor[] = "#111111";
 
 static char *colors[][3] = {
        /*		fg		bg		border   */
-       [SchemeNorm] = { normfgcolor,	bg,	accent },
-       [SchemeSel]  = { selfgcolor,	bg,	bordersel },
-       [SchemeAccent]  = { accent,	bg,	bg },
+       [SchemeNorm] = { normfgcolor,	bg,	normbordercolor },
+       [SchemeSel]  = { selfgcolor,	bg,	selbordercolor },
+       [SchemeAccent]  = { accent,	bg,	accbordercolor },
 };
 
 static const unsigned int baralpha = 0xd0;
@@ -116,6 +124,7 @@ static const Rule rules[] = {
 	SPAPP("qbittorrent",	4,	0, 0, 0, 0)
 	SPAPP("ncpamixer",	5,	0.3, 0.3, 0.3, 0.3)
 	SPAPP("telegram",	6,	TH1, 0, TH1, 0)
+	SPAPP("spotify",	6,	TH1, 0, TH1, 0)
 };
 
 /* layout(s) */
@@ -155,8 +164,9 @@ ResourcePref resources[] = {
 	//{ "foreground",		STRING,		&selfgcolor },
 	//{ "background",		STRING,		&normbgcolor },
 	//{ "background",		STRING,		&selbgcolor },
-	//{ "normborder",		STRING,		&normbordercolor },
-	//{ "selborder",		STRING,		&selbordercolor },
+	{ "normborder",		STRING,		&normbordercolor },
+	{ "selborder",		STRING,		&selbordercolor },
+	{ "accborder",		STRING,		&accbordercolor },
 	//{ "accfgcolor",		STRING,		&accfgcolor },
 };
 
@@ -198,7 +208,7 @@ static Key keys[] = {
 	{ MODKEY,		XK_m,		togglescratch,	{.ui = 3} },	/* lfcd    */
 	{ MODKEY,		XK_y,		togglescratch,	{.ui = 4} },	/* qbittorrent    */
 	{ MODKEY,		XK_F4,		togglescratch,	{.ui = 5} },	/* ncpamixer    */
-	{ MODKEY,		XK_F11,		togglescratch,	{.ui = 6} },	/* ncpamixer    */
+	{ MODKEY,		XK_F11,		togglescratch,	{.ui = 6} },	/* telegram    */
 
 	{ MODKEY,		XK_Return,	spawn,		{.v = termcmd} },
 	{ MODKEY,		XK_KP_Enter,	spawn,		{.v = termcmd} },
