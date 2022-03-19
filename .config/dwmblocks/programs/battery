@@ -13,9 +13,18 @@ count="$(ls /sys/class/power_supply | grep "BAT*" | wc -w)"
 for battery in /sys/class/power_supply/BAT?*; do
   [ -n "${capacity+x}" ] && printf " "
 
+  time=""
+
   case "$(cat "$battery/status")" in
     "Full") status="⚡" ;;
-    "Discharging") status="🔋" ;;
+    "Discharging")
+      status="🔋"
+      curr="$(cat "$battery/energy_now")"
+      rate="$(cat "$battery/power_now")"
+      tt="$(echo "scale = 7; $curr / $rate * 60" | bc)"
+      tt="$(printf "%.0f" "$tt")"
+      time="$(printf "%d:%02d" $(( $tt / 60 )) $(( $tt % 60 / 1 )))"
+      ;;
     "Charging") status="🔌" ;;
     "Not charging") status="🛑" ;;
     "Unknown") status="♻️" ;;
@@ -37,6 +46,6 @@ for battery in /sys/class/power_supply/BAT?*; do
   fi
 
 
-  printf "%s%d%s" "$status" "$capacity" "$warn"; unset warn
+  printf "%s%d%s" "$status" "$capacity" "$warn $time"; unset warn
 
 done && exit 0
