@@ -10,10 +10,7 @@ zstyle ':vcs_info:*' formats " %s(%b)"
 
 # prompt
 prompt () {
-  #PS1="%F{red}エレイン・ディ%F{magenta}@%F{yellow}アーチ%f %F{green}%~%f$vcs_info_msg_1_ $ "
-  #PS1="%F{red}エレイン%F{magenta}@%F{yellow}アーチボーイ%f %F{green}%~%f$vcs_info_msg_1_ $ "
-  #PS1="%F{red}アーチボーイ%f %F{green}%~%f$vcs_info_msg_1_ $ "
-  PS1="%F{red}ア%F{cyan}ー%F{yellow}チ%F{green}ボ%F{blue}ー%F{magenta}イ%f %F{green}%~%f$vcs_info_msg_1_ $ "
+  PS1="%F{green}%~%f$vcs_info_msg_1_ $ "
 }
 
 precmd_functions+=( vcs_info prompt )

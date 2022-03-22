@@ -1,6 +1,8 @@
 set shell bash
 set ifs "\n"
 set shellopts '-eu'
+set cleaner '~/.config/lf/cleaner'
+set previewer '~/.config/lf/scope'
 
 # @depends: !anki setsid $OPENER mpv dmenu find !notify-send popup.sh !sed !fzf
 
