@@ -6,7 +6,7 @@
 ddir="$HOME/Pictures/Screenshots/$(date '+%y%m%d')/"
 dest="$ddir$(date '+%H%M%S').png"
 mkdir -p "$ddir"
-case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | dmenu -l 6 -i -p "Screenshot which area?")" in
+case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | dmenu -l 6 -p "Screenshot which area?")" in
 	"a selected area") maim -s "$dest" ;;
 	"current window") maim -i "$(xdotool getactivewindow)" "$dest" ;;
 	"full screen") maim "$dest" ;;
