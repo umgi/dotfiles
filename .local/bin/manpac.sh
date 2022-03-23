@@ -5,6 +5,8 @@ MANPAC_DIR="$XDG_CONFIG_HOME/manpac"
 MANPAC_TMP="$MANPAC_DIR/tmp"
 MANPAC_PM="$MANPAC_DIR/pm"
 MANPAC_YAY="$MANPAC_DIR/yay"
+MANPAC_EXC="$MANPAC_DIR/ignore-$(hostname)"
+MANPAC_RM="$MANPAC_DIR/remove"
 
 
 usage() {
@@ -14,22 +16,29 @@ usage() {
     y) merge only yay
     s) sync local packages with list
     sp) sync pacman packages
-    sy) sync yay packages"
+    sy) sync yay packages
+    r) remove packages"
 }
 
 merge_pacman() {
   echo "pacman(before): $(cat "$MANPAC_PM" | wc -l)"
-  pacman -Qn | cut -d ' ' -f1 >> "$MANPAC_PM"
-  cat "$MANPAC_PM" | sort | uniq  > "$MANPAC_TMP"
-  mv "$MANPAC_TMP" "$MANPAC_PM"
+
+  comm -13 <(cat "$MANPAC_RM" | sort) \
+    <(comm <(pacman -Qne | cut -d ' ' -f1 | sort) \
+      <(cat "$MANPAC_PM" | sort | uniq | sed '/^\s*$/d')) \
+    | sort | uniq | sponge > "$MANPAC_PM"
+
   echo "pacman(after): $(cat "$MANPAC_PM" | wc -l)"
 }
 
 merge_yay() {
   echo "yay(before): $(cat "$MANPAC_YAY" | wc -l)"
-  pacman -Qm | cut -d ' ' -f1 >> "$MANPAC_YAY"
-  cat "$MANPAC_YAY" | sort | uniq  > "$MANPAC_TMP"
-  mv "$MANPAC_TMP" "$MANPAC_YAY"
+
+  comm -13 <(cat "$MANPAC_RM" | sort) \
+    <(comm <(pacman -Qme | cut -d ' ' -f1 | sort) \
+      <(cat "$MANPAC_YAY" | sort | uniq | sed '/^\s*$/d')) \
+    | sort | uniq | sponge > "$MANPAC_YAY"
+
   echo "yay(after): $(cat "$MANPAC_YAY" | wc -l)"
 }
 
@@ -39,26 +48,39 @@ merge_all() {
 }
 
 sync_pacman() {
-  HOSTNAME="$(hostname)"
-  MISSED="$(comm -2 -3 \
-    <(comm -2 -3 "$MANPAC_PM" "$MANPAC_DIR/ignore-$HOSTNAME") \
-    <(pacman -Qn | cut -d ' ' -f1 | sort) | tr "\n" " ")"
+  [ ! -f "$MANPAC_EXC" ] && touch "$MANPAC_EXC"
 
-  sudo pacman -Syu $MISSED
+  MISSED="$( \
+    comm -13 <(cat "$MANPAC_RM" | sort) \
+      <(comm -13 <(pacman -Qne | cut -d ' ' -f1 | sort) \
+        <(comm -23 "$MANPAC_PM" <(cat "$MANPAC_EXC" | sort))) \
+  )"
+
+  echo "$MISSED" | less
+  sudo pacman -Syu $(echo $MISSED | tr "\n" " ")
 }
 
-sync_yay() {
-  HOSTNAME="$(hostname)"
-  MISSED="$(comm -2 -3 \
-    <(comm -2 -3 "$MANPAC_YAY" "$MANPAC_DIR/ignore-$HOSTNAME") \
-    <(pacman -Qm | cut -d ' ' -f1 | sort) | tr "\n" " ")"
 
-  sudo yay -Syu $MISSED
+sync_yay() {
+  [ ! -f "$MANPAC_EXC" ] && touch "$MANPAC_EXC"
+
+  MISSED="$( \
+    comm -13 <(cat "$MANPAC_RM" | sort) \
+      <(comm -13 <(pacman -Qme | cut -d ' ' -f1 | sort) \
+        <(comm -23 "$MANPAC_YAY" <(cat "$MANPAC_EXC" | sort))) \
+  )"
+
+  echo "$MISSED" | less
+  yay -Syu $(echo $MISSED | tr "\n" " ")
 }
 
 sync() {
   sync_pacman "$@"
   sync_yay "$@"
+}
+
+remove() {
+  sudo pacman -Rsu $(cat "$MANPAC_RM" | cut -d ' ' -f1)
 }
 
 main() {
@@ -69,6 +91,7 @@ main() {
     s) instr="sync";;
     sp) instr="sync_pacman";;
     sy) instr="sync_yay";;
+    r) instr="remove";;
     *) instr="usage";;
   esac
 
