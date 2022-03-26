@@ -29,13 +29,13 @@ for line in $list; do
   echo "$line" | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
   sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 15 --connect-retry-max 3 & # --resolv-retry 10 --connect-retry-max 1 
   running_pid=$!
+  echo "pid: $!"
 
-  sleep 10
-
+  SLEEP_TIME="5"
   region=""
   success=0
   while [ "$success" == "0" ]; do
-    sleep 15
+    sleep "$SLEEP_TIME"
     curl_response=$(curl -s ipinfo.io --silent --connect-timeout 30 --max-time 30)
     ( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
     if [ "$?" != 0 ]; then
@@ -45,6 +45,7 @@ for line in $list; do
       echo "$curl_response"
       [ "$region" != "JP" ] && success="127" || success="0"
     fi
+    SLEEP_TIME="90"
   done
 
   status=""
