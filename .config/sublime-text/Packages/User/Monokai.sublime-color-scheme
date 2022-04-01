@@ -1,0 +1,87 @@
+// Documentation at https://www.sublimetext.com/docs/color_schemes.html
+{
+  "variables": {
+    "text": "#ccc",
+    "black3": "#1d1d1d",
+    "my-orange": "#f08d49",
+    "my-purple": "#cc99cd",
+    "my-cyan": "#67cdcc",
+    "my-green": "#7ec699",
+    "purple": "var(my-purple)"
+  },
+  "globals": {
+    "foreground": "#ccc",
+    "background": "var(black3)"
+  },
+  "rules": [
+    {
+      "name": "Comment",
+      "scope": "comment",
+      "foreground": "#999"
+    },
+    {
+      "name": "String",
+      "scope": "string",
+      "foreground": "#7ec699"
+    },
+    {
+      "name": "Number",
+      "scope": "constant.numeric",
+      "foreground": "#f08d49"
+    },
+    {
+      "name": "Function call",
+      "scope": "variable.function, variable.annotation",
+      "foreground": "#f08d49"
+    },
+    {
+      "name": "Library class/type",
+      "scope": "support.type, support.class",
+      "foreground": "#cc99cd",
+      "font_style": "normal"
+    },
+    {
+      "name": "Keyword",
+      "scope": "keyword - (source.c keyword.operator | source.c++ keyword.operator | source.objc keyword.operator | source.objc++ keyword.operator), keyword.operator.word, source.ruby keyword.declaration",
+      "foreground": "#cc99cd"
+    },
+    {
+      "name": "Entity name",
+      "scope": "entity.name - (entity.name.filename | entity.name.section | entity.name.tag | entity.name.label)",
+      "foreground": "#f08d49"
+    },
+    {
+      "name": "Number suffix",
+      "scope": "storage.type.numeric",
+      "foreground": "var(blue)",
+      "font_style": "italic"
+    },
+    {
+      "name": "Operators",
+      "scope":"keyword.operator",
+      "foreground": "var(my-cyan)"
+    },
+    {
+      "name": "Keywords",
+      "scope":"keyword.declaration",
+      "foreground": "var(my-purple)"
+    },
+    {
+            "name": "Storage type",
+            "scope": "storage.type",
+            "foreground": "var(text)",
+            "font_style": "normal"
+        },
+        {
+            "name": "Function argument",
+            "scope": "variable.parameter - (source.c | source.c++ | source.objc | source.objc++)",
+            "foreground": "var(text)",
+            "font_style": "normal"
+        },
+        {
+          "name": "Logical disable",
+          "scope": "keyword.operator.logical",
+          "foreground": "var(text)"
+        },
+  ]
+}
