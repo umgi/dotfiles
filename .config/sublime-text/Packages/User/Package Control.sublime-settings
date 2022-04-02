@@ -7,6 +7,8 @@
 	[
 		"Babel",
 		"Clang Format",
+		"Emmet",
+		"GDScript (Godot Engine)",
 		"Gofmt",
 		"JsPrettier",
 		"LSP",

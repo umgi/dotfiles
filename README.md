@@ -62,6 +62,7 @@ $ mount /dev/disk/by-label/home /mnt/home
 $ genfstab -U /mnt >> /mnt/etc/fstab
 $ pacstrap /mnt base base-devel linux linux-firmware linux-headers vim
 $ arch-chroot /mnt
+$ pacman -S archlinux-keyring # if signatures have been broken
 ```
 
 ### locales
