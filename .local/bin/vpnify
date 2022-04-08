@@ -122,6 +122,7 @@ if  [ -e "$CUSTOM_PATH/resolv.conf" ] || [ -e "$CUSTOM_PATH/hosts" ] ; then
     fi
 fi
 
+echo "[existing] $EXISTING"
 if [ -n "$EXISTING" ]; then
     # Get the existing subnet number
     NNUM=$(iptables-save | grep "for $NETNS" | head -n1 | cut -d' ' -f4 | cut -d'.' -f3)
@@ -130,6 +131,7 @@ if [ -n "$EXISTING" ]; then
     SUBNET="10.$MNUM.$NNUM"
     export SUBNET
 else
+    echo "[existing] no"
     # Find an unused subnet starting from 10.*.0.0/24 to 10.*.255.0/24
     # Where * is $MNUM
     NNUM=0
@@ -143,25 +145,31 @@ else
         NNUM=$((NNUM + 1))
     done
 
+    echo "[NNUM] $NNUM"
     # No free subnets - probably something's wrong with iptables
     [ $NNUM = 256 ] && exit 1
 
     export NNUM
 
     SUBNET="10.$MNUM.$NNUM"
+    echo "[SUBNET] $SUBNET"
     export SUBNET
 
+    echo "[NNS ADD] $NETNS"
     # Create network namespace
     ip netns add "$NETNS"
 
+    echo "[NNS LO]"
     # Not using 'ip -n' because it's not supported
     # by old versions of iproute2
     ip netns exec "$NETNS" ip link set dev lo up
 
+    echo "[NNS VETH] $VETH0 $VETH1"
     # Create veth pair
     ip link add "$VETH0" type veth peer name "$VETH1"
     ip link set "$VETH1" netns "$NETNS"
 
+    echo "[NNS VETH L3]"
     # Setup the pair
     ip netns exec "$NETNS" ip addr add "$SUBNET.1/24" dev "$VETH1"
     ip addr add "$SUBNET.2/24" dev "$VETH0"
