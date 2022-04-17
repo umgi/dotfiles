@@ -1,0 +1,9 @@
+// SublimeLinter Settings - User
+{
+  "linters":  {
+    "golangci-lint": {
+      "lint_mode": "background",
+      "executable":"golangci-lint",
+    },
+  }
+}
