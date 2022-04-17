@@ -35,7 +35,7 @@ static char* fonts[] = {
   "JoyPixels:pixelsize=10:antialias=true:autohint=true"
 };
 
-static const unsigned int cornerrad = 5;
+static const unsigned int cornerrad = 8;
 
 static char accent[] = "#b0416b";
 static char bg[] = "#111111";
