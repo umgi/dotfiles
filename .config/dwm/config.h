@@ -43,7 +43,7 @@ static char bordersel[] = "#eeeeee";
 
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[] = "#eeeeee";
-static char normbordercolor[] = "#b0416b";
+static char normbordercolor[] = "#000000";
 static char selbordercolor[] = "#eeeeee";
 static char accbordercolor[] = "#111111";
 

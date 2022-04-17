@@ -3267,10 +3267,9 @@ roundcorners(Client* c)
   int height = borderpx * 2 + wa.height;
   /* int width = win_attr.border_width * 2 + win_attr.width; */
   /* int height = win_attr.border_width * 2 + win_attr.height; */
-  int rad = cornerrad * enablegaps /** (1-enablefullscreen)*/ /**
-            enableoutergaps*/
-    ; // config_theme_cornerradius;
+  int rad = cornerrad * enablegaps * (1 - c->isfullscreen); // config_theme_cornerradius;
   int dia = 2 * rad;
+  int topbw = 1 *  enablegaps * (1 - c->isfullscreen);
 
   // do not try to round if the window would be smaller than the corners
   if (width < dia || height < dia)
@@ -3290,14 +3289,14 @@ roundcorners(Client* c)
 
   XSetForeground(dpy, shape_gc, 0);
   XFillRectangle(dpy, mask, shape_gc, 0, 0, width, height);
-  XSetForeground(dpy, shape_gc, 1);
-  XFillArc(dpy, mask, shape_gc, 0, 0, dia, dia, 0, 23040);
-  XFillArc(dpy, mask, shape_gc, width - dia - 1, 0, dia, dia, 0, 23040);
-  XFillArc(dpy, mask, shape_gc, 0, height - dia - 1, dia, dia, 0, 23040);
+  XSetForeground(dpy, shape_gc, 255);
+  XFillArc(dpy, mask, shape_gc, 0+topbw, 0, dia, dia, 0, 23040);
+  XFillArc(dpy, mask, shape_gc, width - dia - 1 - topbw, 0, dia, dia, 0, 23040);
+  XFillArc(dpy, mask, shape_gc, 0+topbw, height - dia - 1 - topbw, dia, dia, 0, 23040);
   XFillArc(
-    dpy, mask, shape_gc, width - dia - 1, height - dia - 1, dia, dia, 0, 23040);
-  XFillRectangle(dpy, mask, shape_gc, rad, 0, width - dia, height);
-  XFillRectangle(dpy, mask, shape_gc, 0, rad, width, height - dia);
+    dpy, mask, shape_gc, width - dia - 1 - topbw, height - dia - 1 - topbw, dia, dia, 0, 23040);
+  XFillRectangle(dpy, mask, shape_gc, rad + topbw, 0, width - dia - topbw*2, height-topbw);
+  XFillRectangle(dpy, mask, shape_gc, 0+topbw, rad, width-topbw*2, height - dia - topbw);
   XShapeCombineMask(dpy,
                     w,
                     ShapeBounding,
