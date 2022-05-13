@@ -5,9 +5,8 @@ EnumerateWithTriggerKeys=True
 EnumerateSkipFirst=False
 
 [Hotkey/TriggerKeys]
-0=Control+space
-1=Zenkaku_Hankaku
-2=Super+space
+0=Zenkaku_Hankaku
+1=Super+space
 
 [Hotkey/AltTriggerKeys]
 0=Shift_L
@@ -62,6 +61,10 @@ CompactInputMethodInformation=True
 ShowFirstInputMethodInformation=True
 # Default page size
 DefaultPageSize=5
+# Override Xkb Option
+OverrideXkbOption=False
+# Custom Xkb Option
+CustomXkbOption=
 # Force Enabled Addons
 EnabledAddons=
 # Force Disabled Addons
