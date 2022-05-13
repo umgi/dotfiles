@@ -31,7 +31,7 @@ for line in $list; do
   running_pid=$!
   echo "pid: $!"
 
-  SLEEP_TIME="5"
+  SLEEP_TIME="8"
   region=""
   success=0
   while [ "$success" == "0" ]; do
