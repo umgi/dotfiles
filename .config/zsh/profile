@@ -13,7 +13,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 export GOPATH="$HOME/go"
 
-export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin"
+export PATH="$PATH:$HOME/.local/bin/wb:$HOME/.local/bin:$GOPATH/bin"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
