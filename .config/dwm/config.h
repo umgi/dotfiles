@@ -109,9 +109,9 @@ static const Rule rules[] = {
   /* class, instance, title,
    * tags mask, isfloating, isterminal, noswallow, monitor
    * left, top, right, bottom, floatborderpx -- applies only on floating*/
-  { "Gimp", NULL, NULL, 1 << 8, 0, 0, 0, -1, 0, 0, 0, 0, 2 },
-  { TERMCLASS, NULL, NULL, 0, 0, 1, 0, -1, 0, 0, 0, 0, 2 },
-  { NULL, NULL, "Event Tester", 0, 0, 0, 1, -1, 0, 0, 0, 0, 2 },
+  { "Gimp", NULL, NULL, 1 << 8, 0, 0, 0, -1, 0, 0, 0, 0, 1 },
+  { TERMCLASS, NULL, NULL, 0, 0, 1, 0, -1, 0, 0, 0, 0, 1 },
+  { NULL, NULL, "Event Tester", 0, 0, 0, 1, -1, 0, 0, 0, 0, 1 },
   { NULL, NULL, "popup", 0, 1, 0, 1, 1, 0, 0, 0, 0, borderpx },
   SPAPP("spvim1", 0, 0, 0, TH2, TH2) SPAPP("spvim2", 1, 0, TH1, TH2, TH1)
     SPAPP("ncmpcpp", 2, TH2, 0, 0, HF) /* be careful with 0.3333333 */
