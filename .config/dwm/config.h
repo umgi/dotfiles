@@ -29,10 +29,9 @@ static const int baseh = 964; /* 1080 - gappih * 2 - bh */
 static const int base169 = 407;
 static char* fonts[] = {
   /*"Unifont\\-JP:pixelsize=16",*/
-  "sans-serif:pixelsize=12",
-  "NotoSansCJKJP:pixelsize=12",
+  "sans-serif:pixelsize=10",
+  "sans-serif:lang=ja:size=10",
   "monospace:pixelsize=16",
-  "JoyPixels:pixelsize=10:antialias=true:autohint=true"
 };
 
 static const unsigned int cornerrad = 8;

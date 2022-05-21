@@ -442,7 +442,8 @@ tiletwo(Monitor* m)
   int mrest = 0, srest = 0;
   int nbreak = -1;
   int sw = 0, sh = 0;
-  int tofs = 0, bofs = 0, lofs = 0, rofs = 0;
+  int tofs = 0, bofs = 0, lofs = 1, rofs = 0;
+  int bmastertop = 0;
   unsigned int be;
   Client* c;
 
@@ -451,6 +452,9 @@ tiletwo(Monitor* m)
     return;
 
   be = oh == 0;
+
+  rofs = n == 1 || MIN(n, m->nmaster) != 1;
+  bmastertop = 1 - (n == 2 && m->nmaster >= 1);
 
   /* initialize areas */
   mx = m->wx + ov;
@@ -492,7 +496,7 @@ tiletwo(Monitor* m)
       /* nmaster clients are stacked vertically, in the center of the screen */
       resize(c,
              mx - (lofs * be * c->bw),
-             my - (rofs * be * c->bw),
+             my - (bmastertop * be * c->bw),
              mw - (!be * 2 * c->bw),
              (mh / mfacts) + (i < mrest ? 1 : 0) - (!be * 2 * c->bw),
              0);
@@ -502,14 +506,14 @@ tiletwo(Monitor* m)
       if ((i - m->nmaster) % 2 == 0 && n == i + 1) {
 	resize(c,
 	       lx,
-	       ly - be * c->bw,
+	       ly - be * c->bw * bmastertop,
 	       2 * sw + iv - ((!be) * 2 * c->bw),
 	       (sh / sfacts) - (!be * 2 * c->bw),
 	       0);
       } else if ((i - m->nmaster) % 2) {
 	resize(c,
 	       rx,
-	       ry - be * c->bw,
+	       ry - be * c->bw * bmastertop,
 	       sw - (!be * 2 * c->bw),
 	       (sh / sfacts) + ((i - 2 * m->nmaster) < 2 * srest ? 1 : 0) -
 	         (!be * 2 * c->bw),
@@ -518,7 +522,7 @@ tiletwo(Monitor* m)
       } else {
 	resize(c,
 	       lx,
-	       ly - be * c->bw,
+	       ly - be * c->bw * bmastertop,
 	       sw - ((2 - be) * c->bw),
 	       (sh / sfacts) + ((i - 2 * m->nmaster) < 2 * srest ? 1 : 0) -
 	         (!be * 2 * c->bw),
