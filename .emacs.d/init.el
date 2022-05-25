@@ -9,7 +9,7 @@
 
 
 (set-face-attribute 'default nil :font "JetBrains Mono" :height 100)
-  
+
 (use-package ligature
   :load-path "./mine/ligature.el"
   :config
@@ -49,7 +49,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(flycheck company lsp-mode go-mode counsel-projectile projectile project-tile hydra evil-collection evil ligature general doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy use-package)))
+   '(evil-mc multiple-cursors neotree sublimity-scroll sublimity flycheck company lsp-mode go-mode counsel-projectile projectile project-tile hydra evil-collection evil ligature general doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -133,7 +133,7 @@
     "tt" '(counsel-load-theme :which-key "choose theme")))
 
 (defun rune/evil-hook ()
-  (dolist (mode '(custom-mode   
+  (dolist (mode '(custom-mode
 		  eshell-mode
 		  git-rebase-mode
 		  erc-modee
@@ -225,11 +225,11 @@
 (use-package go-mode
   :hook ((go-mode . lsp-deferred)
 	 (go-mode . company-mode))
+  :bind-keymap
+  ("<f6>" . gofmt)
+  ("C-c 6" . gofmt)
 
-  :bind (:map go-mode-map
-	      ("<f6>" . gofmt)
-	      ("C-c 6" . gofmt))
-  
+  :config
   (require 'lsp-go)
   ;; https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
   (setq lsp-go-analyses
@@ -238,4 +238,43 @@
 	  (unusedwrite    . t)
 	  (unusedparams   . t)))
   (add-to-list 'exec-path "~/go/bin")
-  (setq gofmt-command "goimports"))
+  (setq gofmt-command "goimports")
+	(setq tab-width 2)
+	)
+
+
+
+;;(use-package sublimity
+;;  :config
+;;  (require 'sublimity-scroll)
+;;  (setq sublimity-scroll-weight 25
+;;	sublimity-scroll-drift-length 0)
+	;sublimity-scroll-vertical-frame-delay 0.001)
+  ;;(require 'sublimity-map)
+  ;;(setq sublimity-map-size 20
+  ;;sublimity-map-fraction 0.3
+  ;;	sublimity-map-text-scale -7)
+;;  (sublimity-mode 1))
+
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq require-final-newline t)
+
+(use-package neotree
+  :bind ("<f8>" . neotree-toggle)
+  :config
+  (setq neo-default-system-application "open"))
+
+;(use-package multiple-cursors
+;  :bind (:map evil-insert-state-map
+;	      ("C-d" . mc/mark-next-word-like-this)))
+
+(use-package evil-mc
+  :bind ("<escape>" . evil-mc-mode))
+
+(add-function
+ :after after-focus-change-function
+ (lambda () (save-some-buffers t)))
+
+(setq tab-width 2)
