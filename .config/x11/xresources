@@ -40,6 +40,7 @@ desktop.background: #b0416b
 desktop.background1: #b0416b
 ! desktop.background2: #3d1725
 desktop.background2: #2a0e18
+!desktop.background: #3d1725
 
 
 nvim.scheme: neodark.vim
