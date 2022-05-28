@@ -48,8 +48,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+	 '("e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" default))
  '(package-selected-packages
-   '(evil-mc multiple-cursors neotree sublimity-scroll sublimity flycheck company lsp-mode go-mode counsel-projectile projectile project-tile hydra evil-collection evil ligature general doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy use-package)))
+	 '(evil-multiedit evil-mc multiple-cursors neotree sublimity-scroll sublimity flycheck company lsp-mode go-mode counsel-projectile projectile project-tile hydra evil-collection evil ligature general doom-themes helpful counsel ivy-rich which-key rainbow-delimiters doom-modeline ivy use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -118,7 +120,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-laserwave t))
+  (load-theme 'doom-ir-black t))
 
 (use-package general
   :config
@@ -239,7 +241,6 @@
 	  (unusedparams   . t)))
   (add-to-list 'exec-path "~/go/bin")
   (setq gofmt-command "goimports")
-	(setq tab-width 2)
 	)
 
 
@@ -262,19 +263,25 @@
 (setq require-final-newline t)
 
 (use-package neotree
-  :bind ("<f8>" . neotree-toggle)
-  :config
-  (setq neo-default-system-application "open"))
+	:bind ("<f8>" . neotree-toggle)
+:config
+(setq neo-default-system-application "open"))
 
 ;(use-package multiple-cursors
 ;  :bind (:map evil-insert-state-map
 ;	      ("C-d" . mc/mark-next-word-like-this)))
 
-(use-package evil-mc
-  :bind ("<escape>" . evil-mc-mode))
 
 (add-function
  :after after-focus-change-function
- (lambda () (save-some-buffers t)))
+ :(lambda () (save-some-buffers t)))
 
-(setq tab-width 2)
+(setq-default tab-width 2)
+(setq-default tab-always-indent t)
+
+
+
+
+;(use-package evil-multiedit)
+;  :config
+;  (evil-multiedit-default-keybinds))
