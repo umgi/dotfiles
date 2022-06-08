@@ -1,136 +1,99 @@
-source $XDG_CONFIG_HOME/nvim/common.vim
+" General
+" see .local/bin/remaps.sh
+filetype plugin on
+filetype indent on
+let mapleader = " "
+set clipboard+=unnamedplus
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+set nocompatible
 
-" Auto install Plug
-if ! filereadable(system('echo -n "$XDG_DATA_HOME/nvim/site/autoload/plug.vim"'))
-  echo "Downloading junegunn/vim-plug to manage plugins..."
-  silent !curl -fLo $XDG_DATA_HOME/nvim/site/autoload/plug.vim --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  autocmd VimEnter * PlugInstall
-endif
+" setxkbmap -option "ctrl:nocaps"
+" xcape -t 200
+set autoread " Reload changed files
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime " trigger reload on cursor stop
+autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl Node
 
-" Vim Plug
-call plug#begin('$XDG_DATA_HOME/nvim/plugged')
-    Plug 'morhetz/gruvbox'
-    Plug 'tpope/vim-fugitive'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'preservim/nerdtree'
-    Plug 'ntpeters/vim-better-whitespace'
-    "Plug 'puremourning/vimspector'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'kabouzeid/nvim-lspinstall'
-    Plug 'sonph/onehalf', { 'rtp' : 'vim' }
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/vim-vsnip'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug '~/repos/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'aqez/vim-test'
+" UI
+syntax on
+set ruler
+set backspace=eol,start,indent
+set ignorecase
+set smartcase
+set incsearch
+set lazyredraw
+set hlsearch
+set magic
+set showmatch
+set foldcolumn=1
+set number
+set relativenumber
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+set previewheight=10
+set laststatus=2
+set scrolloff=10
+set signcolumn=yes
+set splitbelow
+set splitright
+"set list
+"set listchars=eol:%,tab:>\ ,trail:-,precedes:<
+"set listchars=tab:--,trail:.,eol:¬,extends:>,precedes:<
+set cmdheight=1
+set modeline
+set shortmess=aT
 
-    Plug 'ray-x/go.nvim'
+set wildmenu
+set wildmode=list:longest
+"Files, backups and undo
+set nobackup
+set nowb
+set noswapfile
+set hidden
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>l <C-w>l
+set path+=**
+set autowrite
 
-call plug#end()
+" Text/Indent
+set expandtab
+set smarttab
+set shiftwidth=2
+set tabstop=2
+set autoindent
+set smartindent
+set cindent
+set nowrap
 
-source $XDG_CONFIG_HOME/nvim/colorscheme.vim
+" Quick fix
+map <C-j> :cn<CR>
+map <C-k> :cp<CR>
 
+" vim - manpager
+set t_ZH=^[[3m
+set t_ZR=^[[23
 
-" Vimspector
-"let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-"nnoremap <leader>vr :VimspectorReset<CR>
+nnoremap <leader><F8> :source $MYVIMRC<CR>
+nnoremap <leader><F9> :source $MYVIMRC<CR>
+nnoremap <leader><F10> :PlugInstall<CR>
 
-" Telescope
-let $FZF_DEFAULT_COMMAND = 'rg --files'
-nmap <Leader>p :Telescope find_files<CR>
+"https://stackoverflow.com/questions/72135274/run-gofmt-on-vim-without-plugin
+function! GoFmt()
+  silent %!goimports
+endfunction
+command! GoFmt call GoFmt()
+augroup go_autocmd
+  autocmd BufWritePre *.go GoFmt
+augroup END
 
-" NerdTree
-nnoremap <Leader>t :NERDTreeToggle<CR>
-let g:NERDTreeQuitOnOpen = 1
-let g:NERDTreeShowHidden = 1
+" close term
+map <F1> <C-\><C-n>
 
-" Treesitter
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = true,
-  },
-}
-EOF
-
-
-" LSP
-lua << EOF
-
-  require('telescope').setup {
-    defaults = {
-      file_sorter = require('telescope.sorters').get_fzy_sorter, mappings = {
-        i = {
-          ["<C-k>"] = require('telescope.actions').move_selection_previous,
-          ["<C-j>"] = require('telescope.actions').move_selection_next,
-        }
-      }
-    },
-    extensions = {
-      fzy_native = {
-        override_generic_sorter = false,
-        override_file_sorter = true
-      }
-    }
-  }
-
-  require('telescope').load_extension('fzy_native')
-  require('go').setup()
-  vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
-
-  require'cmp'.setup {
-    snippet = {
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-      end,
-    },
-    sources = {
-      { name = "nvim_lsp" },
-      { name = "vsnip" },
-      { name = "buffer" }
-    }
-  }
-
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-  local nvim_lsp = require('lspconfig')
-  local pid = vim.fn.getpid()
-  local omnisharp_bin = "omnisharp"
-  nvim_lsp.omnisharp.setup{ cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }, capabilities = capabilities }
-  nvim_lsp.rust_analyzer.setup{ capabilities = capabilities }
-  nvim_lsp.clangd.setup{ capabilities = capabilities }
-  nvim_lsp.tsserver.setup{ capabilities = capabilities }
-  nvim_lsp.cssls.setup{ capabilities = capabilities }
-  nvim_lsp.html.setup{ capabilities = capabilities }
-  nvim_lsp.gopls.setup{ capabilities = capabilities }
-EOF
-
-nnoremap gd :Telescope lsp_definitions<CR>
-nnoremap <Leader>fi :Telescope lsp_implementations<CR>
-nnoremap <Leader>fu :Telescope lsp_references<CR>
-nnoremap <leader>cf <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader><space> :Telescope lsp_code_actions<CR>
-vnoremap <leader><space> :Telescope lsp_range_code_actions<CR>
-nnoremap <F2> <cmd>lua vim.lsp.buf.rename()<CR>
-
-nnoremap <leader>gs :Telescope git_status<CR>
-nnoremap <leader>gb :Telescope git_branches<CR>
-nnoremap <leader>gc :Telescope git_commits<CR>
-nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-
-nnoremap <leader>gr :Telescope live_grep<CR>
-
-
-nnoremap <leader>rt :TestNearest<CR>
-
-source $XDG_CONFIG_HOME/nvim/auto.vim
+autocmd BufWritePost ~/.config/dwmblocks/config.h !cd ~/.config/dwmblocks/; sudo make install && {killall -q dwmblocks;setsid dwmblocks & }
+autocmd BufWritePost ~/.config/dwm/config.h !cd ~/.config/dwm/; sudo make install && {killall -q dwm;setsid dwm & }
+autocmd BufWritePost ~/.config/sxhkd/sxhkdrc !{pkill -USR1 sxhkd}
+autocmd BufWritePost ~/.config/st/config.h !cd ~/.config/st/; sudo make install
+autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
+autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
