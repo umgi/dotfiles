@@ -1,0 +1,169 @@
+{
+  //Editor
+  "files.trimTrailingWhitespace": true,
+  "editor.formatOnPaste": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.snippetSuggestions": "top",
+  "terminal.integrated.automationShell.linux": "",
+  "explorer.confirmDelete": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.rulers": [80],
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "editor.renameOnType": true,
+  "explorer.confirmDragAndDrop": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "files.associations": {
+    "*.js": "javascript"
+  },
+  "vscode-neovim.neovimExecutablePaths.win32": "D:\\bin\\Neovim\\bin\\nvim.exe",
+  // "settingsSync.ignoredSettings": ["vscode-neovim.neovimExecutablePaths.win32"],
+  "vsicons.dontShowNewVersionMessage": true,
+  // "terminal.integrated.shellArgs.windows": null,
+  // "godot_tools.editor_path": "C:/bin/godot.exe",
+
+  // Vintage
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true, // same copy buffer
+  "vim.leader": "<space>",
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["i"],
+      "after": ["<Esc>", "i"]
+    }
+  ],
+
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<C+r>"],
+      "commands": ["redo"]
+    },
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": ["<C+r>"],
+      "commands": ["redo"]
+    }
+  ],
+
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false,
+    "<C-d>": false,
+    "<C-c>": false,
+    "<C-x>": false,
+    "<C-v>": false
+  },
+
+  "editor.stickyTabStops": true,
+  // Always include all words from the current document.
+  "javascript.suggest.alwaysAllWords": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "git.autofetch": true,
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "editor.minimap.enabled": false,
+  "svelte.plugin.html.tagComplete.enable": false,
+  "workbench.colorCustomizations": {
+    "[Fluffy Theme]": {
+      // "titleBar.activeBackground": "#cc9999",
+      // "tab.activeBackground": "#cc9999",
+      // "tab.activeForeground": "#FFFFFF"
+    }
+  },
+  "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "editor.fontFamily": "'Rounded m+ 1mn', Consolas, 'Courier New', monospace",
+  "debug.console.fontSize": 16,
+  "terminal.integrated.profiles.windows": {
+    "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe (migrated)": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "args": []
+    }
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.wrappingIndent": "none",
+  "editor.wordWrap": "on",
+  "emmet.triggerExpansionOnTab": true,
+  "prettier.htmlWhitespaceSensitivity": "strict",
+  "window.menuBarVisibility": "toggle",
+
+  // Go
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false,
+    "explicitFolding.rules": [
+      {
+        "begin": "if err != nil {",
+        "middleRegex": "return",
+        "end": "}",
+        "autoFold": true
+      },
+      {
+        "begin": "return",
+        "end": "}",
+        "autoFold": true
+      },
+      {
+        "begin": "}",
+        "end": "^$",
+        "autoFold": true
+      }
+    ]
+  },
+
+  // GDScript
+  // gdscript tabs = 2 space size
+  "[gdscript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false, // fix enter after :. so you can exit if statement
+    "editor.defaultFormatter": "Razoric.gdscript-toolkit-formatter"
+  },
+  "[yaml]": {
+    "editor.formatOnSave": false
+  },
+  "files.autoSave": "onFocusChange",
+  "bracket-pair-colorizer-2.depreciation-notice": false,
+
+  "editor.showFoldingControls": "always",
+  "editor.foldingStrategy": "auto",
+
+  // "explicitFolding.rules": {},
+  "explicitFolding.debug": false,
+  "editor.foldingHighlight": false,
+  "editor.renderLineHighlight": "gutter",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "git.suggestSmartCommit": false,
+  "mssql.connections": [
+    {
+      "server": "10.42.244.2",
+      "database": "ComSales",
+      "authenticationType": "SqlLogin",
+      "user": "logistic_read",
+      "password": "",
+      "emptyPasswordInput": false,
+      "savePassword": true
+    }
+  ],
+  "git.path": "",
+  "workbench.colorTheme": "yuyuko-vim-vsc"
+}
