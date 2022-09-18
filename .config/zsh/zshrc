@@ -1,0 +1,76 @@
+if [[ -n $KITTY_INSTALLATION_DIR ]]; then
+  export KITTY_SHELL_INTEGRATION="enabled"
+  autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+  kitty-integration
+  unfunction kitty-integration
+fi
+
+setopt PROMPT_SUBST
+
+# colors
+autoload -U colors && colors
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '(%b)'
+
+
+
+
+# prompt
+rand_ps1_color="${(o)color[$(shuf -i 31-37 -n 1)]}"
+prompt () {
+  # https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion 
+  pp="$(print -P "%~")"
+  pp="${pp#"~/"}"
+  pp="${pp#"~"}"
+
+  preprompt="%F{$rand_ps1_color}$pp%f$vcs_info_msg_0_"
+  if [ -n "$pp" ]; then
+    preprompt="$preprompt "
+  fi
+
+  PS1="$preprompt$ "
+}
+
+precmd_functions+=( vcs_info prompt )
+
+
+mkdir -p ~/.cache/zsh
+touch ~/.cache/zsh/history
+# history
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+
+# autocomplete
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
+
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# vim in tab complete menu
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -v '^?' backward-delete-char
+bindkey -M viins '\C-e' end-of-line
+
+
+
+
+
+autoload edit-command-line; zle -N edit-command-line
+bindkey "^f" edit-command-line
+
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

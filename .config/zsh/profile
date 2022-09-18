@@ -3,6 +3,7 @@ export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="firefox"
 export READER="zathura"
+export PAGER="less"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -14,6 +15,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export GOPATH="$HOME/go"
 
 export PATH="$PATH:$HOME/.local/bin/wb:$HOME/.local/bin:$GOPATH/bin"
+export PATH="$XDG_CONFIG_HOME/dwmblocks/programs:$PATH"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
