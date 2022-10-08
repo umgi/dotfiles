@@ -1,5 +1,5 @@
 [global]
-  geometry = "300x5-0+24"
+  geometry = "250x5-0+0"
   indicate_hidden = no
   shrink = no
   padding = 8
@@ -7,7 +7,7 @@
   separator_height = 2
   separator_color = "#1c1c1c"
   frame_width = 1
-  frame_color="#d4b261"
+  frame_color="#000000"
   sort = yes
   idle_threshold = 120
   font = Monospace 12
@@ -31,7 +31,7 @@
   foreground="#9b9b9b"
   timeout = 60
 
-[urgency-normal]>
+[urgency-normal]
   background="#111111"
   foreground="#9b9b9b"
   timeout = 5

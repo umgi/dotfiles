@@ -78,6 +78,9 @@ super + shift + e
   notify-send 'keys reloaded'; \
   remaps.sh
 
+super + p
+  pcmanfm
+
 super + d
   dmenu_run
 super + g

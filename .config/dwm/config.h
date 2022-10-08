@@ -38,12 +38,12 @@ static const unsigned int cornerrad = 8;
 
 static char accent[] = "#b0416b";
 static char bg[] = "#111111";
-static char bordersel[] = "#eeeeee";
+static char bordersel[] = "#555555";
 
 static char normfgcolor[] = "#bbbbbb";
-static char selfgcolor[] = "#eeeeee";
+static char selfgcolor[] = "#555555";
 static char normbordercolor[] = "#000000";
-static char selbordercolor[] = "#eeeeee";
+static char selbordercolor[] = "#555555";
 static char accbordercolor[] = "#111111";
 
 static char* colors[][3] = {
