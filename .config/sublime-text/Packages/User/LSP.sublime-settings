@@ -3,6 +3,47 @@
 		"gopls": {
 			"enabled": true
 		},
+		"cc-langserver": {
+			"command": ["/usr/bin/ccls"],
+			"enabled": true,
+			"languages": [
+				{
+					"scopes": ["source.c"],
+					"syntaxes": ["Packages/C++/C.sublime-syntax"],
+					"languageId": "c"
+				},
+				{
+					"scopes": ["source.c++"],
+					"syntaxes": ["Packages/C++/C++.sublime-syntax"],
+					"languageId": "cpp"
+				},
+				{
+					"scopes": ["source.objc"],
+					"syntaxes": ["Packages/Objective-C/Objective-C.sublime-syntax"],
+					"languageId": "objective-c"
+				},
+				{
+					"scopes": ["source.objc++"],
+					"syntaxes": ["Packages/Objective-C/Objective-C++.sublime-syntax"],
+					"languageId": "objective-cpp"
+				}
+			],
+			"initializationOptions": {
+				"cache": {
+					"directory": "/tmp/ccls-cache"
+				},
+				"completion": {
+					"detailedLabel": true
+				},
+				"clang": {
+					"extraArgs": [
+						"-isystem",
+						"/Library/Developer/CommandLineTools/usr/include/c++/v1"
+					],
+					"resourceDir": "/usr/local/Cellar/llvm/12.0.1/lib/clang/12.0.1"
+				}
+			}
+		}
 		// "gdscript": {
 		// 	"command": ["godot", "--no-window"],
 		// },

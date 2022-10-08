@@ -31,5 +31,6 @@
 	},
 	{ "keys": ["alt+`"], "command": "toggle_terminus_panel",
 		"args":{ "cmd": "zsh", "cwd": "${file_path:${folder}}", "panel_name": "Terminus" },
-	}
+	},
+	{ "keys": "f5", "command": "build" }
 ]

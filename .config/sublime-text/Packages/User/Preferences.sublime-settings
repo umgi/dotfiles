@@ -1,12 +1,12 @@
 {
 	"ignored_packages": [
 	],
-	"color_scheme": "Packages/Color Scheme - Default/Monokai.sublime-color-scheme",
+	"color_scheme": "Monokai.sublime-color-scheme",
 	"theme": "Adaptive.sublime-theme",
 
 	"close_windows_when_empty": false,
 	"draw_white_space": ["selection", "trailing", "isolated"],
-	"font_size":10,
+	"font_size":14,
 	"tab_size":2,
 	"translate_tabs_to_spaces": true,
 	"word_wrap": true,
@@ -14,6 +14,7 @@
 	"vintage_use_clipboard": true,
 	"dictionary": "Packages/Dictionaries/Russian.dic",
 	"ensure_newline_at_eof_on_save": true,
-	"font_face": "JetBrains Mono",
+	// "font_face": "JetBrains Mono",
+	// "font_options": ["gray_antialias"],
 	"draw_indent_guides": false,
 }
