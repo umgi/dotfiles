@@ -1,3 +1,4 @@
+vim.cmd [[
 " General
 " see .local/bin/remaps.sh
 filetype plugin on
@@ -81,8 +82,18 @@ nnoremap <leader><F10> :PlugInstall<CR>
 
 "https://stackoverflow.com/questions/72135274/run-gofmt-on-vim-without-plugin
 function! GoFmt()
+  let saved_view = winsaveview()
   silent %!goimports
+  if v:shell_error > 0
+    cexpr getline(1, '$')->map({ idx, val -> val->substitute('<standard input>', expand('%'), '') })
+    silent undo
+    cwindow
+  else
+    cclose
+  endif
+  call winrestview(saved_view)
 endfunction
+
 command! GoFmt call GoFmt()
 augroup go_autocmd
   autocmd BufWritePre *.go GoFmt
@@ -97,3 +108,4 @@ autocmd BufWritePost ~/.config/sxhkd/sxhkdrc !{pkill -USR1 sxhkd}
 autocmd BufWritePost ~/.config/st/config.h !cd ~/.config/st/; sudo make install
 autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
 autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
+]]
