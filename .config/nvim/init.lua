@@ -1,3 +1,9 @@
+require'plugins'
+require'keymaps'
+require'pcompe'
+require'settings'
+require'lsp'
+require'treesitter'
 vim.cmd [[
 " General
 " see .local/bin/remaps.sh
