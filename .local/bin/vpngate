@@ -3,6 +3,16 @@
 # Todo:
 #   + used 10 min ago
 
+usage() {
+  [ -z "${1}" ] || echo "! ${1}"
+
+  exit 2
+}
+
+ROOT_ERR="$(basename "$0") must be run as root"
+
+[ "$(id -u)" -eq 0 ] || usage "$ROOT_ERR"
+
 listaddr="http://www.vpngate.net/api/iphone/"
 
 # $2 ip
@@ -19,6 +29,8 @@ list=$(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(
 
 printf "vpn\nvpn" > /tmp/vpngate.creds
 
+netns_script="/home/dt/.local/bin/netns-script"
+
 #IFS=''
 #chosen=$(echo "$list" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }' | dmenu -f -l 5 -p vpngate:)
 #[ -z "$chosen" ] && exit 0
@@ -27,7 +39,19 @@ for line in $list; do
   info=$(echo "$line" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }')
   dunstify -h "$dunst_id" "$dunst_title - trying" "$info"
   echo "$line" | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
-  sudo openvpn --config /tmp/vpngate.conf --auth-user-pass /tmp/vpngate.creds --connect-timeout 15 --connect-retry-max 3 & # --resolv-retry 10 --connect-retry-max 1 
+  openvpn \
+    --mute-replay-warnings \
+    --config /tmp/vpngate.conf \
+    --auth-user-pass /tmp/vpngate.creds \
+    --connect-timeout 15 \
+    --connect-retry-max 3 \
+    & # --resolv-retry 10 --connect-retry-max 1 
+    #--auth-nocache \
+    #--route-nopull \
+    #--script-security 2 \
+    #--redirect-gateway \
+    #--up $netns_script \
+    #--down $netns_script \
   running_pid=$!
   echo "pid: $!"
 

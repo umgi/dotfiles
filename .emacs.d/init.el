@@ -7,7 +7,6 @@
 
 (menu-bar-mode -1)
 
-
 (set-face-attribute 'default nil :font "JetBrains Mono" :height 100)
 
 (use-package ligature
@@ -28,6 +27,10 @@
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))
+
+(setq undo-limit 20000000)
+(setq undo-strong-limit 40000000)
+
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -285,3 +288,9 @@
 ;(use-package evil-multiedit)
 ;  :config
 ;  (evil-multiedit-default-keybinds))
+
+
+(global-hl-line-mode 1)
+
+(display-time 1)
+(display-battery-mode 1)
