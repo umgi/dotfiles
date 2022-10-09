@@ -1,9 +1,9 @@
-require'plugins'
-require'opts'
-require'maps'
-require'auto'
+require("plugins")
+require("opts")
+require("maps")
+require("auto")
 
-vim.cmd [[
+vim.cmd([[
 " General
 " see .local/bin/remaps.sh
 filetype plugin on
@@ -21,4 +21,4 @@ set t_ZR=^[[23
 
 " close term
 map <F1> <C-\><C-n>
-]]
+]])
