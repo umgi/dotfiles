@@ -1,16 +1,10 @@
 local fn = vim.fn
---[[
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-end
---]]
---
+
 local ensure_packer = function()
 	local fn = vim.fn
 	local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 	if fn.empty(fn.glob(install_path)) > 0 then
-  		fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+		fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 		vim.cmd [[packadd packer.nvim]]
 		return true
 	end
@@ -19,7 +13,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-return require('packer').startup(function(use)
+return require'packer' .startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use 'nvim-lua/plenary.nvim'
 	use 'neovim/nvim-lspconfig'
@@ -42,6 +36,7 @@ return require('packer').startup(function(use)
 		requires = {
 			'kyazdani42/nvim-web-devicons', -- optional, for file icon
 		},
+		config = function() require('plugins.nvim-tree') end,
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
 	use 'onsails/lspkind-nvim'
@@ -56,6 +51,14 @@ return require('packer').startup(function(use)
 			require('plugins.bufferline')
 		end
 	}
+
+	use {
+		'mhartington/formatter.nvim',
+		config = function() 
+			require'plugins.formatter'
+		end
+	}
+
 	use { 'L3MON4D3/LuaSnip',
 		after = 'friendly-snippets',
 		config = function()
