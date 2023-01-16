@@ -91,3 +91,6 @@ alias \
 
 alias \
   csql="clickhouse-cli"
+
+alias \
+	k="kubectl"

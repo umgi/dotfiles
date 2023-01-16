@@ -64,6 +64,11 @@ super + shift + F11
   setsid -f picom --experimental-backends
 
 
+#alt + c
+#	notify-send "clipboard: $(xclip -selection clipboard -o)"; (xclip -selection clipboard -o | xclip -selection primary) ; \
+#	cabl
+
+
 super + w
   $BROWSER
 
@@ -119,13 +124,13 @@ XF86AudioPlay
 super + Up
   wallpaper.sh
 
-super + F8
-  notify-send "soundcloud"; firefox -kiosk -private-window "https://soundcloud.com/discover"
-super + F9
-  notify-send "spotify"; firefox -kiosk -private-window "https://open.spotify.com"
+#super + F8
+#  notify-send "soundcloud"; firefox -kiosk -private-window "https://soundcloud.com/discover"
+#super + F9
+#  notify-send "spotify"; firefox -kiosk -private-window "https://open.spotify.com"
 
 super + F12
-  [ "$(cat /etc/hostname)" = "arch" ] && toggle-touchpad.sh
+  [ "$(cat /etc/hostname)" = "archboy" ] && toggle-touchpad.sh
 
 super + shift + y
   X_OUTPUT=$(xrandr | grep -oP '([a-zA-Z0-9]+)(?= connected)'); \
@@ -136,3 +141,14 @@ super + shift + u
   xrandr --output "$X_OUTPUT" --scale 1x1; \
   wallpaper.sh
 
+super + e
+	run-or-raise "st-nvim" "st -g 200x40+730+0 -n st-nvim -e nvim "
+
+super + f
+	run-or-raise firefox firefox
+
+super + r
+	run-or-raise "st-tmux-1" "st -g 200x20+730+684 -n st-tmux-1 -e tmux"
+
+super + F11
+	run-or-raise "telegram-desktop" "telegram-desktop"

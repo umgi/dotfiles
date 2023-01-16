@@ -1,10 +1,9 @@
 #!/bin/sh
 
-export GTK_IM_MODULE="fcitx"
-export QT_IM_MODULE="fcitx"
-export SDL_IM_MODULE="fcitx"
-export GLFW_IM_MODULE="ibus"
-export XMODIFIERS="@im=fcitx"
+export GTK_IM_MODULE="fcitx5"
+export QT_IM_MODULE="fcitx5"
+export SDL_IM_MODULE="fcitx5"
+export XMODIFIERS="@im=fcitx5"
 
 eval $(gnome-keyring-daemon --start)
 export SSH_AUTH_SOCK
@@ -12,8 +11,8 @@ export SSH_AUTH_SOCK
 # keymaps
 xrdb "$XDG_CONFIG_HOME/x11/xresources"
 nginx -c "$XDG_CONFIG_HOME/nginx/shared" -p "$HOME/shared/"
-xsetroot -bg '#000000' &
 
+theme-set.sh &
 # b
 remaps.sh &
 fcitx5 -d &
@@ -27,6 +26,4 @@ unclutter &
 dunst &
 dwmblocks &
 sxhkd &
-wallpaper.sh &
 exec openbox-session
-#exec dwm
