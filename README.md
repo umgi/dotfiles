@@ -95,9 +95,10 @@ systemctl enable NetworkManager.service
 ### grub
 
 ```
-$ pacman -S grub efibootmgr os-prober
+$ pacman -S grub efibootmgr os-prober ntfs-3g 
 + efibootmgr - for uefi system
 + os-prober - if dualboot with windows
++ ntfs-3g - for detecting windows
 
 # installing with windows
 $ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB

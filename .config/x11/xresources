@@ -79,3 +79,5 @@
 ! *.colorBD:     #ffffff
 !*.colorIT:
 !*.colorUL:
+
+Xft.dpi: 120

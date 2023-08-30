@@ -17,16 +17,18 @@ xsetroot -bg '#000000' &
 # b
 remaps.sh &
 fcitx5 -d &
-# redshift &
+redshift &
 # feh --bg-fill --randomize ~/.local/share/wallpaper/active/* &
 mpd &
 unclutter &
-# picom --experimental-backends &
+picom &
 # gazou & # japanese ocr
 # syncthing --no-browser &
 dunst &
 dwmblocks &
 sxhkd &
-wallpaper.sh &
-exec openbox-session
-#exec dwm
+wallpaper-gradient-time.sh &
+"$HOME/.fehbg" &
+#wallpaper.sh &
+#exec openbox-session
+exec dwm

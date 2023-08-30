@@ -186,7 +186,7 @@ struct Monitor
   float mfact;
   int nmaster;
   int num;
-  int by;             /* bar geometry */
+  int bx, by, bw, bh; /* bar geometry */
   int mx, my, mw, mh; /* screen size */
   int wx, wy, ww, wh; /* window area  */
   int gappih;         /* horizontal gap between windows */
@@ -1251,7 +1251,7 @@ drawbar(Monitor* m)
     if (c->isurgent)
       urg |= c->tags;
   }
-  x = 0;
+  x = m->ww;
   for (i = 0; i < LENGTH(tags); i++) {
     /* do not draw vacant tags */
     if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
@@ -1283,7 +1283,7 @@ drawbar(Monitor* m)
       drw_setscheme(drw, scheme[SchemeAccent]);
       drw_rect(
         drw, x + linegap / 2, bh - lineheight, w - linegap, lineheight, 1, 0);
-    }
+      }
 
     x += w;
   }
@@ -1298,13 +1298,13 @@ drawbar(Monitor* m)
       drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
       drw_text(drw, x, 0, w, bh, mid, m->sel->name, 0);
       if (m->sel->isfloating)
-	drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+        drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
     } else {
       drw_setscheme(drw, scheme[SchemeNorm]);
       drw_rect(drw, x, 0, w, bh, 1, 1);
     }
   }
-  drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+  drw_map(drw, m->barwin, 0, 0, m->ww, bh*2);
 }
 
 void
@@ -1947,6 +1947,35 @@ resize(Client* c, int x, int y, int w, int h, int interact)
 }
 
 void
+crop(Client* c, int width, int height) {
+  Window w = c->win;
+
+  Pixmap mask = XCreatePixmap(dpy, w, width, height, 1);
+  if (!mask)
+    return;
+
+  XGCValues xgcv;
+  GC shape_gc = XCreateGC(dpy, mask, 0, &xgcv);
+  if (!shape_gc) {
+    XFreePixmap(dpy, mask);
+    return;
+  }
+
+  XSetForeground(dpy, shape_gc, 255);
+  XFillRectangle(dpy, mask, shape_gc, 0, 0, width, height);
+  XShapeCombineMask(
+    dpy,
+    w,
+    ShapeBounding,
+    0, //- wa.border_width,
+    0, //- wa.border_width,
+    mask,
+    ShapeSet);
+  XFreePixmap(dpy, mask);
+  XFreeGC(dpy, shape_gc);
+}
+
+void
 resizeclient(Client* c, int x, int y, int w, int h)
 {
   XWindowChanges wc;
@@ -2442,7 +2471,8 @@ showhide(Client* c)
   } else {
     /* hide clients bottom up */
     showhide(c->snext);
-    XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
+    // XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
+    XMoveWindow(dpy, c->win, c->x, c->mon->mh);
   }
 }
 
@@ -2753,7 +2783,7 @@ updatebars(void)
 void
 updatebarpos(Monitor* m)
 {
-  m->wy = m->my;
+  m->wy = m->my + m->gappov * 2;
   m->wh = m->mh;
   if (m->showbar) {
     m->wh -= bh;
