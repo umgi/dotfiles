@@ -25,8 +25,8 @@ function! GoFmt()
 endfunction
 
 command! GoFmt call GoFmt()
-augroup go_autocmd
+  augroup go_autocmd
   autocmd BufWritePre *.go GoFmt
-augroup END
+	augroup END
 
 ]]

@@ -8,7 +8,10 @@ require'bufferline' .setup {
 		color_icons = false,
 		show_buffer_icons = false,
 		show_buffer_close_icons = false,
-		show_buffer_default_icon = false,
+		get_element_icon = function(buf)
+			return
+      --return require('nvim-tree/nvim-web-devicon').get_icon('hello', 'txt', {default = false})
+		end,
 		show_close_icon = false,
 		separator_style = 'thin',
 		sort_by = 'insert_after_current',
