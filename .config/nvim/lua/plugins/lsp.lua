@@ -9,24 +9,52 @@ map("n", "]d", vim.diagnostic.goto_next, opts)
 map("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	local function buf_set_keymap(...)
+		vim.api.nvim_buf_set_keymap(bufnr, ...)
+	end
+	local function buf_set_option(...)
+		vim.api.nvim_buf_set_option(bufnr, ...)
+	end
 
-	map("n", "gD", vim.lsp.buf.declaration, bufopts)
-	map("n", "gd", vim.lsp.buf.definition, bufopts)
-	map("n", "K", vim.lsp.buf.hover, bufopts)
-	map("n", "gi", vim.lsp.buf.implementation, bufopts)
-	map("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-	map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-	map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-	map("n", "<leader>wl", function()
+	buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+	local opts = { noremap = true, silent = true, buffer = bufnr }
+
+	buf_set_keymap("n", "gD", vim.lsp.buf.declaration, opts)
+	buf_set_keymap("n", "gd", vim.lsp.buf.definition, opts)
+	buf_set_keymap("n", "K", vim.lsp.buf.hover, opts)
+	buf_set_keymap("n", "gi", vim.lsp.buf.implementation, opts)
+	buf_set_keymap("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+	buf_set_keymap("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
+	buf_set_keymap("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
+	buf_set_keymap("n", "<leader>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, bufopts)
-	map("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
-	map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-	map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-	map("n", "gr", vim.lsp.buf.references, bufopts)
-	map("n", "<leader>f", vim.lsp.buf.formatting, bufopts)
+	end, opts)
+	buf_set_keymap("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+	buf_set_keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	buf_set_keymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+	buf_set_keymap("n", "gr", vim.lsp.buf.references, opts)
+	buf_set_keymap("n", "<leader>f", vim.lsp.buf.formatting, opts)
+
+	if client.resolved_capabilities.document_formatting then
+		buf_set_keymap("n", "ff", vim.lsp.buf.formatting, opts)
+	elseif client.resolved_capabilities.document_range_formatting then
+		buf_set_keymap("n", "ff", vim.lsp.buf.range_formatting, opts)
+	end
+
+	if client.resolved_capabilities.document_highlight then
+		vim.api.nvim_exec(
+			[[
+			hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=LightYellow
+			hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=LightYellow
+			hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=LightYellow
+			augroup lsp_document_highlight
+				autocmd! *           <buffer>
+				autocmd  CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+			augroup END
+		]],
+			false
+		)
+	end
 end
 
 local lspconfig = require("lspconfig")
@@ -39,8 +67,9 @@ local function config(_config)
 end
 
 lspconfig.gopls.setup(config({
-	on_attach = on_attach,
 	cmd = { "gopls", "serve" },
+	capabilities = capabilities,
+	on_attach = on_attach,
 	filetypes = { "go", "go.mod" },
 	root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 	settings = {

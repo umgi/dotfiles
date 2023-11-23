@@ -22,3 +22,11 @@ set t_ZR=^[[23
 " close term
 map <F1> <C-\><C-n>
 ]])
+
+vim.cmd([[
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+]])
+
+vim.cmd([[
+autocmd BufWritePre *.go lua goimports(1000)
+]])
