@@ -83,6 +83,16 @@ lspconfig.gopls.setup(config({
 	},
 }))
 
+require("mason").setup()
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup({
+	ensure_installed = { "pyright" },
+})
+
+lspconfig.pyright.setup(config({
+	capabilities = capabilities,
+}))
+
 lspconfig.ccls.setup({
 	init_options = {
 		cache = {

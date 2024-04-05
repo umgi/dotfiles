@@ -1251,7 +1251,7 @@ drawbar(Monitor* m)
     if (c->isurgent)
       urg |= c->tags;
   }
-  x = m->ww;
+  x = m->ww-200;
   for (i = 0; i < LENGTH(tags); i++) {
     /* do not draw vacant tags */
     if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
@@ -1304,7 +1304,7 @@ drawbar(Monitor* m)
       drw_rect(drw, x, 0, w, bh, 1, 1);
     }
   }
-  drw_map(drw, m->barwin, 0, 0, m->ww, bh*2);
+  drw_map(drw, m->barwin, m->ww/3, 10, m->ww-10, bh*3);
 }
 
 void
@@ -2251,6 +2251,7 @@ setfullscreen(Client* c, int fullscreen)
     c->floatborderpx = 0;
     c->isfloating = 1;
     resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
+    // arrange(c->mon);
     XRaiseWindow(dpy, c->win);
   } else if (!fullscreen && c->isfullscreen) {
     XChangeProperty(dpy,

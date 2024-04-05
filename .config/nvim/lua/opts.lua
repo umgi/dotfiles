@@ -4,7 +4,6 @@ local f = false
 
 o.clipboard = o.clipboard + "unnamedplus"
 o.compatible = f
-
 o.ruler = t
 o.backspace = "eol,start,indent"
 o.ignorecase = t
@@ -16,7 +15,7 @@ o.magic = f -- regexp search
 o.showmatch = t
 o.foldcolumn = "1"
 o.number = t
-o.relativenumber = t
+o.relativenumber = f
 o.completeopt = "menuone,noinsert,noselect"
 o.shortmess = o.shortmess + "aTc"
 o.previewheight = 10
@@ -26,10 +25,9 @@ o.signcolumn = "yes"
 o.splitbelow = t
 o.splitright = t
 o.list = t
-o.listchars = "tab:  ,trail:.,extends:>,precedes:<,lead: "
+o.listchars = "tab:  ,trail:·,extends:…,precedes:…"
 o.cmdheight = 1
 o.modeline = t
-
 o.wildmenu = t
 o.wildmode = "list:longest"
 
@@ -52,3 +50,14 @@ o.autoindent = t
 o.smartindent = t
 o.cindent = t
 o.wrap = t
+
+-- Experimental
+o.showmode = f
+o.undofile = t
+
+vim.api.nvim_exec(
+	[[
+			hi SignColumn guibg=bg
+	]],
+	false
+)

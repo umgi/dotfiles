@@ -36,9 +36,7 @@ super + {F5,F6,F7}
 
 
 super + F10
-  [ "$(pidof redshift)" ] && \
-  (killall redshift) || \
-  (setsid -f redshift)
+  de-redshift.sh
 
 # super + F11
 #   feh --bg-fill --randomize $XDG_DATA_HOME/wallpaper/active/*/*
@@ -58,15 +56,16 @@ super + shift + F8
 
 #super + shift + {F9,F10}
 #  xbacklight {-dec 3, -inc 3}
-super + shift + F11
+super + F11
   [ "$(pidof picom)" ] && \
   killall picom || \
-  setsid -f picom --experimental-backends
+  setsid -f picom
 
 
 #alt + c
 #	notify-send "clipboard: $(xclip -selection clipboard -o)"; (xclip -selection clipboard -o | xclip -selection primary) ; \
 #	cabl
+
 
 
 super + w
@@ -95,7 +94,7 @@ super + shift + s
   $TERMINAL
 
 
-super + shift + h
+super + shift + f6
   $TERMINAL -e htop
 
 
@@ -143,9 +142,6 @@ super + shift + u
 
 super + e
 	run-or-raise "st-nvim" "st -g 200x40+730+0 -n st-nvim -e nvim "
-
-super + f
-	run-or-raise firefox firefox
 
 super + r
 	run-or-raise "st-tmux-1" "st -g 200x20+730+684 -n st-tmux-1 -e tmux"

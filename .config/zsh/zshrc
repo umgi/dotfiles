@@ -74,3 +74,12 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+LUAROCKS_PATH=~/.config/zsh/luarocks
+if [ ! -f "$LUAROCKS_PATH" ]; then
+	luarocks path --bin > "$LUAROCKS_PATH"
+fi
+
+source "$LUAROCKS_PATH"
+
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh

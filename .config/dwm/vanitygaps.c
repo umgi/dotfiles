@@ -429,6 +429,104 @@ centeredmaster(Monitor* m)
     }
   }
 }
+
+void tileslide(Monitor* m) {
+  unsigned int i, n;
+  int oh, ov, ih, iv;
+  int mx = 0, my = 0, mh = 0, mw = 0;
+  int lx = 0, ly = 0;
+  int rx = 0, ry = 0;
+  float mfacts = 0, sfacts = 0;
+  int mtotal = 0, stotal = 0;
+  int mrest = 0, srest = 0;
+  int nbreak = -1;
+  int sw = 0, sh = 0;
+  int tofs = 0, bofs = 0, lofs = 1, rofs = 0;
+  int bmastertop = 0;
+  unsigned int be;
+  Client* c;
+
+  getgaps(m, &oh, &ov, &ih, &iv, &n);
+  if (n == 0)
+    return;
+
+  be = oh == 0;
+
+  rofs = n == 1 || MIN(n, m->nmaster) != 1;
+  bmastertop = 1 - (n == 2 && m->nmaster >= 1);
+
+  /* initialize areas */
+  mx = m->wx + ov;
+  my = m->wy + oh;
+  mh = m->wh - 2 * oh - ih * ((!m->nmaster ? n : MIN(n, m->nmaster)) - 1);
+  mw = m->ww - 2 * ov;
+
+  if (m->nmaster && n > m->nmaster) {
+    /* ||<---M--->|<-S->|| */
+    mw = (m->ww - 2 * ov - 2 * iv) * m->mfact;
+    sw = (m->ww - 2 * ov - 2 * iv - mw) / 2;
+    sh = m->wh - 2 * oh - (n - m->nmaster - 1) / 2 * ih;
+
+
+    lx = m->wx + ov + mw + iv;
+    ly = m->wy + oh;
+
+    rx = lx + sw + iv;
+    ry = m->wy + oh;
+  }
+
+  /* calculate facts */
+  for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++) {
+    if (!m->nmaster || n < m->nmaster)
+      mfacts += 1;
+    else if ((n - m->nmaster) % 2 == 0)
+      sfacts += 1; // total factor of left hand stack area
+  }
+
+  for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++)
+    if (!m->nmaster || n < m->nmaster)
+      mtotal += mh / mfacts;
+    else if ((n - m->nmaster) % 2 == 0)
+      stotal += sh / sfacts; // count only for left column
+
+  mrest = mh - mtotal;
+  srest = sh - stotal;
+
+  for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+    if (!m->nmaster || i < m->nmaster) {
+      /* nmaster clients are stacked vertically, in the center of the screen */
+      resize(c,
+             mx - (lofs * be * c->bw),
+             my - (bmastertop * be * c->bw),
+            //  mw - (!be * 2 * c->bw),
+            //  (mh / mfacts) + (i < mrest ? 1 : 0) - (!be * 2 * c->bw),
+             (mw / mfacts) + (i < mrest ? 1 : 0) - (!be * 2 * c->bw),
+             mh - (!be * 2 * c->bw),
+             0);
+      // my += HEIGHT(c) + ih - be * c->bw;
+      mx += WIDTH(c) + iv - be * c->bw;
+    } else {
+      resize(
+        c,
+        lx,
+        ly,
+        c->w,
+        c->h,
+        0
+      );
+
+      crop(
+        c,
+        sw,
+        sh
+      );
+
+      ly += HEIGHT(c) + ih - be * c->bw;
+    }
+  }
+
+}
+
 void
 tiletwo(Monitor* m)
 {

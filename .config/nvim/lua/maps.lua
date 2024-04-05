@@ -3,6 +3,8 @@ local map = vim.api.nvim_set_keymap
 
 local g = vim.g
 g.mapleader = " "
+g.maplocalleader = " "
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>")
 
 map("n", "<leader>h", "<C-w>h", opts)
 map("n", "<leader>j", "<C-w>j", opts)

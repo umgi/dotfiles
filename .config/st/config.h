@@ -6,8 +6,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "monospace:pixelsize=12:antialias=true";
-static char *font2[] = { "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
+static char *font = "monospace:pointsize=16:antialias=true";
+static char *font2[] = { "JoyPixels:pointsize=10:antialias=true:autohint=true" };
 static int borderpx = 2;
 
 
@@ -534,6 +534,11 @@ static Key key[] = {
 static uint selmasks[] = {
 	[SEL_RECTANGULAR] = Mod1Mask,
 };
+
+static MonitorConfig monitors_config[] = {
+  {"eDP-1", -10},
+};
+static int winmovethreshold = 0;
 
 /*
  * Printable characters in ASCII, used to estimate the advance width

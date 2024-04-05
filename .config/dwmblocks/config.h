@@ -28,7 +28,7 @@ static const Block blocks[] = {
 	{"",	"sb-help-icon",	0,	15},*/
 
 	//{ "",	"shuf -n 1 ~/.local/share/kaomoji-ny.txt",	30,	11 }, // happy new year
-	{ "",	"df -h --output=avail /dev/sda2 | tail -n1",	360,	15 },
+	{ "",	"df -h --output=avail /dev/nvme0n1p7 | tail -n1",	360,	15 },
 	{ "",	PATH("github"),	120,	15 },
 	{ "",	PATH("pomodoro"),	15,	15 },
 	{ "",	PATH("load"),	15,	11 },

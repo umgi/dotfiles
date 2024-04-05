@@ -18,5 +18,8 @@ export PATH="$PATH:$HOME/.local/bin/wb:$HOME/.local/bin:$GOPATH/bin"
 export PATH="$XDG_CONFIG_HOME/dwmblocks/programs:$PATH"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
+export QTWEBENGINE_DISABLE_SANDBOX=1
 
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+
+[ -f "$XDG_CONFIG_HOME/zsh/secret_profile" ] && source "$XDG_CONFIG_HOME/zsh/secret_profile"

@@ -24,8 +24,11 @@ dunst_id="string:x-dunst-stack-tag:vpngate"
 dunst_title="vpngate"
 
 dunstify -h "$dunst_id" "$dunst_title - loading"
-
+pushd "/home/emi/.local/share/vpn"
+prerequest_proxy="$(sudo openvpn "antizapret-tcp.ovpn" > "antizapret-log" 2>&1 & echo "$!")"
+sleep 10
 list=$(curl $listaddr | tr -d '\r' | tail -n +3 | head -n -1 | grep -E ",Japan,(jp|JP)," | awk -F, '{print $5 "," $8 "," $2 "," $15 }' | sort -g -r -t ',' )
+kill "$prerequest_proxy"
 
 printf "vpn\nvpn" > /tmp/vpngate.creds
 
@@ -39,12 +42,15 @@ for line in $list; do
   info=$(echo "$line" | awk -F, '{ printf("%2d) %4sMB - %3d sessions - %s\n", NR, int($1/1048576), $2, $3) }')
   dunstify -h "$dunst_id" "$dunst_title - trying" "$info"
   echo "$line" | cut -d, -f4 | base64 -d > /tmp/vpngate.conf
+	copilot_url="$(dig +short copilot-proxy.githubusercontent.com | tail -n +2 | tr -d '\n')"
+	echo "route-nopull" >> /tmp/vpngate.conf
+	echo "route $copilot_url 255.255.255.255" >> /tmp/vpngate.conf
   openvpn \
     --mute-replay-warnings \
     --config /tmp/vpngate.conf \
     --auth-user-pass /tmp/vpngate.creds \
-    --connect-timeout 15 \
-    --connect-retry-max 3 \
+    --connect-timeout 120 \
+    --connect-retry-max 5 \
     & # --resolv-retry 10 --connect-retry-max 1 
     #--auth-nocache \
     #--route-nopull \
@@ -55,12 +61,12 @@ for line in $list; do
   running_pid=$!
   echo "pid: $!"
 
-  SLEEP_TIME="8"
+  SLEEP_TIME="120"
   region=""
   success=0
   while [ "$success" == "0" ]; do
     sleep "$SLEEP_TIME"
-    curl_response=$(curl -s ipinfo.io --silent --connect-timeout 30 --max-time 30)
+    curl_response=$(curl -s ipinfo.io --silent --connect-timeout 120 --max-time 120)
     ( sleep 7 && pkill -RTMIN+5 dwmblocks) & # parallel
     if [ "$?" != 0 ]; then
       success="$?"
@@ -69,7 +75,7 @@ for line in $list; do
       echo "$curl_response"
       [ "$region" != "JP" ] && success="127" || success="0"
     fi
-    SLEEP_TIME="90"
+    SLEEP_TIME="120"
   done
 
   status=""
@@ -86,7 +92,7 @@ for line in $list; do
   esac
 
   dunstify -h "$dunst_id" "$dunst_title - $status"
-  sudo killall "openvpn"
+  kill "$running_pid"
   sleep 5
 done
 

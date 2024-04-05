@@ -94,3 +94,28 @@ alias \
 
 alias \
 	k="kubectl"
+
+export KNS="-n=seller-wb-balance"
+alias \
+	kgp="kubectl get po $KNS | grep -wv 'seller-wb-balance'" \
+	kd="kubectl describe po $KNS"\
+	klp="kubectl logs --previous $KNS" \
+  kdr="kubectl describe resourcequota $KNS" \
+	klf="kubectl logs --follow $KNS" \
+  tst="tsh kube login k8s.stage-dp" \
+  txc="tsh kube login k8s.stage-xc" \
+	tdp="tsh kube login k8s.portal-dp" \
+	tdl="tsh kube login k8s.portal-dl" \
+	tel="tsh kube login k8s.portal-el"
+
+function ked () {
+  KUBEEDITOR='vim' kubectl edit "deploy/$1" $KNS
+}
+
+function ksd () {
+	kubectl scale deploy $1 --replicas=$2 $KNS
+}
+
+alias \
+	wbgl="pass otp otp/gitlab.wildberries.ru -c"
+

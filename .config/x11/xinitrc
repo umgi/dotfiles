@@ -27,8 +27,11 @@ picom &
 dunst &
 dwmblocks &
 sxhkd &
-wallpaper-gradient-time.sh &
+#wallpaper-gradient-time.sh &
 "$HOME/.fehbg" &
-#wallpaper.sh &
+# wallpaper.sh &
 #exec openbox-session
+mpv "Shared/Startup/Microsoft Windows NT Startup Sound.mp3" &
 exec dwm
+#exec i3
+

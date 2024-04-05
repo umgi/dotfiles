@@ -1,12 +1,90 @@
 {
+  "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "explorer.confirmDelete": false,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "files.autoSave": "afterDelay",
+  "Lua.hint.enable": true,
+  "excalidraw.theme": "dark",
+  "vim.handleKeys": {
+    "<C-c>": false,
+    "<C-d>": false,
+    "<C-f>": false
+  },
+  "highlight.regexes": {
+    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *TODO(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+      "decorations": [
+        {
+          "overviewRulerColor": "#ffcc00",
+          "backgroundColor": "#ffcc00",
+          "color": "#1f1f1f",
+          "fontWeight": "bold"
+        },
+        {
+          "backgroundColor": "#ffcc00",
+          "color": "#1f1f1f"
+        }
+      ]
+    },
+    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:FIXME|FIX|BUG|UGLY|DEBUG|HACK)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+      "decorations": [
+        {
+          "overviewRulerColor": "#cc0000",
+          "backgroundColor": "#cc0000",
+          "color": "#1f1f1f",
+          "fontWeight": "bold"
+        },
+        {
+          "backgroundColor": "#cc0000",
+          "color": "#1f1f1f"
+        }
+      ]
+    },
+    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:REVIEW|OPTIMIZE|TSC)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+      "decorations": [
+        {
+          "overviewRulerColor": "#00ccff",
+          "backgroundColor": "#00ccff",
+          "color": "#1f1f1f",
+          "fontWeight": "bold"
+        },
+        {
+          "backgroundColor": "#00ccff",
+          "color": "#1f1f1f"
+        }
+      ]
+    },
+    "((?:<!-- *)?(?:#|// @|//|./\\*+|<!--|--|\\* @|{!|{{!--|{{!) *(?:IDEA)(?:\\s*\\([^)]+\\))?:?)((?!\\w)(?: *-->| *\\*/| *!}| *--}}| *}}|(?= *(?:[^:]//|/\\*+|<!--|@|--|{!|{{!--|{{!))|(?: +[^\\n@]*?)(?= *(?:[^:]//|/\\*+|<!--|@|--(?!>)|{!|{{!--|{{!))|(?: +[^@\\n]+)?))": {
+      "filterFileRegex": ".*(?<!CHANGELOG.md)$",
+      "decorations": [
+        {
+          "overviewRulerColor": "#cc00cc",
+          "backgroundColor": "#cc00cc",
+          "color": "#1f1f1f",
+          "fontWeight": "bold"
+        },
+        {
+          "backgroundColor": "#cc00cc",
+          "color": "#1f1f1f"
+        }
+      ]
+    }
+  },
+  "workbench.activityBar.location": "top",
+
+  "markdown.preview.fontFamily": "azukifontB, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+  "luacheck.luacheck": "luacheck.exe",
+  "lua-tools.useLuacheck": false,
+
   //Editor
   "files.trimTrailingWhitespace": true,
   "editor.formatOnPaste": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
   "terminal.integrated.automationShell.linux": "",
-  "explorer.confirmDelete": false,
-  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.rulers": [80],
   "emmet.includeLanguages": {
@@ -17,6 +95,259 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "files.associations": {
     "*.js": "javascript"
+  },
+  "vscode-neovim.neovimExecutablePaths.win32": "D:\\bin\\Neovim\\bin\\nvim.exe",
+  // "settingsSync.ignoredSettings": ["vscode-neovim.neovimExecutablePaths.win32"],
+  "vsicons.dontShowNewVersionMessage": true,
+  // "terminal.integrated.shellArgs.windows": null,
+  // "godot_tools.editor_path": "C:/bin/godot.exe",
+
+  // Vintage
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true, // same copy buffer
+  "vim.leader": "<space>",
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["i"],
+      "after": ["<Esc>", "i"]
+    }
+  ],
+
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<C+r>"],
+      "commands": ["redo"]
+    },
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": ["<C+r>"],
+      "commands": ["redo"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "command": "whichkey.triggerKey",
+          "args": "m"
+        }
+      ]
+    }
+  ],
+
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false,
+    "<C-d>": false,
+    "<C-c>": false,
+    "<C-x>": false,
+    "<C-v>": false,
+    "<C-p>": false
+  },
+
+  "editor.stickyTabStops": true,
+  // Always include all words from the current document.
+  "javascript.suggest.alwaysAllWords": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "git.autofetch": true,
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "svelte.plugin.html.tagComplete.enable": false,
+  "workbench.colorCustomizations": {
+    "[Fluffy Theme]": {
+      // "titleBar.activeBackground": "#cc9999",
+      // "tab.activeBackground": "#cc9999",
+      // "tab.activeForeground": "#FFFFFF"
+    }
+  },
+  "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "debug.console.fontSize": 16,
+  "terminal.integrated.profiles.windows": {
+    "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe (migrated)": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "args": []
+    }
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.wrappingIndent": "none",
+  "editor.wordWrap": "on",
+  "emmet.triggerExpansionOnTab": true,
+  "prettier.htmlWhitespaceSensitivity": "strict",
+
+  // Go
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false,
+    "explicitFolding.rules": [
+      {
+        "begin": "if err != nil {",
+        "middleRegex": "return",
+        "end": "}",
+        "autoFold": true
+      },
+      {
+        "begin": "return",
+        "end": "}",
+        "autoFold": true
+      },
+      {
+        "begin": "}",
+        "end": "^$",
+        "autoFold": true
+      }
+    ]
+  },
+
+  // GDScript
+  // gdscript tabs = 2 space size
+  "[gdscript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false, // fix enter after :. so you can exit if statement
+    "editor.defaultFormatter": "Razoric.gdscript-toolkit-formatter"
+  },
+  "files.autoSave": "onFocusChange",
+  "bracket-pair-colorizer-2.depreciation-notice": false,
+
+  "editor.showFoldingControls": "always",
+  "editor.foldingStrategy": "auto",
+
+  // "explicitFolding.rules": {},
+  "explicitFolding.debug": false,
+  "editor.foldingHighlight": false,
+  "editor.renderLineHighlight": "gutter",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "git.suggestSmartCommit": false,
+  "mssql.connections": [
+    {
+      "server": "10.42.244.2",
+      "database": "ComSales",
+      "authenticationType": "SqlLogin",
+      "user": "logistic_read",
+      "password": "",
+      "emptyPasswordInput": false,
+      "savePassword": true
+    }
+  ],
+  "git.path": "",
+  // "editor.smoothScrolling": true,
+  // "workbench.list.smoothScrolling": true,
+  // "editor.cursorSmoothCaretAnimation": "on",
+  "files.enableTrash": false,
+  "explorer.confirmDelete": false,
+  "editor.disableTranslate3d": true,
+  "hana.reminderViewIntervalInMinutes": 60,
+  "go.lintTool": "golangci-lint",
+  "terminal.integrated.fontSize": 22,
+  "git.ignoreRebaseWarning": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "terminal.integrated.inheritEnv": false,
+  "activitusbar.showSourceControlCounter": true,
+  "activitusbar.views": [
+    {
+      "name": "explorer",
+      "codicon": "explorer-view-icon"
+    },
+    {
+      "name": "search",
+      "codicon": "search-view-icon"
+    },
+    {
+      "name": "scm",
+      "codicon": "source-control-view-icon"
+    },
+    {
+      "name": "debug",
+      "codicon": "run-view-icon"
+    },
+    {
+      "name": "extensions",
+      "codicon": "extensions-view-icon"
+    },
+    {
+      "name": "uncanny",
+      "codicon": "account"
+    }
+  ],
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "go.inlayHints.rangeVariableTypes": true,
+  "plantuml.exportFormat": "svg",
+  "plantuml.exportOutDir": "docs",
+  "go.testFlags": ["-v"],
+  "go.disableConcurrentTests": true,
+  "go.testExplorer.packageDisplayMode": "nested",
+  "go.testExplorer.showDynamicSubtestsInEditor": true,
+  "go.testTimeout": "120s",
+  "gitlens.mode.active": "review",
+  "window.zoomLevel": -2,
+  "python.pythonPath": "/home/emi/nb/insight/.venv/bin/python",
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".*\\.go$",
+        "cmd": "wsl --allow-cuddle-declarations --fix ./...; echo \"Hello wsl\""
+      },
+      {
+        "match": ".*\\.go$",
+        "cmd": "fieldalignment -fix ./..."
+      },
+      {
+        "match": ".*\\.go$",
+        "cmd": "golangci-lint run ./... --fix "
+      }
+    ]
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "markdown.preview.fontFamily": "'azukifontBi', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+  "workbench.activityBar.location": "top",
+  "workbench.layoutControl.enabled": false,
+  "window.commandCenter": false,
+  "workbench.editor.editorActionsLocation": "hidden",
+  "editor.renderWhitespace": "none",
+
+  //Editor
+  "files.trimTrailingWhitespace": true,
+  "editor.formatOnPaste": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.snippetSuggestions": "top",
+  "terminal.integrated.automationShell.linux": "",
+  "explorer.confirmDelete": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.rulers": [80],
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "editor.renameOnType": true,
+  "explorer.confirmDragAndDrop": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "files.associations": {
+    "*.js": "javascript",
+    "*.tmpl": "html"
   },
   "vscode-neovim.neovimExecutablePaths.win32": "D:\\bin\\Neovim\\bin\\nvim.exe",
   // "settingsSync.ignoredSettings": ["vscode-neovim.neovimExecutablePaths.win32"],
@@ -71,6 +402,13 @@
     "<C-v>": false
   },
 
+  "vim.leader": "<space>",
+  // gdscript tabs = 2 space size
+  "[gdscript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false // fix enter after :. so you can exit if statement
+  },
   "editor.stickyTabStops": true,
   // Always include all words from the current document.
   "javascript.suggest.alwaysAllWords": true,
@@ -90,8 +428,8 @@
   },
   "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "editor.fontFamily": "'Rounded m+ 1mn', Consolas, 'Courier New', monospace",
   "debug.console.fontSize": 16,
+  "terminal.integrated.fontSize": 18,
   "terminal.integrated.profiles.windows": {
     "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe (migrated)": {
       "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -103,7 +441,7 @@
   "editor.wordWrap": "on",
   "emmet.triggerExpansionOnTab": true,
   "prettier.htmlWhitespaceSensitivity": "strict",
-  "window.menuBarVisibility": "toggle",
+  "omnisharp.monoPath": "",
 
   // Go
   "[go]": {
@@ -138,9 +476,6 @@
     "editor.insertSpaces": false, // fix enter after :. so you can exit if statement
     "editor.defaultFormatter": "Razoric.gdscript-toolkit-formatter"
   },
-  "[yaml]": {
-    "editor.formatOnSave": false
-  },
   "files.autoSave": "onFocusChange",
   "bracket-pair-colorizer-2.depreciation-notice": false,
 
@@ -153,17 +488,100 @@
   "editor.renderLineHighlight": "gutter",
   "diffEditor.ignoreTrimWhitespace": false,
   "git.suggestSmartCommit": false,
-  "mssql.connections": [
+  "workbench.startupEditor": "none",
+
+  // terminal
+  "terminal.integrated.profiles.linux": {
+    "zsh": {
+      "path": "zsh",
+      "args": ["-l", "-i"]
+    }
+  },
+
+  "v.vls.debug": true,
+  "v.vls.enable": true,
+  "[v]": {
+    "editor.defaultFormatter": "vlanguage.vscode-vlang"
+  },
+  "editor.stickyScroll.enabled": true,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "C_Cpp.formatting": "clangFormat",
+  "[cpp]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[gotmpl]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "editor.guides.bracketPairs": "active",
+  "git.confirmSync": false,
+  "editor.tabSize": 2,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "plantuml.render": "PlantUMLServer",
+  "plantuml.server": "https://www.plantuml.com/plantuml",
+
+  "redhat.telemetry.enabled": false,
+  "editor.formatOnSave": true,
+  "extensions.ignoreRecommendations": true,
+
+  "editor.inlineSuggest.enabled": true,
+
+  // Appearance
+  "workbench.colorTheme": "Fluffy Theme",
+  "workbench.iconTheme": "vscode-animal-crossing-icon-theme",
+  "window.menuBarVisibility": "toggle",
+
+  // Fonts
+  "customizeUI.font.regular": "azukifontB",
+  "customizeUI.font.monospace": "azukifontB",
+  "editor.fontFamily": "azukifontB, 'JetBrains Mono','Rounded m+ 1mn', Consolas, 'Courier New', monospace",
+  "editor.inlayHints.fontFamily": "'あずきフォント'",
+  "terminal.integrated.fontFamily": "azukifontB",
+
+  // VSpaceCode
+  "vim.visualModeKeyBindingsNonRecursive": [
     {
-      "server": "10.42.244.2",
-      "database": "ComSales",
-      "authenticationType": "SqlLogin",
-      "user": "logistic_read",
-      "password": "",
-      "emptyPasswordInput": false,
-      "savePassword": true
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "command": "whichkey.triggerKey",
+          "args": "m"
+        }
+      ]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
     }
   ],
-  "git.path": "",
-  "workbench.colorTheme": "yuyuko-vim-vsc"
+  "vspacecode.bindingOverrides": [
+    {
+      "keys": "d.f",
+      "name": "Select and Start debugging",
+      "type": "command",
+      "command": "workbench.action.debug.selectandstart",
+      "icon": "move"
+    }
+  ],
+  "Lua.codeLens.enable": true,
+  "Lua.hint.setType": true,
+  "Lua.nameStyle.config": {},
+  "inline-parameters.lua.hintBeforeParameter": false,
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  },
+  "workbench.editorAssociations": {
+    "*.aseprite": "default"
+  }
 }
