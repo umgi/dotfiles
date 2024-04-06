@@ -58,12 +58,6 @@ awful.screen.set_auto_dpi_enabled(true)
 theme = os.getenv("XDG_CONFIG_HOME") .. "/awesome/themes/zenburn/theme.lua"
 beautiful.init(theme)
 
-naughty.notify({
-	preset = naughty.config.presets.critical,
-	title = "Oops, an error happened!",
-	text = tostring(theme),
-})
-
 -- This is used later as the default terminal and editor to run.
 terminal = "st"
 editor = os.getenv("EDITOR") or "nano"
@@ -538,11 +532,7 @@ awful.rules.rules = {
 		properties = { screen = 1, tag = "web", titlebars_enabled = false },
 	},
 	{
-		rule = { class = "discord" },
-		properties = { screen = 1, tag = "chat", titlebars_enabled = false },
-	},
-	{
-		rule = { class = "TelegramDesktop" },
+		rule_any = { class = { "discord", "TelegramDesktop" } },
 		properties = { screen = 1, tag = "chat", titlebars_enabled = false },
 	},
 }
