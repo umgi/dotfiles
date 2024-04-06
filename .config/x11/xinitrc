@@ -31,7 +31,8 @@ sxhkd &
 "$HOME/.fehbg" &
 # wallpaper.sh &
 #exec openbox-session
-mpv "Shared/Startup/Microsoft Windows NT Startup Sound.mp3" &
-exec dwm
+#mpv "Shared/Startup/Microsoft Windows NT Startup Sound.mp3" &
+#exec dwm
 #exec i3
+exec awesome
 

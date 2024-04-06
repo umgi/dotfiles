@@ -143,8 +143,8 @@ super + shift + u
 super + e
 	run-or-raise "st-nvim" "st -g 200x40+730+0 -n st-nvim -e nvim "
 
-super + r
-	run-or-raise "st-tmux-1" "st -g 200x20+730+684 -n st-tmux-1 -e tmux"
+# super + r
+# r 	run-or-raise "st-tmux-1" "st -g 200x20+730+684 -n st-tmux-1 -e tmux"
 
 super + F11
 	run-or-raise "telegram-desktop" "telegram-desktop"
