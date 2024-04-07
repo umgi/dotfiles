@@ -153,5 +153,10 @@
   {
     "key": "ctrl+n ctrl+m",
     "command": "anki.sendToAsDirStru"
+  },
+  {
+    "key": "f",
+    "command": "openInApplication.open",
+    "when": "sideBarFocus && !inputFocus"
   }
 ]

@@ -77,7 +77,6 @@
 
   "markdown.preview.fontFamily": "azukifontB, -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
   "luacheck.luacheck": "luacheck.exe",
-  "lua-tools.useLuacheck": false,
 
   //Editor
   "files.trimTrailingWhitespace": true,
@@ -399,7 +398,8 @@
     "<C-d>": false,
     "<C-c>": false,
     "<C-x>": false,
-    "<C-v>": false
+    "<C-v>": false,
+    "<C-w>": false
   },
 
   "vim.leader": "<space>",

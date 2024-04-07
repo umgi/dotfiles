@@ -13,6 +13,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+local lovistatusbar = require("lovi_statusbar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -237,7 +238,7 @@ awful.screen.connect_for_each_screen(function(s)
 	})
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s })
+	s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
@@ -257,6 +258,8 @@ awful.screen.connect_for_each_screen(function(s)
 			s.mylayoutbox,
 		},
 	})
+
+	lovistatusbar.setup(s)
 end)
 -- }}}
 
@@ -347,6 +350,10 @@ globalkeys = gears.table.join(
 			c:emit_signal("request::activate", "key.unminimize", { raise = true })
 		end
 	end, { description = "restore minimized", group = "client" }),
+
+	-- awful.key({ modkey }, "v", function()
+	-- 	awful.screen.focused()
+	-- end)
 
 	-- Prompt
 	awful.key({ modkey }, "r", function()
