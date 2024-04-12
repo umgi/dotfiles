@@ -80,4 +80,6 @@
 !*.colorIT:
 !*.colorUL:
 
-Xft.dpi: 243
+!Xft.dpi: 240
+Xft.dpi: 192
+

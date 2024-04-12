@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // Thanks to Raven2cz: https://www.youtube.com/watch?v=KdrTjlq9F5I
+    {
+      "name": "Debug with Xephyr",
+      "type": "lua-local",
+      "request": "launch",
+      "program": {
+        "command": "lua"
+      },
+      "env": {},
+      "args": ["${workspaceFolder}/.vscode/debug.lua"]
+    }
+  ]
+}

@@ -19,6 +19,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local dpi = require("beautiful").xresources.apply_dpi
+-- local dpi = function(size)
+-- 	return size * 2
+-- end
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -29,6 +34,12 @@ if awesome.startup_errors then
 		text = awesome.startup_errors,
 	})
 end
+
+naughty.notify({
+	preset = naughty.config.presets.critical,
+	title = "hello: " .. tostring(dpi(1)) .. ", " .. tostring(dpi(2)) .. ", " .. tostring(dpi(3)) .. ", ",
+	-- text = awesome.startup_errors,
+})
 
 -- Handle runtime errors after startup
 do
@@ -235,10 +246,57 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		filter = awful.widget.tasklist.filter.currenttags,
 		buttons = tasklist_buttons,
+		layout = {
+			spacing_widget = {
+				{
+					forced_width = 5,
+					forced_height = 24,
+					thickness = 1,
+					color = "#777777",
+					widget = wibox.widget.separator,
+				},
+				valign = "center",
+				halign = "center",
+				widget = wibox.container.place,
+			},
+			spacing = 1,
+			layout = wibox.layout.fixed.horizontal,
+		},
+		widget_template = {
+			{
+				wibox.widget.base.make_widget(),
+				forced_height = 5,
+				id = "background_role",
+				widget = wibox.container.background,
+			},
+			{
+				{
+					id = "clienticon",
+					widget = awful.widget.clienticon,
+				},
+				margins = 5,
+				widget = wibox.container.margin,
+			},
+			nil,
+			create_callback = function(self, c, index, objects) -- luacheck: no unused args
+				self:get_childred_by_id("clienticon")[1].client = c
+			end,
+			layout = wibox.layout.align.vertical,
+		},
+	})
+
+	naughty.notify({
+		preset = naughty.config.presets.critical,
+		title = "Oops, there were errors during startup!",
+		text = require("gears.debug").dump_return(s.mytasklist, "mytaskbar", 5),
 	})
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "bottom", screen = s })
+	s.mywibox = awful.wibar({
+		position = "bottom",
+		screen = s,
+		height = dpi(30),
+	})
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
