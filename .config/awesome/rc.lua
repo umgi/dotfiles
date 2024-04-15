@@ -35,12 +35,6 @@ if awesome.startup_errors then
 	})
 end
 
-naughty.notify({
-	preset = naughty.config.presets.critical,
-	title = "hello: " .. tostring(dpi(1)) .. ", " .. tostring(dpi(2)) .. ", " .. tostring(dpi(3)) .. ", ",
-	-- text = awesome.startup_errors,
-})
-
 -- Handle runtime errors after startup
 do
 	local in_error = false
@@ -246,50 +240,50 @@ awful.screen.connect_for_each_screen(function(s)
 		screen = s,
 		filter = awful.widget.tasklist.filter.currenttags,
 		buttons = tasklist_buttons,
-		layout = {
-			spacing_widget = {
-				{
-					forced_width = 5,
-					forced_height = 24,
-					thickness = 1,
-					color = "#777777",
-					widget = wibox.widget.separator,
-				},
-				valign = "center",
-				halign = "center",
-				widget = wibox.container.place,
-			},
-			spacing = 1,
-			layout = wibox.layout.fixed.horizontal,
-		},
-		widget_template = {
-			{
-				wibox.widget.base.make_widget(),
-				forced_height = 5,
-				id = "background_role",
-				widget = wibox.container.background,
-			},
-			{
-				{
-					id = "clienticon",
-					widget = awful.widget.clienticon,
-				},
-				margins = 5,
-				widget = wibox.container.margin,
-			},
-			nil,
-			create_callback = function(self, c, index, objects) -- luacheck: no unused args
-				self:get_childred_by_id("clienticon")[1].client = c
-			end,
-			layout = wibox.layout.align.vertical,
-		},
+		-- layout = {
+		-- 	spacing_widget = {
+		-- 		{
+		-- 			forced_width = 5,
+		-- 			forced_height = 24,
+		-- 			thickness = 1,
+		-- 			color = "#777777",
+		-- 			widget = wibox.widget.separator,
+		-- 		},
+		-- 		valign = "center",
+		-- 		halign = "center",
+		-- 		widget = wibox.container.place,
+		-- 	},
+		-- 	spacing = 1,
+		-- 	layout = wibox.layout.fixed.horizontal,
+		-- },
+		-- widget_template = {
+		-- 	{
+		-- 		wibox.widget.base.make_widget(),
+		-- 		forced_height = 5,
+		-- 		id = "background_role",
+		-- 		widget = wibox.container.background,
+		-- 	},
+		-- 	{
+		-- 		{
+		-- 			id = "clienticon",
+		-- 			widget = awful.widget.clienticon,
+		-- 		},
+		-- 		margins = 5,
+		-- 		widget = wibox.container.margin,
+		-- 	},
+		-- 	nil,
+		-- 	create_callback = function(self, c, index, objects) -- luacheck: no unused args
+		-- 		self:get_childred_by_id("clienticon")[1].client = c
+		-- 	end,
+		-- 	layout = wibox.layout.align.vertical,
+		-- },
 	})
 
-	naughty.notify({
-		preset = naughty.config.presets.critical,
-		title = "Oops, there were errors during startup!",
-		text = require("gears.debug").dump_return(s.mytasklist, "mytaskbar", 5),
-	})
+	-- naughty.notify({
+	-- 	preset = naughty.config.presets.critical,
+	-- 	title = "Oops, there were errors during startup!",
+	-- 	text = require("gears.debug").dump_return(s.mytasklist, "mytaskbar", 5),
+	-- })
 
 	-- Create the wibox
 	s.mywibox = awful.wibar({
@@ -618,6 +612,7 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
+	-- for
 	-- buttons for the titlebar
 	local buttons = gears.table.join(
 		awful.button({}, 1, function()
@@ -630,30 +625,80 @@ client.connect_signal("request::titlebars", function(c)
 		end)
 	)
 
-	awful.titlebar(c):setup({
+	local container
+
+	local icon = {
 		{ -- Left
 			awful.titlebar.widget.iconwidget(c),
 			buttons = buttons,
 			layout = wibox.layout.fixed.horizontal,
 		},
-		{ -- Middle
-			{ -- Title
-				align = "center",
-				widget = awful.titlebar.widget.titlewidget(c),
-			},
-			buttons = buttons,
-			layout = wibox.layout.flex.horizontal,
+		left = 0,
+		right = 16,
+		top = 8,
+		bottom = 8,
+		layout = wibox.container.margin,
+	}
+
+	local titlebar = { -- Middle
+		{ -- Title
+			align = "left",
+			widget = awful.titlebar.widget.titlewidget(c),
 		},
-		{ -- Right
-			awful.titlebar.widget.floatingbutton(c),
-			awful.titlebar.widget.maximizedbutton(c),
-			awful.titlebar.widget.stickybutton(c),
-			awful.titlebar.widget.ontopbutton(c),
-			awful.titlebar.widget.closebutton(c),
-			layout = wibox.layout.fixed.horizontal(),
-		},
+		buttons = buttons,
+		layout = wibox.layout.flex.horizontal,
+	}
+
+	local ctrl = { -- Right
+		-- awful.titlebar.widget.floatingbutton(c),
+		-- awful.titlebar.widget.maximizedbutton(c),
+		-- awful.titlebar.widget.stickybutton(c),
+		-- awful.titlebar.widget.ontopbutton(c),
+		-- awful.titlebar.widget.closebutton(c),
+		layout = wibox.layout.fixed.horizontal(),
+	}
+
+	container = {
+		icon,
+		titlebar,
+		ctrl,
 		layout = wibox.layout.align.horizontal,
-	})
+	}
+
+	do
+		container = {
+			container,
+			left = 10,
+			right = 10,
+			top = 1,
+			bottom = 2,
+			layout = wibox.container.margin,
+		}
+	end
+
+	-- do
+	-- 	local size = math.floor(dpi(1) + 1 / 2)
+	-- 	-- Add inner black bottom border line
+	-- 	container = {
+	-- 		container,
+	-- 		bottom = size,
+	-- 		color = "#00000044",
+	-- 		widget = wibox.container.margin,for
+	-- 	}
+	-- end
+
+	do
+		local size = math.floor(dpi(1) + 1 / 2)
+		-- Add inner white bottom border line
+		container = {
+			container,
+			bottom = size,
+			color = "#000000BB",
+			widget = wibox.container.margin,
+		}
+	end
+
+	awful.titlebar(c, { size = dpi(35) }):setup(container)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.

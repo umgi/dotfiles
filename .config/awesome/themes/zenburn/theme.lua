@@ -15,7 +15,8 @@ theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
 theme.font = "sans 8"
 
 -- {{{ Colors
-theme.fg_normal = "#DCDCCC"
+theme.fg_normal = "#555555"
+theme.fg_normal = "#AAAAAA"
 theme.fg_focus = "#F0DFAF"
 theme.fg_urgent = "#CC9393"
 theme.bg_normal = "#000000"
@@ -27,7 +28,7 @@ theme.bg_systray = theme.bg_normal
 
 -- {{{ Borders
 theme.useless_gap = dpi(0)
-theme.border_width = dpi(2)
+theme.border_width = dpi(1)
 theme.border_normal = "#3F3F3F"
 theme.border_focus = "#6F6F6F"
 theme.border_marked = "#CC9393"
@@ -35,7 +36,7 @@ theme.border_marked = "#CC9393"
 
 -- {{{ Titlebars
 theme.titlebar_bg_focus = "#000000"
-theme.titlebar_bg_normal = "#3F3F3F"
+theme.titlebar_bg_normal = "#333333DD"
 -- }}}
 
 -- There are other variable sets
@@ -68,7 +69,15 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = dpi(15)
+theme.menu_height = dpi(30)
+
+local naughty = require("naughty")
+naughty.notify({
+	preset = naughty.config.presets.critical,
+	title = "Oops, there were errors during startup!" .. tostring(dpi(15)),
+	text = tostring(dpi(15)),
+})
+
 theme.menu_width = dpi(100)
 -- }}}
 
@@ -105,8 +114,12 @@ theme.layout_cornerse = themes_path .. "zenburn/layouts/cornerse.png"
 -- }}}
 
 -- {{{ Titlebar
-theme.titlebar_close_button_focus = themes_path .. "zenburn/titlebar/close_focus.png"
-theme.titlebar_close_button_normal = themes_path .. "zenburn/titlebar/close_normal.png"
+theme.titlebar_close_button_focus = themes_path .. "zenburn/close_w10red_2x_d.png"
+theme.titlebar_close_button_focus_hover = themes_path .. "zenburn/close_w10red_2x_h.png"
+theme.titlebar_close_button_focus_press = themes_path .. "zenburn/close_w10red_2x_a.png"
+theme.titlebar_close_button_normal = themes_path .. "zenburn/close_w10red_2x_d.png"
+theme.titlebar_close_button_normal_hover = themes_path .. "zenburn/close_w10red_2x_h.png"
+theme.titlebar_close_button_normal_press = themes_path .. "zenburn/close_w10red_2x_a.png"
 
 theme.titlebar_minimize_button_normal = themes_path .. "default/titlebar/minimize_normal.png"
 theme.titlebar_minimize_button_focus = themes_path .. "default/titlebar/minimize_focus.png"
