@@ -10,6 +10,8 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+-- local nice = require("3rd.awesome-wm-nice")
+-- nice()
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -278,12 +280,6 @@ awful.screen.connect_for_each_screen(function(s)
 		-- 	layout = wibox.layout.align.vertical,
 		-- },
 	})
-
-	-- naughty.notify({
-	-- 	preset = naughty.config.presets.critical,
-	-- 	title = "Oops, there were errors during startup!",
-	-- 	text = require("gears.debug").dump_return(s.mytasklist, "mytaskbar", 5),
-	-- })
 
 	-- Create the wibox
 	s.mywibox = awful.wibar({
@@ -611,6 +607,7 @@ client.connect_signal("manage", function(c)
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
+-- [[
 client.connect_signal("request::titlebars", function(c)
 	-- for
 	-- buttons for the titlebar
@@ -618,6 +615,10 @@ client.connect_signal("request::titlebars", function(c)
 		awful.button({}, 1, function()
 			c:emit_signal("request::activate", "titlebar", { raise = true })
 			awful.mouse.client.move(c)
+		end),
+		awful.button({}, 2, function()
+			c:emit_signal("request::activate", "titlebar", { raise = true })
+			awful.mouse.client.resize(c, "default", { awful.placement.maximize() })
 		end),
 		awful.button({}, 3, function()
 			c:emit_signal("request::activate", "titlebar", { raise = true })
@@ -701,6 +702,8 @@ client.connect_signal("request::titlebars", function(c)
 	awful.titlebar(c, { size = dpi(35) }):setup(container)
 end)
 
+--]]
+
 -- Enable sloppy focus, so that focus follows mouse.
 -- client.connect_signal("mouse::enter", function(c)
 -- 	-- c:emit_signal("request::activate", "mouse_enter", { raise = false })
@@ -719,3 +722,9 @@ end)
 beautiful.useless_gap = 16
 beautiful.gap_single_client = true
 -- }}}
+
+naughty.notify({
+	preset = naughty.config.presets.critical,
+	title = "Oops, there were errors during startup!",
+	text = tostring(package.path),
+})

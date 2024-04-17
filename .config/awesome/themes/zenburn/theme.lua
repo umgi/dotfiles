@@ -71,13 +71,6 @@ theme.mouse_finder_color = "#CC9393"
 -- menu_[border_color|border_width]
 theme.menu_height = dpi(30)
 
-local naughty = require("naughty")
-naughty.notify({
-	preset = naughty.config.presets.critical,
-	title = "Oops, there were errors during startup!" .. tostring(dpi(15)),
-	text = tostring(dpi(15)),
-})
-
 theme.menu_width = dpi(100)
 -- }}}
 
