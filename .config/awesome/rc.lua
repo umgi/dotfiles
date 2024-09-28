@@ -279,15 +279,50 @@ awful.screen.connect_for_each_screen(function(s)
 		-- 	end,
 		-- 	layout = wibox.layout.align.vertical,
 		-- },
+		widget_template = {
+			{
+				{
+					{
+						{
+							id = "icon_role",
+							widget = wibox.widget.imagebox,
+						},
+						left = 8,
+						right = 8,
+						top = 8,
+						bottom = 8,
+						widget = wibox.container.margin,
+					},
+					{
+						id = "text_role",
+						widget = wibox.widget.textbox,
+						ellipsize = "end",
+					},
+					layout = wibox.layout.fixed.horizontal,
+				},
+				-- left = dpi(2),
+				-- right = dpi(2),
+
+				left = 10,
+				right = 10,
+				top = 1,
+				bottom = 2,
+				widget = wibox.container.margin,
+			},
+			id = "background_role",
+			widget = wibox.container.background,
+		},
 	})
 
 	-- Create the wibox
 	s.mywibox = awful.wibar({
-		position = "bottom",
+		position = "top",
 		screen = s,
-		height = dpi(30),
+		height = dpi(35),
 	})
 
+	local systray = wibox.widget.systray()
+	systray.opacity = 221 / 255
 	-- Add widgets to the wibox
 	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
@@ -301,7 +336,18 @@ awful.screen.connect_for_each_screen(function(s)
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
 			mykeyboardlayout,
-			wibox.widget.systray(),
+			{
+				systray,
+				-- {
+				-- 	id = "icon_role",
+				-- 	widget = wibox.widget.imagebox,
+				-- },
+				left = 8,
+				right = 8,
+				top = 8,
+				bottom = 8,
+				widget = wibox.container.margin,
+			},
 			mytextclock,
 			s.mylayoutbox,
 		},
@@ -606,6 +652,25 @@ client.connect_signal("manage", function(c)
 	end
 end)
 
+local function double_click_event_handler(double_click_event)
+	local double_click_timer
+
+	return function()
+		if double_click_timer then
+			double_click_timer:stop()
+			double_click_timer = nil
+
+			double_click_event()
+			return
+		end
+
+		double_click_event = gears.timer.start_new(0.2, function()
+			double_click_timer = nil
+			return false
+		end)
+	end
+end
+
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 -- [[
 client.connect_signal("request::titlebars", function(c)
@@ -615,6 +680,11 @@ client.connect_signal("request::titlebars", function(c)
 		awful.button({}, 1, function()
 			c:emit_signal("request::activate", "titlebar", { raise = true })
 			awful.mouse.client.move(c)
+
+			double_click_event_handler(function()
+				c.floating = false
+				c.maximize = not c.maximize
+			end)
 		end),
 		awful.button({}, 2, function()
 			c:emit_signal("request::activate", "titlebar", { raise = true })
@@ -723,8 +793,7 @@ beautiful.useless_gap = 16
 beautiful.gap_single_client = true
 -- }}}
 
-naughty.notify({
-	preset = naughty.config.presets.critical,
-	title = "Oops, there were errors during startup!",
-	text = tostring(package.path),
-})
+-- A notification popup using the default widget_template.
+-- naughty.connect_signal("request::display", function(n)
+-- 	naughty.layout.box({ notification = n })
+-- end)

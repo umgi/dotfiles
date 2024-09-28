@@ -4,7 +4,6 @@
   "explorer.confirmDelete": false,
   "terminal.integrated.enableMultiLinePasteWarning": "never",
   "files.autoSave": "afterDelay",
-  "Lua.hint.enable": true,
   "excalidraw.theme": "dark",
   "vim.handleKeys": {
     "<C-c>": false,
@@ -168,13 +167,6 @@
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "svelte.plugin.html.tagComplete.enable": false,
-  "workbench.colorCustomizations": {
-    "[Fluffy Theme]": {
-      // "titleBar.activeBackground": "#cc9999",
-      // "tab.activeBackground": "#cc9999",
-      // "tab.activeForeground": "#FFFFFF"
-    }
-  },
   "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "debug.console.fontSize": 16,
@@ -419,13 +411,6 @@
   },
   "editor.minimap.enabled": false,
   "svelte.plugin.html.tagComplete.enable": false,
-  "workbench.colorCustomizations": {
-    "[Fluffy Theme]": {
-      // "titleBar.activeBackground": "#cc9999",
-      // "tab.activeBackground": "#cc9999",
-      // "tab.activeForeground": "#FFFFFF"
-    }
-  },
   "terminal.external.windowsExec": "C:\\Program Files\\Git\\bin\\bash.exe",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "debug.console.fontSize": 16,
@@ -523,22 +508,17 @@
   "plantuml.server": "https://www.plantuml.com/plantuml",
 
   "redhat.telemetry.enabled": false,
-  "editor.formatOnSave": true,
   "extensions.ignoreRecommendations": true,
 
   "editor.inlineSuggest.enabled": true,
-
-  // Appearance
-  "workbench.colorTheme": "Fluffy Theme",
-  "workbench.iconTheme": "vscode-animal-crossing-icon-theme",
-  "window.menuBarVisibility": "toggle",
+  "window.menuBarVisibility": "compact",
 
   // Fonts
   "customizeUI.font.regular": "azukifontB",
   "customizeUI.font.monospace": "azukifontB",
-  "editor.fontFamily": "azukifontB, 'JetBrains Mono','Rounded m+ 1mn', Consolas, 'Courier New', monospace",
-  "editor.inlayHints.fontFamily": "'あずきフォント'",
-  "terminal.integrated.fontFamily": "azukifontB",
+  "editor.fontFamily": "Iosevka, azukifontB, 'JetBrains Mono','Rounded m+ 1mn', Consolas, 'Courier New', monospace",
+  "editor.inlayHints.fontFamily": "Iosevka, 'あずきフォント'",
+  "terminal.integrated.fontFamily": "Iosevka, azukifontB",
 
   // VSpaceCode
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -577,11 +557,33 @@
   "Lua.codeLens.enable": true,
   "Lua.hint.setType": true,
   "Lua.nameStyle.config": {},
-  "inline-parameters.lua.hintBeforeParameter": false,
   "[lua]": {
     "editor.defaultFormatter": "JohnnyMorganz.stylua"
   },
   "workbench.editorAssociations": {
     "*.aseprite": "default"
-  }
+  },
+  "debug.console.wordWrap": false,
+  "workbench.colorCustomizations": {
+    "[Copilot Theme - Higher Contrast]": {
+      "debugConsole.infoForeground": "#eeeeee"
+    },
+    "[Fluffy Theme]": {
+      // "titleBar.activeBackground": "#cc9999",
+      // "tab.activeBackground": "#cc9999",
+      // "tab.activeForeground": "#FFFFFF"
+    }
+  },
+  "Lua.hint.paramType": false,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "editor.codeActionsOnSave": {
+
+  },
+  "go.testFlags": ["-v"],
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 4,
+        "prettier.useTabs": false
+    },
+
 }

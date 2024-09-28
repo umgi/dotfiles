@@ -20,7 +20,6 @@ alias \
   mkd="mkdir -pv" \
   ffmpeg="ffmpeg -hide_banner" \
   ..="cd .."
-
 alias \
   ls="ls --color=auto --group-directories-first" \
   la="ls -a" \
@@ -59,16 +58,24 @@ alias \
   gp="git push -u origin main"
 
 alias \
-  dot="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME" \
-  ds="dot status" \
-  dss="dot status -v | $PAGER" \
-  da="dot add" \
-  doc="dot commit -m" \
-  dp="dot push -u origin main"
+  ddt="git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME" \
+  ds="ddt status" \
+  dss="ddt status -v | $PAGER" \
+  da="ddt add" \
+  doc="ddt commit -m" \
+  dp="ddt push -u origin main"
 
 alias \
   gvim="vim" \
   lf="lfub"
+
+alias \
+	godc="deadcode ./..." \
+	golint="golangci-lint run --fix ./..." \
+	gofield="fieldalignment -fix ./..." \
+	gofieldinstall="go install golang.org/x/tools/go/analysis/passes/fieldalignment/cmd/fieldalignment@latest" \
+	gowsl="wsl --fix ./..."
+
 
 lfcd () {
   tmp="$(mktemp)"
@@ -106,7 +113,10 @@ alias \
   txc="tsh kube login k8s.stage-xc" \
 	tdp="tsh kube login k8s.portal-dp" \
 	tdl="tsh kube login k8s.portal-dl" \
-	tel="tsh kube login k8s.portal-el"
+	tel="tsh kube login k8s.portal-el" \
+	tbel="tsh kube login k8s.wb-balance-el" \
+	tbnb="tsh kube login k8s.wb-balance-nb" \
+	tbxs="tsh kube login k8s.wb-balance-xs"
 
 function ked () {
   KUBEEDITOR='vim' kubectl edit "deploy/$1" $KNS
@@ -118,4 +128,8 @@ function ksd () {
 
 alias \
 	wbgl="pass otp otp/gitlab.wildberries.ru -c"
+
+function kpf () {
+	kubectl $KNS port-forward svc/$1 $2
+}
 

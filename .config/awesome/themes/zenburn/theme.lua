@@ -8,35 +8,37 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
+-- theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
 -- }}}
 
 -- {{{ Styles
 theme.font = "sans 8"
 
 -- {{{ Colors
-theme.fg_normal = "#555555"
+-- theme.fg_normal = "#555555"
 theme.fg_normal = "#AAAAAA"
 theme.fg_focus = "#F0DFAF"
 theme.fg_urgent = "#CC9393"
-theme.bg_normal = "#000000"
-theme.bg_focus = "#1e1e1e"
+theme.bg_normal = "#000000DD"
+theme.bg_focus = "#1e1e1eDD"
 -- theme.bg_urgent = "#3F3F3F"
-theme.bg_urgent = "#1e0000"
+theme.bg_urgent = "#1e0000DD"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
 theme.useless_gap = dpi(0)
 theme.border_width = dpi(1)
-theme.border_normal = "#3F3F3F"
-theme.border_focus = "#6F6F6F"
-theme.border_marked = "#CC9393"
+-- theme.border_normal = "#3F3F3FDD"
+theme.border_normal = "#000000DD"
+-- theme.border_focus = "#6F6F6FDD"
+theme.border_focus = "EEEEEEDD"
+theme.border_marked = "#CC9393DD"
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus = "#000000"
-theme.titlebar_bg_normal = "#333333DD"
+theme.titlebar_bg_focus = "#000000DD"
+theme.titlebar_bg_normal = "#202020DD"
 -- }}}
 
 -- There are other variable sets

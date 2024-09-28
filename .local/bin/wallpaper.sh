@@ -12,9 +12,10 @@
 
 CHOSEN_BACKGROUND="$(ls /home/emi/.local/share/wallpaper/*.jpg | shuf -n 1)"
 
-magick "$CHOSEN_BACKGROUND" -blur 0x50 /tmp/wallpaper.png
+# magick "$CHOSEN_BACKGROUND" -blur 0x50 /tmp/wallpaper.png
 
-feh --no-fehbg -z --bg-max /tmp/wallpaper.png
+# feh --no-fehbg -z --bg-max /tmp/wallpaper.png
+feh --no-fehbg -z --bg-max "$CHOSEN_BACKGROUND"
 exit 0
 
 

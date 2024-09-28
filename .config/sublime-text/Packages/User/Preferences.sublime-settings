@@ -17,4 +17,5 @@
 	// "font_face": "JetBrains Mono",
 	// "font_options": ["gray_antialias"],
 	"draw_indent_guides": false,
+	"index_files": true,
 }
