@@ -15,7 +15,7 @@ nginx -c "$XDG_CONFIG_HOME/nginx/shared" -p "$HOME/shared/"
 xsetroot -bg '#000000' &
 
 # b
-remaps.sh &
+awm_remaps.sh &
 fcitx5 -d &
 redshift &
 # feh --bg-fill --randomize ~/.local/share/wallpaper/active/* &
@@ -28,8 +28,8 @@ dunst &
 dwmblocks &
 sxhkd &
 #wallpaper-gradient-time.sh &
-"$HOME/.fehbg" &
-# wallpaper.sh &
+# "$HOME/.fehbg" &
+wallpaper.sh &
 #exec openbox-session
 #mpv "Shared/Startup/Microsoft Windows NT Startup Sound.mp3" &
 #exec dwm

@@ -4,6 +4,8 @@
 # Faster long press
 xset r rate 300 50
 
+setxkbmap -layout 'us,us' -option 'ctrl:swap_lalt_lctl'
+
 # setxkbmap -option "ctrl:nocaps"
 # xmodmap -e "keycode 255 = Tab"
 # xmodmap -e "keycode 23 = Super_L"

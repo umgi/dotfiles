@@ -34,6 +34,8 @@ super + {F5,F6,F7}
   mpc {prev, next, toggle}
 
 
+super + F9
+	power_mode.sh
 
 super + F10
   de-redshift.sh
@@ -80,7 +82,7 @@ super + shift + w
   $TERMINAL -e sudo nmtui
 super + shift + e
   notify-send 'keys reloaded'; \
-  remaps.sh
+  awm_remaps.sh
 
 # super + p
 #   pcmanfm
@@ -94,7 +96,7 @@ super + shift + s
   $TERMINAL
 
 
-super + shift + f6
+super + shift + F6
   $TERMINAL -e htop
 
 
@@ -111,10 +113,10 @@ Print
   maimpick
 
 XF86MonBrightness{Down,Up}
-  xbacklight {-dec,-inc} 15
+  lua /home/emi/Documents/lovi/src/brightness-lovi.lua {dec,inc}
 
 XF86Audio{Mute,LowerVolume,RaiseVolume}
-  pamixer {-t, --allow-boost -d 4, --allow-boost -i 4}; kill -44 $(pidof dwmblocks)
+  lua /home/emi/Documents/lovi/src/volume-lovi.lua {mute, dec, inc}
 
 
 XF86AudioPlay
